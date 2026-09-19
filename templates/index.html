@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RuralCare AI | Rural Healthcare Assistant</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eefcf8, #f4f8ff);
+            color: #17324d;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ---------- BACKGROUND ANIMATION ---------- */
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.35;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .blob.one {
+            width: 280px;
+            height: 280px;
+            background: #5ee7c4;
+            top: 60px;
+            left: -100px;
+        }
+
+        .blob.two {
+            width: 320px;
+            height: 320px;
+            background: #7aa7ff;
+            right: -120px;
+            bottom: 80px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-25px) translateX(15px);
+            }
+        }
+
+        /* ---------- NAVBAR ---------- */
+
+        nav {
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #087f73;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #10bfa5, #1677d2);
+            color: white;
+            font-size: 22px;
+            box-shadow: 0 8px 20px rgba(16,191,165,0.25);
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: #e5faf4;
+            color: #07866f;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            max-width: 1100px;
+            margin: 55px auto 35px;
+            padding: 0 25px;
+            text-align: center;
+            animation: fadeUp 0.8s ease;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 17px;
+            border-radius: 30px;
+            background: white;
+            color: #087f73;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 65px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+            color: #12395a;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #079b83, #176fd1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #60758a;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- MAIN ---------- */
+
+        .container {
+            width: min(1100px, 92%);
+            margin: 40px auto 70px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 25px;
+        }
+
+        /* ---------- CARD ---------- */
+
+        .card {
+            background: rgba(255,255,255,0.86);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 25px;
+            padding: 28px;
+            box-shadow: 0 18px 45px rgba(25,70,100,0.09);
+            animation: fadeUp 0.9s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 50px rgba(25,70,100,0.13);
+            transition: 0.3s;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 22px;
+        }
+
+        .card-title .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e3faf5;
+            font-size: 23px;
+        }
+
+        .card-title h2 {
+            font-size: 21px;
+            color: #173d5d;
+        }
+
+        .card-title p {
+            color: #8092a2;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        /* ---------- FORM ---------- */
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #3d5870;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #d9e7ed;
+            border-radius: 15px;
+            padding: 13px 15px;
+            outline: none;
+            background: #fafdff;
+            color: #24445d;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        select:focus,
+        textarea:focus {
+            border-color: #12ad95;
+            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* ---------- SYMPTOM DROPDOWN ---------- */
+
+        .symptom-select {
+            width: 100%;
+            border: 1px solid #d9e7ed;
+            border-radius: 15px;
+            padding: 13px 15px;
+            outline: none;
+            background: #fafdff;
+            color: #24445d;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .symptom-select:focus {
+            border-color: #12ad95;
+            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
+        }
+
+        #otherSymptom {
+            display: none;
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #d9e7ed;
+            border-radius: 13px;
+            padding: 13px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        #otherSymptom:focus {
+            border-color: #12ad95;
+            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
+        }
+
+        /* ---------- BUTTONS ---------- */
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 14px;
+            padding: 13px 19px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #0aa98f, #1478cf);
+            color: white;
+            box-shadow: 0 10px 22px rgba(14,150,145,0.22);
+        }
+
+        .secondary {
+            background: #e9f6ff;
+            color: #1266a5;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        /* ---------- RESULT ---------- */
+
+        .result {
+            margin-top: 22px;
+            padding: 18px;
+            border-radius: 17px;
+            background: #f1fbf8;
+            border-left: 4px solid #0aa98f;
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .result h3 {
+            color: #087f73;
+            margin-bottom: 7px;
+        }
+
+        .result p {
+            color: #60758a;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ---------- SIDE CARDS ---------- */
+
+        .feature {
+            padding: 18px;
+            border-radius: 18px;
+            background: #f7fbfd;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #274c68;
+        }
+
+        .feature p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #8193a2;
+        }
+
+        /* ---------- PHARMACY ---------- */
+
+        .pharmacy {
+            margin-top: 25px;
+        }
+
+        .pharmacy-box {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pharmacy-box input {
+            flex: 1;
+            padding: 13px 15px;
+            border-radius: 14px;
+            border: 1px solid #d9e7ed;
+            outline: none;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #8294a3;
+            font-size: 12px;
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media (max-width: 800px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 15px 5%;
+            }
+
+            .hero {
+                margin-top: 35px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .card {
+                padding: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+
+            <div class="logo-icon">✚</div>
+
+            RuralCare AI
+
+        </div>
+
+        <div class="status">
+            ● AI Healthcare Assistant
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            🌿 AI-Powered Rural Healthcare
+        </div>
+
+        <h1>
+            Healthcare Support<br>
+            <span>Closer to Every Village</span>
+        </h1>
+
+        <p>
+            Describe your symptoms, understand the possible risk level,
+            and find nearby medicine availability — all from one simple platform.
+        </p>
+
+    </section>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <div class="grid">
+
+            <!-- SYMPTOM CARD -->
+
+            <section class="card">
+
+                <div class="card-title">
+
+                    <div class="icon">🩺</div>
+
+                    <div>
+
+                        <h2>AI Symptom Triage</h2>
+
+                        <p>
+                            Describe how you are feeling
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LANGUAGE -->
+
+                <div class="form-group">
+
+                    <label for="language">
+                        Preferred Language
+                    </label>
+
+                    <select id="language">
+
+                        <option>English</option>
+                        <option>Hindi</option>
+                        <option>Kannada</option>
+                        <option>Marathi</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SYMPTOM DROPDOWN -->
+
+                <div class="form-group">
+
+                    <label for="symptomSelect">
+                        Select Your Symptoms
+                    </label>
+
+                    <select
+                        id="symptomSelect"
+                        class="symptom-select"
+                    >
+
+                        <option value="">
+                            Choose a symptom...
+                        </option>
+
+                        <option value="Fever">
+                            Fever
+                        </option>
+
+                        <option value="Headache">
+                            Headache
+                        </option>
+
+                        <option value="Cough">
+                            Cough
+                        </option>
+
+                        <option value="Cold">
+                            Cold
+                        </option>
+
+                        <option value="Sore throat">
+                            Sore throat
+                        </option>
+
+                        <option value="Runny nose">
+                            Runny nose
+                        </option>
+
+                        <option value="Body pain">
+                            Body pain
+                        </option>
+
+                        <option value="Fatigue">
+                            Fatigue
+                        </option>
+
+                        <option value="Dizziness">
+                            Dizziness
+                        </option>
+
+                        <option value="Nausea">
+                            Nausea
+                        </option>
+
+                        <option value="Vomiting">
+                            Vomiting
+                        </option>
+
+                        <option value="Stomach pain">
+                            Stomach pain
+                        </option>
+
+                        <option value="Diarrhea">
+                            Diarrhea
+                        </option>
+
+                        <option value="Chest pain">
+                            Chest pain
+                        </option>
+
+                        <option value="Shortness of breath">
+                            Shortness of breath
+                        </option>
+
+                        <option value="Back pain">
+                            Back pain
+                        </option>
+
+                        <option value="Joint pain">
+                            Joint pain
+                        </option>
+
+                        <option value="Muscle pain">
+                            Muscle pain
+                        </option>
+
+                        <option value="Abdominal pain">
+                            Abdominal pain
+                        </option>
+
+                        <option value="Loss of appetite">
+                            Loss of appetite
+                        </option>
+
+                        <option value="Weakness">
+                            Weakness
+                        </option>
+
+                        <option value="Chills">
+                            Chills
+                        </option>
+
+                        <option value="Skin rash">
+                            Skin rash
+                        </option>
+
+                        <option value="Itching">
+                            Itching
+                        </option>
+
+                        <option value="Eye pain">
+                            Eye pain
+                        </option>
+
+                        <option value="Ear pain">
+                            Ear pain
+                        </option>
+
+                        <option value="Tooth pain">
+                            Tooth pain
+                        </option>
+
+                        <option value="Constipation">
+                            Constipation
+                        </option>
+
+                        <option value="Burning urination">
+                            Burning urination
+                        </option>
+
+                        <option value="Frequent urination">
+                            Frequent urination
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+
+                    <input
+                        type="text"
+                        id="otherSymptom"
+                        placeholder="Please type your symptom..."
+                    >
+
+                </div>
+
+
+                <!-- ADDITIONAL DETAILS -->
+
+                <div class="form-group">
+
+                    <label for="symptoms">
+                        Additional Details
+                    </label>
+
+                    <textarea
+                        id="symptoms"
+                        placeholder="Example: I have fever and headache since yesterday..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-row">
+
+                    <button
+                        class="secondary"
+                        onclick="startVoice()"
+                    >
+                        🎙️ Speak Symptoms
+                    </button>
+
+                    <button
+                        class="primary"
+                        onclick="checkSeverity()"
+                    >
+                        ✨ Check Severity
+                    </button>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div
+                    class="result"
+                    id="result"
+                >
+
+                    <h3 id="resultTitle">
+                        Assessment
+                    </h3>
+
+                    <p id="resultText">
+                        Your result will appear here.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT SIDE -->
+
+            <aside class="card">
+
+                <div class="card-title">
+
+                    <div class="icon">💡</div>
+
+                    <div>
+
+                        <h2>How it helps</h2>
+
+                        <p>
+                            Simple healthcare guidance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🗣️
+                    </div>
+
+                    <div>
+
+                        <h3>Voice Support</h3>
+
+                        <p>
+                            Users can describe symptoms using their voice.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <h3>AI Triage</h3>
+
+                        <p>
+                            Symptoms are analysed to estimate the risk level.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <h3>Medicine Availability</h3>
+
+                        <p>
+                            Find medicine availability at nearby pharmacies.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🌐
+                    </div>
+
+                    <div>
+
+                        <h3>Regional Languages</h3>
+
+                        <p>
+                            Designed to be easier for rural communities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+
+        <!-- PHARMACY -->
+
+        <section class="card pharmacy">
+
+            <div class="card-title">
+
+                <div class="icon">💊</div>
+
+                <div>
+
+                    <h2>Nearby Pharmacy</h2>
+
+                    <p>
+                        Check medicine availability
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pharmacy-box">
+
+                <input
+                    type="text"
+                    id="medicine"
+                    placeholder="Enter medicine name..."
+                >
+
+                <button
+                    class="primary"
+                    onclick="findMedicine()"
+                >
+                    🔍 Search
+                </button>
+
+            </div>
+
+
+            <div
+                class="result"
+                id="pharmacyResult"
+            >
+
+                <h3>
+                    Pharmacy Search
+                </h3>
+
+                <p id="pharmacyText">
+                    Search results will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        RuralCare AI • AI-powered healthcare assistance for rural communities
+
+        <br><br>
+
+        ⚠️ This is a prototype and does not replace professional medical advice.
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /* ---------- SYMPTOM DROPDOWN ---------- */
+
+        const symptomSelect =
+            document.getElementById("symptomSelect");
+
+        const otherSymptom =
+            document.getElementById("otherSymptom");
+
+
+        symptomSelect.addEventListener(
+            "change",
+            function () {
+
+                if (this.value === "Other") {
+
+                    otherSymptom.style.display = "block";
+
+                    otherSymptom.focus();
+
+                } else {
+
+                    otherSymptom.style.display = "none";
+
+                    otherSymptom.value = "";
+
+                }
+
+            }
+        );
+
+
+        /* ---------- GET SELECTED SYMPTOM ---------- */
+
+        function getSelectedSymptoms() {
+
+            if (symptomSelect.value === "Other") {
+
+                if (otherSymptom.value.trim() !== "") {
+
+                    return [
+                        otherSymptom.value.trim()
+                    ];
+
+                }
+
+                return [];
+
+            }
+
+
+            if (symptomSelect.value) {
+
+                return [
+                    symptomSelect.value
+                ];
+
+            }
+
+
+            return [];
+
+        }
+
+
+        /* ---------- VOICE INPUT ---------- */
+
+        function startVoice() {
+
+            const SpeechRecognition =
+                window.SpeechRecognition ||
+                window.webkitSpeechRecognition;
+
+
+            if (!SpeechRecognition) {
+
+                alert(
+                    "Voice recognition is not supported in this browser."
+                );
+
+                return;
+            }
+
+
+            const recognition =
+                new SpeechRecognition();
+
+
+            recognition.lang = "en-IN";
+
+
+            recognition.start();
+
+
+            recognition.onresult =
+                function(event) {
+
+                    const text =
+                        event.results[0][0].transcript;
+
+
+                    document.getElementById(
+                        "symptoms"
+                    ).value = text;
+
+                };
+
+        }
+
+
+        /* ---------- DEMO SEVERITY ---------- */
+
+        function checkSeverity() {
+
+            const selectedSymptoms =
+                getSelectedSymptoms();
+
+
+            const additionalDetails =
+                document.getElementById(
+                    "symptoms"
+                ).value.trim();
+
+
+            const result =
+                document.getElementById(
+                    "result"
+                );
+
+
+            const title =
+                document.getElementById(
+                    "resultTitle"
+                );
+
+
+            const text =
+                document.getElementById(
+                    "resultText"
+                );
+
+
+            if (
+                selectedSymptoms.length === 0 &&
+                !additionalDetails
+            ) {
+
+                alert(
+                    "Please select a symptom or describe your symptoms first."
+                );
+
+                return;
+
+            }
+
+
+            let finalSymptoms =
+                selectedSymptoms.join(", ");
+
+
+            if (additionalDetails) {
+
+                if (finalSymptoms) {
+
+                    finalSymptoms +=
+                        ". Additional details: " +
+                        additionalDetails;
+
+                } else {
+
+                    finalSymptoms =
+                        additionalDetails;
+
+                }
+
+            }
+
+
+            result.style.display =
+                "block";
+
+
+            title.innerText =
+                "🩺 Symptoms Received";
+
+
+            text.innerText =
+                "Selected symptoms: " +
+                finalSymptoms +
+                ". The system can now send this information to the AI triage model for risk assessment. This prototype does not provide a medical diagnosis.";
+
+        }
+
+
+        /* ---------- PHARMACY ---------- */
+
+        function findMedicine() {
+
+            const medicine =
+                document.getElementById(
+                    "medicine"
+                ).value.trim();
+
+
+            const result =
+                document.getElementById(
+                    "pharmacyResult"
+                );
+
+
+            const text =
+                document.getElementById(
+                    "pharmacyText"
+                );
+
+
+            if (!medicine) {
+
+                alert(
+                    "Please enter a medicine name."
+                );
+
+                return;
+
+            }
+
+
+            result.style.display =
+                "block";
+
+
+            text.innerText =
+                "Searching availability for " +
+                medicine +
+                "... Connect this section with the pharmacy database/backend to display real results.";
+
+        }
+
+    </script>
+
+</body>
+</html>
