@@ -1,466 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RuralCare AI | Rural Healthcare Assistant</title>
+    <title>RuralCare AI</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Segoe UI", Arial, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #eefcf8, #f4f8ff);
-            color: #17324d;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef7ff, #f8fbff);
+            color: #172033;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* ---------- BACKGROUND ANIMATION ---------- */
+
+        /* --------------------------------
+           BACKGROUND
+        -------------------------------- */
 
         .blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(70px);
+            filter: blur(80px);
             opacity: 0.35;
             z-index: -1;
-            animation: float 8s ease-in-out infinite;
         }
 
         .blob.one {
-            width: 280px;
-            height: 280px;
-            background: #5ee7c4;
-            top: 60px;
-            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: #8ec5ff;
+            top: -100px;
+            left: -80px;
         }
 
         .blob.two {
-            width: 320px;
-            height: 320px;
-            background: #7aa7ff;
+            width: 350px;
+            height: 350px;
+            background: #b8f1d5;
             right: -120px;
-            bottom: 80px;
-            animation-delay: 2s;
+            bottom: -100px;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-            }
 
-            50% {
-                transform: translateY(-25px) translateX(15px);
-            }
-        }
-
-        /* ---------- NAVBAR ---------- */
+        /* --------------------------------
+           NAVBAR
+        -------------------------------- */
 
         nav {
-            width: 100%;
-            padding: 18px 7%;
+            width: 92%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 16px 22px;
+
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(15px);
+
+            border-radius: 18px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255,255,255,0.75);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
             font-size: 22px;
             font-weight: 800;
-            color: #087f73;
-        }
-
-        .logo-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 13px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #10bfa5, #1677d2);
-            color: white;
-            font-size: 22px;
-            box-shadow: 0 8px 20px rgba(16,191,165,0.25);
+            color: #1677ff;
         }
 
         .status {
-            padding: 8px 14px;
-            border-radius: 30px;
-            background: #e5faf4;
-            color: #07866f;
             font-size: 13px;
+            color: #159447;
             font-weight: 600;
         }
 
-        /* ---------- HERO ---------- */
+
+        /* --------------------------------
+           HERO
+        -------------------------------- */
 
         .hero {
-            max-width: 1100px;
-            margin: 55px auto 35px;
-            padding: 0 25px;
-            text-align: center;
-            animation: fadeUp 0.8s ease;
-        }
+            width: 92%;
+            max-width: 1200px;
+            margin: 50px auto 30px;
 
-        .hero-badge {
-            display: inline-block;
-            padding: 8px 17px;
-            border-radius: 30px;
-            background: white;
-            color: #087f73;
-            font-size: 13px;
-            font-weight: 700;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            margin-bottom: 18px;
+            text-align: center;
         }
 
         .hero h1 {
-            font-size: clamp(36px, 6vw, 65px);
-            line-height: 1.05;
+            font-size: 48px;
+            line-height: 1.1;
             margin-bottom: 18px;
-            color: #12395a;
         }
 
         .hero h1 span {
-            background: linear-gradient(90deg, #079b83, #176fd1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #1677ff;
         }
 
         .hero p {
-            max-width: 650px;
+            max-width: 700px;
             margin: auto;
-            color: #60758a;
+
             font-size: 17px;
+            color: #667085;
             line-height: 1.7;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ---------- MAIN ---------- */
+        /* --------------------------------
+           MAIN GRID
+        -------------------------------- */
 
         .container {
-            width: min(1100px, 92%);
-            margin: 40px auto 70px;
-        }
+    width: 92%;
+    max-width: 1200px;
+    margin: 40px auto;
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1.35fr 0.65fr;
-            gap: 25px;
-        }
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
 
-        /* ---------- CARD ---------- */
+.how-help-section {
+    width: 100%;
+}
+
+
+        /* --------------------------------
+           CARD
+        -------------------------------- */
 
         .card {
-            background: rgba(255,255,255,0.86);
-            backdrop-filter: blur(15px);
+            background: rgba(255,255,255,0.88);
+            border-radius: 24px;
+            padding: 30px;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+
             border: 1px solid rgba(255,255,255,0.8);
-            border-radius: 25px;
-            padding: 28px;
-            box-shadow: 0 18px 45px rgba(25,70,100,0.09);
-            animation: fadeUp 0.9s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 22px 50px rgba(25,70,100,0.13);
-            transition: 0.3s;
+        .card h2 {
+            margin-bottom: 10px;
         }
 
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            margin-bottom: 22px;
-        }
-
-        .card-title .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #e3faf5;
-            font-size: 23px;
-        }
-
-        .card-title h2 {
-            font-size: 21px;
-            color: #173d5d;
-        }
-
-        .card-title p {
-            color: #8092a2;
-            font-size: 13px;
-            margin-top: 3px;
-        }
-
-        /* ---------- FORM ---------- */
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #3d5870;
-        }
-
-        select,
-        textarea {
-            width: 100%;
-            border: 1px solid #d9e7ed;
-            border-radius: 15px;
-            padding: 13px 15px;
-            outline: none;
-            background: #fafdff;
-            color: #24445d;
-            font-size: 14px;
-            transition: 0.25s;
-        }
-
-        select:focus,
-        textarea:focus {
-            border-color: #12ad95;
-            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
-        }
-
-        textarea {
-            min-height: 150px;
-            resize: vertical;
+        .card-description {
+            color: #667085;
+            margin-bottom: 25px;
             line-height: 1.6;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+
+        /* --------------------------------
+           FORM
+        -------------------------------- */
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            margin-top: 18px;
         }
 
-        /* ---------- SYMPTOM DROPDOWN ---------- */
-
-        .symptom-select {
+        select,
+        textarea,
+        input {
             width: 100%;
-            border: 1px solid #d9e7ed;
-            border-radius: 15px;
-            padding: 13px 15px;
+
+            padding: 14px 15px;
+
+            border: 1px solid #d9e2ec;
+            border-radius: 12px;
+
+            font-size: 15px;
+
             outline: none;
-            background: #fafdff;
-            color: #24445d;
-            font-size: 14px;
-            transition: 0.25s;
+
+            background: white;
         }
 
-        .symptom-select:focus {
-            border-color: #12ad95;
-            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
+        select:focus,
+        textarea:focus,
+        input:focus {
+            border-color: #1677ff;
         }
 
-        #otherSymptom {
-            display: none;
-            width: 100%;
-            margin-top: 10px;
-            border: 1px solid #d9e7ed;
-            border-radius: 13px;
-            padding: 13px;
-            outline: none;
-            font-size: 14px;
+        textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
-        #otherSymptom:focus {
-            border-color: #12ad95;
-            box-shadow: 0 0 0 4px rgba(18,173,149,0.10);
-        }
 
-        /* ---------- BUTTONS ---------- */
+        /* --------------------------------
+           BUTTONS
+        -------------------------------- */
 
         .button-row {
             display: flex;
             gap: 12px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
         button {
             border: none;
+            border-radius: 12px;
+
+            padding: 13px 18px;
+
+            font-size: 15px;
+            font-weight: 600;
+
             cursor: pointer;
-            border-radius: 14px;
-            padding: 13px 19px;
-            font-size: 14px;
-            font-weight: 700;
+
             transition: 0.25s;
         }
 
+        button:hover {
+            transform: translateY(-2px);
+        }
+
         .primary {
-            background: linear-gradient(135deg, #0aa98f, #1478cf);
+            background: #1677ff;
             color: white;
-            box-shadow: 0 10px 22px rgba(14,150,145,0.22);
         }
 
         .secondary {
-            background: #e9f6ff;
-            color: #1266a5;
+            background: #eef5ff;
+            color: #1677ff;
         }
 
-        button:hover {
-            transform: translateY(-3px);
+
+        /* --------------------------------
+           SELECTED SYMPTOMS
+        -------------------------------- */
+
+        .selected-title {
+            font-size: 13px;
+            color: #667085;
+
+            margin-top: 15px;
+            margin-bottom: 8px;
         }
 
-        button:active {
-            transform: scale(0.97);
+        .selected-symptoms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        /* ---------- RESULT ---------- */
+        .symptom-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            background: #eef5ff;
+            color: #1677ff;
+
+            border-radius: 20px;
+
+            padding: 8px 11px;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .chip-remove {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+
+            color: #1677ff;
+
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .chip-remove:hover {
+            transform: none;
+        }
+
+
+        /* --------------------------------
+           OTHER SYMPTOM
+        -------------------------------- */
+
+        #otherSymptomBox {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .other-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .other-row input {
+            flex: 1;
+        }
+
+        .add-other {
+            white-space: nowrap;
+        }
+
+
+        /* --------------------------------
+           RESULT
+        -------------------------------- */
 
         .result {
-            margin-top: 22px;
-            padding: 18px;
-            border-radius: 17px;
-            background: #f1fbf8;
-            border-left: 4px solid #0aa98f;
             display: none;
-            animation: fadeUp 0.4s ease;
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            background: #f5f9ff;
+
+            border-left: 5px solid #1677ff;
         }
 
         .result h3 {
-            color: #087f73;
-            margin-bottom: 7px;
+            margin-bottom: 8px;
         }
 
         .result p {
-            color: #60758a;
+            color: #667085;
             line-height: 1.6;
-            font-size: 14px;
         }
 
-        /* ---------- SIDE CARDS ---------- */
+
+        /* --------------------------------
+           HOW IT HELPS BUTTON
+        -------------------------------- */
+
+        .help-toggle {
+            width: 100%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: white;
+            color: #172033;
+
+            border: 1px solid #e1e8f0;
+
+            margin-bottom: 12px;
+
+            padding: 16px 18px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        .help-toggle span:last-child {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .help-toggle.active span:last-child {
+            transform: rotate(180deg);
+        }
+
+        .help-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .help-content.open {
+            max-height: 1000px;
+        }
+
+
+        /* --------------------------------
+           FEATURE CARDS
+        -------------------------------- */
 
         .feature {
-            padding: 18px;
+            padding: 20px;
+
+            background: #f8fbff;
+
             border-radius: 18px;
-            background: #f7fbfd;
-            margin-bottom: 14px;
-            display: flex;
-            gap: 13px;
-            align-items: flex-start;
+
+            margin-bottom: 12px;
+
+            border: 1px solid #e8eef5;
         }
 
         .feature-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+            font-size: 25px;
+            margin-bottom: 8px;
         }
 
         .feature h3 {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #274c68;
+            margin-bottom: 6px;
+            font-size: 17px;
         }
 
         .feature p {
-            font-size: 12px;
+            color: #667085;
             line-height: 1.5;
-            color: #8193a2;
+            font-size: 14px;
         }
 
-        /* ---------- PHARMACY ---------- */
+
+        /* --------------------------------
+           PHARMACY
+        -------------------------------- */
 
         .pharmacy {
-            margin-top: 25px;
+            width: 92%;
+            max-width: 1200px;
+            margin: 20px auto 50px;
         }
 
         .pharmacy-box {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .pharmacy-box input {
             flex: 1;
-            padding: 13px 15px;
-            border-radius: 14px;
-            border: 1px solid #d9e7ed;
-            outline: none;
         }
 
-        /* ---------- FOOTER ---------- */
+        #pharmacyResult {
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 16px;
+
+            background: #f7fbf8;
+
+            border-radius: 14px;
+
+            border-left: 4px solid #19a463;
+        }
+
+
+        /* --------------------------------
+           FOOTER
+        -------------------------------- */
 
         footer {
+            width: 92%;
+            max-width: 1200px;
+
+            margin: 40px auto;
+
             text-align: center;
-            padding: 25px;
-            color: #8294a3;
-            font-size: 12px;
+
+            color: #7b8494;
+
+            font-size: 13px;
+
+            line-height: 1.6;
         }
 
-        /* ---------- MOBILE ---------- */
 
-        @media (max-width: 800px) {
+        /* --------------------------------
+           RESPONSIVE
+        -------------------------------- */
 
-            .grid {
-                grid-template-columns: 1fr;
-            }
+       @media(max-width: 850px) {
 
-            nav {
-                padding: 15px 5%;
-            }
+    .hero h1 {
+        font-size: 36px;
+    }
 
-            .hero {
-                margin-top: 35px;
-            }
+}
 
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .card {
-                padding: 21px;
-            }
-        }
     </style>
+
 </head>
 
+
 <body>
+
 
     <div class="blob one"></div>
     <div class="blob two"></div>
 
-    <!-- NAVBAR -->
+
+    <!-- --------------------------------
+         NAVBAR
+    -------------------------------- -->
 
     <nav>
 
         <div class="logo">
-
-            <div class="logo-icon">✚</div>
-
-            RuralCare AI
-
+            🌾 RuralCare AI
         </div>
 
         <div class="status">
@@ -470,404 +517,295 @@
     </nav>
 
 
-    <!-- HERO -->
+    <!-- --------------------------------
+         HERO
+    -------------------------------- -->
 
     <section class="hero">
 
-        <div class="hero-badge">
-            🌿 AI-Powered Rural Healthcare
-        </div>
-
         <h1>
-            Healthcare Support<br>
+            Healthcare Support
             <span>Closer to Every Village</span>
         </h1>
 
         <p>
-            Describe your symptoms, understand the possible risk level,
-            and find nearby medicine availability — all from one simple platform.
+            An AI-powered rural healthcare assistance system that helps
+            users understand symptom urgency and connect with nearby
+            healthcare resources.
         </p>
 
     </section>
 
 
-    <!-- MAIN CONTENT -->
+    <!-- --------------------------------
+     MAIN
+-------------------------------- -->
 
-    <main class="container">
+<div class="container">
 
-        <div class="grid">
 
-            <!-- SYMPTOM CARD -->
+    <!-- HOW IT HELPS -->
 
-            <section class="card">
+    <div class="how-help-section">
 
-                <div class="card-title">
+        <button
+            class="help-toggle"
+            id="helpToggle"
+            onclick="toggleHelp()"
+        >
 
-                    <div class="icon">🩺</div>
+            <span>
+                💡 How It Helps
+            </span>
 
-                    <div>
+            <span>
+                ▼
+            </span>
 
-                        <h2>AI Symptom Triage</h2>
+        </button>
 
-                        <p>
-                            Describe how you are feeling
-                        </p>
 
-                    </div>
+        <div
+            class="help-content"
+            id="helpContent"
+        >
 
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎙️
                 </div>
 
+                <h3>
+                    Voice Support
+                </h3>
 
-                <!-- LANGUAGE -->
+                <p>
+                    Users can describe symptoms using voice,
+                    helping people who find typing difficult.
+                </p>
 
-                <div class="form-group">
+            </div>
 
-                    <label for="language">
-                        Preferred Language
-                    </label>
 
-                    <select id="language">
+            <div class="feature">
 
-                        <option>English</option>
-                        <option>Hindi</option>
-                        <option>Kannada</option>
-                        <option>Marathi</option>
-
-                    </select>
-
+                <div class="feature-icon">
+                    🤖
                 </div>
 
+                <h3>
+                    AI Triage
+                </h3>
 
-                <!-- SYMPTOM DROPDOWN -->
+                <p>
+                    The system provides basic urgency guidance
+                    based on the reported symptoms.
+                </p>
 
-                <div class="form-group">
-
-                    <label for="symptomSelect">
-                        Select Your Symptoms
-                    </label>
-
-                    <select
-                        id="symptomSelect"
-                        class="symptom-select"
-                    >
-
-                        <option value="">
-                            Choose a symptom...
-                        </option>
-
-                        <option value="Fever">
-                            Fever
-                        </option>
-
-                        <option value="Headache">
-                            Headache
-                        </option>
-
-                        <option value="Cough">
-                            Cough
-                        </option>
-
-                        <option value="Cold">
-                            Cold
-                        </option>
-
-                        <option value="Sore throat">
-                            Sore throat
-                        </option>
-
-                        <option value="Runny nose">
-                            Runny nose
-                        </option>
-
-                        <option value="Body pain">
-                            Body pain
-                        </option>
-
-                        <option value="Fatigue">
-                            Fatigue
-                        </option>
-
-                        <option value="Dizziness">
-                            Dizziness
-                        </option>
-
-                        <option value="Nausea">
-                            Nausea
-                        </option>
-
-                        <option value="Vomiting">
-                            Vomiting
-                        </option>
-
-                        <option value="Stomach pain">
-                            Stomach pain
-                        </option>
-
-                        <option value="Diarrhea">
-                            Diarrhea
-                        </option>
-
-                        <option value="Chest pain">
-                            Chest pain
-                        </option>
-
-                        <option value="Shortness of breath">
-                            Shortness of breath
-                        </option>
-
-                        <option value="Back pain">
-                            Back pain
-                        </option>
-
-                        <option value="Joint pain">
-                            Joint pain
-                        </option>
-
-                        <option value="Muscle pain">
-                            Muscle pain
-                        </option>
-
-                        <option value="Abdominal pain">
-                            Abdominal pain
-                        </option>
-
-                        <option value="Loss of appetite">
-                            Loss of appetite
-                        </option>
-
-                        <option value="Weakness">
-                            Weakness
-                        </option>
-
-                        <option value="Chills">
-                            Chills
-                        </option>
-
-                        <option value="Skin rash">
-                            Skin rash
-                        </option>
-
-                        <option value="Itching">
-                            Itching
-                        </option>
-
-                        <option value="Eye pain">
-                            Eye pain
-                        </option>
-
-                        <option value="Ear pain">
-                            Ear pain
-                        </option>
-
-                        <option value="Tooth pain">
-                            Tooth pain
-                        </option>
-
-                        <option value="Constipation">
-                            Constipation
-                        </option>
-
-                        <option value="Burning urination">
-                            Burning urination
-                        </option>
-
-                        <option value="Frequent urination">
-                            Frequent urination
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-
-                    </select>
+            </div>
 
 
-                    <input
-                        type="text"
-                        id="otherSymptom"
-                        placeholder="Please type your symptom..."
-                    >
+            <div class="feature">
 
+                <div class="feature-icon">
+                    💊
                 </div>
 
+                <h3>
+                    Medicine Availability
+                </h3>
 
-                <!-- ADDITIONAL DETAILS -->
+                <p>
+                    Users can search participating pharmacies
+                    for medicine availability.
+                </p>
 
-                <div class="form-group">
+            </div>
 
-                    <label for="symptoms">
-                        Additional Details
-                    </label>
 
-                    <textarea
-                        id="symptoms"
-                        placeholder="Example: I have fever and headache since yesterday..."
-                    ></textarea>
+            <div class="feature">
 
+                <div class="feature-icon">
+                    🌐
                 </div>
 
+                <h3>
+                    Regional Languages
+                </h3>
 
-                <!-- BUTTONS -->
+                <p>
+                    The interface supports English, Hindi,
+                    Kannada and Marathi.
+                </p>
 
-                <div class="button-row">
+            </div>
 
-                    <button
-                        class="secondary"
-                        onclick="startVoice()"
-                    >
-                        🎙️ Speak Symptoms
-                    </button>
+        </div>
 
-                    <button
-                        class="primary"
-                        onclick="checkSeverity()"
-                    >
-                        ✨ Check Severity
-                    </button>
-
-                </div>
+    </div>
 
 
-                <!-- RESULT -->
 
-                <div
-                    class="result"
-                    id="result"
+    <!-- AI SYMPTOM TRIAGE -->
+
+    <div class="card">
+
+        <h2>
+            🩺 AI Symptom Triage
+        </h2>
+
+        <p class="card-description">
+            Select your symptoms and provide additional details.
+            The system will provide basic urgency guidance.
+        </p>
+
+
+        <label for="language">
+            Preferred Language
+        </label>
+
+        <select id="language">
+
+            <option value="English">
+                English
+            </option>
+
+            <option value="Hindi">
+                Hindi
+            </option>
+
+            <option value="Kannada">
+                Kannada
+            </option>
+
+            <option value="Marathi">
+                Marathi
+            </option>
+
+        </select>
+
+
+        <label for="symptomSelect">
+            Select Symptoms
+        </label>
+
+        <select
+            id="symptomSelect"
+            class="symptom-select"
+        >
+
+            <option value="">
+                Choose a symptom...
+            </option>
+
+        </select>
+
+
+        <div
+            id="selectedTitle"
+            class="selected-title"
+            style="display:none;"
+        >
+            Selected symptoms
+        </div>
+
+
+        <div
+            id="selectedSymptomsContainer"
+            class="selected-symptoms"
+        ></div>
+
+
+        <div id="otherSymptomBox">
+
+            <div class="other-row">
+
+                <input
+                    type="text"
+                    id="otherSymptom"
+                    placeholder="Enter other symptom"
                 >
 
-                    <h3 id="resultTitle">
-                        Assessment
-                    </h3>
+                <button
+                    class="secondary add-other"
+                    onclick="addOtherSymptom()"
+                >
+                    Add
+                </button>
 
-                    <p id="resultText">
-                        Your result will appear here.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- RIGHT SIDE -->
-
-            <aside class="card">
-
-                <div class="card-title">
-
-                    <div class="icon">💡</div>
-
-                    <div>
-
-                        <h2>How it helps</h2>
-
-                        <p>
-                            Simple healthcare guidance
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🗣️
-                    </div>
-
-                    <div>
-
-                        <h3>Voice Support</h3>
-
-                        <p>
-                            Users can describe symptoms using their voice.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🤖
-                    </div>
-
-                    <div>
-
-                        <h3>AI Triage</h3>
-
-                        <p>
-                            Symptoms are analysed to estimate the risk level.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        💊
-                    </div>
-
-                    <div>
-
-                        <h3>Medicine Availability</h3>
-
-                        <p>
-                            Find medicine availability at nearby pharmacies.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🌐
-                    </div>
-
-                    <div>
-
-                        <h3>Regional Languages</h3>
-
-                        <p>
-                            Designed to be easier for rural communities.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </aside>
+            </div>
 
         </div>
 
 
-        <!-- PHARMACY -->
+        <label for="symptoms">
+            Additional Details
+        </label>
 
-        <section class="card pharmacy">
+        <textarea
+            id="symptoms"
+            placeholder="Describe any additional symptoms or details..."
+        ></textarea>
 
-            <div class="card-title">
 
-                <div class="icon">💊</div>
+        <div class="button-row">
 
-                <div>
+            <button
+                class="secondary"
+                onclick="startVoice()"
+            >
+                🎙️ Speak Symptoms
+            </button>
 
-                    <h2>Nearby Pharmacy</h2>
+            <button
+                class="primary"
+                onclick="checkSeverity()"
+            >
+                ✨ Check Severity
+            </button>
 
-                    <p>
-                        Check medicine availability
-                    </p>
+        </div>
 
-                </div>
 
-            </div>
+        <div
+            class="result"
+            id="result"
+        >
+
+            <h3 id="resultTitle">
+                Assessment
+            </h3>
+
+            <p id="resultText">
+                Your result will appear here.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+    
+
+
+    <!-- --------------------------------
+         PHARMACY
+    -------------------------------- -->
+
+    <section class="pharmacy">
+
+        <div class="card">
+
+            <h2>
+                💊 Medicine Availability
+            </h2>
+
+            <p class="card-description">
+                Search for a medicine to check availability
+                at participating nearby pharmacies.
+            </p>
 
 
             <div class="pharmacy-box">
@@ -882,71 +820,423 @@
                     class="primary"
                     onclick="findMedicine()"
                 >
-                    🔍 Search
+                    Search
                 </button>
 
             </div>
 
 
             <div
-                class="result"
                 id="pharmacyResult"
             >
 
-                <h3>
-                    Pharmacy Search
-                </h3>
-
-                <p id="pharmacyText">
-                    Search results will appear here.
-                </p>
+                <p id="pharmacyText"></p>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </section>
 
+
+    <!-- --------------------------------
+         FOOTER
+    -------------------------------- -->
 
     <footer>
 
-        RuralCare AI • AI-powered healthcare assistance for rural communities
-
-        <br><br>
-
-        ⚠️ This is a prototype and does not replace professional medical advice.
+        RuralCare AI is a prototype healthcare assistance system.
+        It does not provide medical diagnosis or prescriptions.
+        Always consult a qualified healthcare professional for
+        medical decisions.
 
     </footer>
 
 
-    <!-- JAVASCRIPT -->
 
     <script>
 
-        /* ---------- SYMPTOM DROPDOWN ---------- */
+
+        /* =====================================================
+           SYMPTOM TRANSLATIONS
+        ===================================================== */
+
+        const symptomTranslations = {
+
+            English: {
+
+                "Fever": "Fever",
+                "Headache": "Headache",
+                "Cough": "Cough",
+                "Cold": "Cold",
+                "Sore throat": "Sore throat",
+                "Runny nose": "Runny nose",
+                "Body pain": "Body pain",
+                "Fatigue": "Fatigue",
+                "Dizziness": "Dizziness",
+                "Nausea": "Nausea",
+                "Vomiting": "Vomiting",
+                "Stomach pain": "Stomach pain",
+                "Diarrhea": "Diarrhea",
+                "Chest pain": "Chest pain",
+                "Shortness of breath": "Shortness of breath",
+                "Back pain": "Back pain",
+                "Joint pain": "Joint pain",
+                "Muscle pain": "Muscle pain",
+                "Abdominal pain": "Abdominal pain",
+                "Loss of appetite": "Loss of appetite",
+                "Weakness": "Weakness",
+                "Chills": "Chills",
+                "Skin rash": "Skin rash",
+                "Itching": "Itching",
+                "Eye pain": "Eye pain",
+                "Ear pain": "Ear pain",
+                "Tooth pain": "Tooth pain",
+                "Constipation": "Constipation",
+                "Burning urination": "Burning urination",
+                "Frequent urination": "Frequent urination",
+                "Other": "Other"
+
+            },
+
+
+            Hindi: {
+
+                "Fever": "बुखार",
+                "Headache": "सिरदर्द",
+                "Cough": "खांसी",
+                "Cold": "सर्दी",
+                "Sore throat": "गले में खराश",
+                "Runny nose": "नाक बहना",
+                "Body pain": "शरीर में दर्द",
+                "Fatigue": "थकान",
+                "Dizziness": "चक्कर आना",
+                "Nausea": "जी मिचलाना",
+                "Vomiting": "उल्टी",
+                "Stomach pain": "पेट दर्द",
+                "Diarrhea": "दस्त",
+                "Chest pain": "सीने में दर्द",
+                "Shortness of breath": "सांस लेने में तकलीफ",
+                "Back pain": "कमर दर्द",
+                "Joint pain": "जोड़ों में दर्द",
+                "Muscle pain": "मांसपेशियों में दर्द",
+                "Abdominal pain": "पेट में दर्द",
+                "Loss of appetite": "भूख न लगना",
+                "Weakness": "कमजोरी",
+                "Chills": "ठंड लगना",
+                "Skin rash": "त्वचा पर दाने",
+                "Itching": "खुजली",
+                "Eye pain": "आंखों में दर्द",
+                "Ear pain": "कान में दर्द",
+                "Tooth pain": "दांत में दर्द",
+                "Constipation": "कब्ज",
+                "Burning urination": "पेशाब करते समय जलन",
+                "Frequent urination": "बार-बार पेशाब आना",
+                "Other": "अन्य"
+
+            },
+
+
+            Kannada: {
+
+                "Fever": "ಜ್ವರ",
+                "Headache": "ತಲೆನೋವು",
+                "Cough": "ಕೆಮ್ಮು",
+                "Cold": "ಜಲದೋಷ",
+                "Sore throat": "ಗಂಟಲು ನೋವು",
+                "Runny nose": "ಮೂಗು ಸೋರುವುದು",
+                "Body pain": "ದೇಹದ ನೋವು",
+                "Fatigue": "ದಣಿವು",
+                "Dizziness": "ತಲೆ ಸುತ್ತು",
+                "Nausea": "ವಾಕರಿಕೆ",
+                "Vomiting": "ವಾಂತಿ",
+                "Stomach pain": "ಹೊಟ್ಟೆ ನೋವು",
+                "Diarrhea": "ಅತಿಸಾರ",
+                "Chest pain": "ಎದೆ ನೋವು",
+                "Shortness of breath": "ಉಸಿರಾಟದ ತೊಂದರೆ",
+                "Back pain": "ಬೆನ್ನು ನೋವು",
+                "Joint pain": "ಸಂಧಿ ನೋವು",
+                "Muscle pain": "ಸ್ನಾಯು ನೋವು",
+                "Abdominal pain": "ಹೊಟ್ಟೆಯ ನೋವು",
+                "Loss of appetite": "ಹಸಿವಿಲ್ಲದಿರುವುದು",
+                "Weakness": "ದೌರ್ಬಲ್ಯ",
+                "Chills": "ಚಳಿ",
+                "Skin rash": "ಚರ್ಮದ ಮೇಲೆ ದದ್ದು",
+                "Itching": "ತುರಿಕೆ",
+                "Eye pain": "ಕಣ್ಣಿನ ನೋವು",
+                "Ear pain": "ಕಿವಿಯ ನೋವು",
+                "Tooth pain": "ಹಲ್ಲಿನ ನೋವು",
+                "Constipation": "ಮಲಬದ್ಧತೆ",
+                "Burning urination": "ಮೂತ್ರ ವಿಸರ್ಜಿಸುವಾಗ ಉರಿ",
+                "Frequent urination": "ಆಗಾಗ ಮೂತ್ರ ವಿಸರ್ಜನೆ",
+                "Other": "ಇತರೆ"
+
+            },
+
+
+            Marathi: {
+
+                "Fever": "ताप",
+                "Headache": "डोकेदुखी",
+                "Cough": "खोकला",
+                "Cold": "सर्दी",
+                "Sore throat": "घसा खवखवणे",
+                "Runny nose": "नाक वाहणे",
+                "Body pain": "अंगदुखी",
+                "Fatigue": "थकवा",
+                "Dizziness": "चक्कर येणे",
+                "Nausea": "मळमळ",
+                "Vomiting": "उलट्या",
+                "Stomach pain": "पोटदुखी",
+                "Diarrhea": "अतिसार",
+                "Chest pain": "छातीत दुखणे",
+                "Shortness of breath": "श्वास घेण्यास त्रास",
+                "Back pain": "पाठदुखी",
+                "Joint pain": "सांधेदुखी",
+                "Muscle pain": "स्नायू दुखणे",
+                "Abdominal pain": "पोटात दुखणे",
+                "Loss of appetite": "भूक न लागणे",
+                "Weakness": "अशक्तपणा",
+                "Chills": "थंडी वाजणे",
+                "Skin rash": "त्वचेवर पुरळ",
+                "Itching": "खाज",
+                "Eye pain": "डोळ्यात दुखणे",
+                "Ear pain": "कान दुखणे",
+                "Tooth pain": "दात दुखणे",
+                "Constipation": "बद्धकोष्ठता",
+                "Burning urination": "लघवी करताना जळजळ",
+                "Frequent urination": "वारंवार लघवी होणे",
+                "Other": "इतर"
+
+            }
+
+        };
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const languageSelect =
+            document.getElementById("language");
 
         const symptomSelect =
             document.getElementById("symptomSelect");
 
+        const otherSymptomBox =
+            document.getElementById("otherSymptomBox");
+
         const otherSymptom =
             document.getElementById("otherSymptom");
 
+        const selectedSymptomsContainer =
+            document.getElementById(
+                "selectedSymptomsContainer"
+            );
+
+        const selectedTitle =
+            document.getElementById("selectedTitle");
+
+
+        /*
+           Store English/canonical values internally.
+
+           Example:
+
+           Fever
+           Cough
+           Headache
+
+           Even when the user sees:
+
+           बुखार
+           खांसी
+           सिरदर्द
+        */
+
+        let selectedSymptoms = [];
+
+
+        /* =====================================================
+           RENDER SYMPTOM OPTIONS
+        ===================================================== */
+
+        function renderSymptomOptions() {
+
+            const language =
+                languageSelect.value;
+
+            const translations =
+                symptomTranslations[language];
+
+            symptomSelect.innerHTML = "";
+
+
+            const placeholder =
+                document.createElement("option");
+
+            placeholder.value = "";
+
+            placeholder.textContent =
+                language === "Hindi"
+                    ? "लक्षण चुनें..."
+                    : language === "Kannada"
+                    ? "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+                    : language === "Marathi"
+                    ? "लक्षण निवडा..."
+                    : "Choose a symptom...";
+
+            symptomSelect.appendChild(
+                placeholder
+            );
+
+
+            Object.keys(translations).forEach(
+                function(canonicalValue) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        canonicalValue;
+
+                    option.textContent =
+                        translations[canonicalValue];
+
+                    symptomSelect.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+
+            renderSelectedSymptoms();
+
+        }
+
+
+        /* =====================================================
+           ADD NORMAL SYMPTOM
+        ===================================================== */
+
+        function addSymptom(symptom) {
+
+            if (!symptom) {
+                return;
+            }
+
+
+            if (
+                symptom === "Other"
+            ) {
+
+                otherSymptomBox.style.display =
+                    "block";
+
+                otherSymptom.focus();
+
+                return;
+            }
+
+
+            if (
+                !selectedSymptoms.includes(symptom)
+            ) {
+
+                selectedSymptoms.push(symptom);
+
+            }
+
+
+            symptomSelect.value = "";
+
+            otherSymptomBox.style.display =
+                "none";
+
+            renderSelectedSymptoms();
+
+        }
+
+
+        /* =====================================================
+           SYMPTOM SELECT CHANGE
+        ===================================================== */
 
         symptomSelect.addEventListener(
             "change",
-            function () {
+            function() {
 
-                if (this.value === "Other") {
+                const value =
+                    this.value;
 
-                    otherSymptom.style.display = "block";
+                if (!value) {
+                    return;
+                }
 
-                    otherSymptom.focus();
+                addSymptom(value);
 
-                } else {
+            }
+        );
 
-                    otherSymptom.style.display = "none";
 
-                    otherSymptom.value = "";
+        /* =====================================================
+           ADD OTHER SYMPTOM
+        ===================================================== */
+
+        function addOtherSymptom() {
+
+            const value =
+                otherSymptom.value.trim();
+
+
+            if (!value) {
+
+                alert(
+                    "Please enter the symptom first."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !selectedSymptoms.includes(value)
+            ) {
+
+                selectedSymptoms.push(value);
+
+            }
+
+
+            otherSymptom.value = "";
+
+            otherSymptomBox.style.display =
+                "none";
+
+            symptomSelect.value = "";
+
+            renderSelectedSymptoms();
+
+        }
+
+
+        /* =====================================================
+           ENTER KEY FOR OTHER
+        ===================================================== */
+
+        otherSymptom.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    addOtherSymptom();
 
                 }
 
@@ -954,40 +1244,130 @@
         );
 
 
-        /* ---------- GET SELECTED SYMPTOM ---------- */
+        /* =====================================================
+           REMOVE SYMPTOM
+        ===================================================== */
 
-        function getSelectedSymptoms() {
+        function removeSymptom(index) {
 
-            if (symptomSelect.value === "Other") {
+            selectedSymptoms.splice(
+                index,
+                1
+            );
 
-                if (otherSymptom.value.trim() !== "") {
-
-                    return [
-                        otherSymptom.value.trim()
-                    ];
-
-                }
-
-                return [];
-
-            }
-
-
-            if (symptomSelect.value) {
-
-                return [
-                    symptomSelect.value
-                ];
-
-            }
-
-
-            return [];
+            renderSelectedSymptoms();
 
         }
 
 
-        /* ---------- VOICE INPUT ---------- */
+        /* =====================================================
+           RENDER SELECTED SYMPTOM CHIPS
+        ===================================================== */
+
+        function renderSelectedSymptoms() {
+
+            selectedSymptomsContainer.innerHTML =
+                "";
+
+
+            if (
+                selectedSymptoms.length === 0
+            ) {
+
+                selectedTitle.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            selectedTitle.style.display =
+                "block";
+
+
+            const language =
+                languageSelect.value;
+
+            const translations =
+                symptomTranslations[language];
+
+
+            selectedSymptoms.forEach(
+                function(symptom, index) {
+
+                    const chip =
+                        document.createElement("div");
+
+                    chip.className =
+                        "symptom-chip";
+
+
+                    const displayName =
+                        translations[symptom]
+                        || symptom;
+
+
+                    chip.innerHTML = `
+
+                        <span>
+                            ${escapeHtml(displayName)}
+                        </span>
+
+                        <button
+                            class="chip-remove"
+                            onclick="removeSymptom(${index})"
+                            title="Remove"
+                        >
+                            ×
+                        </button>
+
+                    `;
+
+
+                    selectedSymptomsContainer
+                        .appendChild(chip);
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           HTML ESCAPE
+        ===================================================== */
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           LANGUAGE CHANGE
+        ===================================================== */
+
+        languageSelect.addEventListener(
+            "change",
+            function() {
+
+                renderSymptomOptions();
+
+            }
+        );
+
+
+        /* =====================================================
+           VOICE SUPPORT
+        ===================================================== */
 
         function startVoice() {
 
@@ -1003,6 +1383,7 @@
                 );
 
                 return;
+
             }
 
 
@@ -1010,7 +1391,26 @@
                 new SpeechRecognition();
 
 
-            recognition.lang = "en-IN";
+            const language =
+                languageSelect.value;
+
+
+            const voiceLanguages = {
+
+                English: "en-IN",
+
+                Hindi: "hi-IN",
+
+                Kannada: "kn-IN",
+
+                Marathi: "mr-IN"
+
+            };
+
+
+            recognition.lang =
+                voiceLanguages[language]
+                || "en-IN";
 
 
             recognition.start();
@@ -1020,7 +1420,8 @@
                 function(event) {
 
                     const text =
-                        event.results[0][0].transcript;
+                        event.results[0][0]
+                            .transcript;
 
 
                     document.getElementById(
@@ -1029,40 +1430,51 @@
 
                 };
 
+
+            recognition.onerror =
+                function() {
+
+                    alert(
+                        "Voice recognition could not be completed. Please try again."
+                    );
+
+                };
+
         }
 
 
-        /* ---------- DEMO SEVERITY ---------- */
+        /* =====================================================
+           CHECK SEVERITY
+        ===================================================== */
 
-        function checkSeverity() {
-
-            const selectedSymptoms =
-                getSelectedSymptoms();
-
+        async function checkSeverity() {
 
             const additionalDetails =
-                document.getElementById(
-                    "symptoms"
-                ).value.trim();
+                document
+                    .getElementById("symptoms")
+                    .value
+                    .trim();
+
+
+            const language =
+                languageSelect.value;
 
 
             const result =
-                document.getElementById(
-                    "result"
-                );
+                document.getElementById("result");
 
 
             const title =
-                document.getElementById(
-                    "resultTitle"
-                );
+                document.getElementById("resultTitle");
 
 
             const text =
-                document.getElementById(
-                    "resultText"
-                );
+                document.getElementById("resultText");
 
+
+            /* ------------------------------
+               VALIDATION
+            ------------------------------ */
 
             if (
                 selectedSymptoms.length === 0 &&
@@ -1078,52 +1490,158 @@
             }
 
 
-            let finalSymptoms =
-                selectedSymptoms.join(", ");
-
-
-            if (additionalDetails) {
-
-                if (finalSymptoms) {
-
-                    finalSymptoms +=
-                        ". Additional details: " +
-                        additionalDetails;
-
-                } else {
-
-                    finalSymptoms =
-                        additionalDetails;
-
-                }
-
-            }
-
+            /* ------------------------------
+               LOADING
+            ------------------------------ */
 
             result.style.display =
                 "block";
 
 
             title.innerText =
-                "🩺 Symptoms Received";
+                "🔄 Checking Symptoms...";
 
 
             text.innerText =
-                "Selected symptoms: " +
-                finalSymptoms +
-                ". The system can now send this information to the AI triage model for risk assessment. This prototype does not provide a medical diagnosis.";
+                "Please wait while the triage system processes the information.";
+
+
+            /* ------------------------------
+               API REQUEST
+            ------------------------------ */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/triage",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    language:
+                                        language,
+
+                                    symptoms:
+                                        selectedSymptoms,
+
+                                    details:
+                                        additionalDetails
+
+                                })
+
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server response was not OK"
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                /* ------------------------------
+                   SHOW RESULT
+                ------------------------------ */
+
+                if (data.success) {
+
+                    title.innerText =
+                        "🩺 " +
+                        data.urgency;
+
+
+                    text.innerText =
+                        data.message;
+
+
+                } else {
+
+                    title.innerText =
+                        "⚠️ Something went wrong";
+
+
+                    text.innerText =
+                        "Please try again.";
+
+                }
+
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                title.innerText =
+                    "⚠️ Connection Error";
+
+
+                text.innerText =
+                    "The healthcare backend could not be reached. Make sure Flask is running.";
+
+            }
 
         }
 
 
-        /* ---------- PHARMACY ---------- */
+        /* =====================================================
+           HOW IT HELPS TOGGLE
+        ===================================================== */
+
+        function toggleHelp() {
+
+            const content =
+                document.getElementById(
+                    "helpContent"
+                );
+
+
+            const button =
+                document.getElementById(
+                    "helpToggle"
+                );
+
+
+            content.classList.toggle(
+                "open"
+            );
+
+
+            button.classList.toggle(
+                "active"
+            );
+
+        }
+
+
+        /* =====================================================
+           MEDICINE SEARCH
+        ===================================================== */
 
         function findMedicine() {
 
             const medicine =
-                document.getElementById(
-                    "medicine"
-                ).value.trim();
+                document
+                    .getElementById("medicine")
+                    .value
+                    .trim();
 
 
             const result =
@@ -1160,7 +1678,16 @@
 
         }
 
+
+        /* =====================================================
+           INITIAL LOAD
+        ===================================================== */
+
+        renderSymptomOptions();
+
     </script>
 
+
 </body>
+
 </html>
