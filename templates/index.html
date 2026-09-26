@@ -5,11 +5,15 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
 
     <title>RuralCare AI</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -64,7 +68,7 @@
             margin: 20px auto;
             padding: 16px 22px;
 
-            background: rgba(255,255,255,0.75);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(15px);
 
             border-radius: 18px;
@@ -73,7 +77,7 @@
             justify-content: space-between;
             align-items: center;
 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
         }
 
         .logo {
@@ -126,18 +130,18 @@
         -------------------------------- */
 
         .container {
-    width: 92%;
-    max-width: 1200px;
-    margin: 40px auto;
+            width: 92%;
+            max-width: 1200px;
+            margin: 40px auto;
 
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
 
-.how-help-section {
-    width: 100%;
-}
+        .how-help-section {
+            width: 100%;
+        }
 
 
         /* --------------------------------
@@ -145,13 +149,13 @@
         -------------------------------- */
 
         .card {
-            background: rgba(255,255,255,0.88);
+            background: rgba(255, 255, 255, 0.88);
             border-radius: 24px;
             padding: 30px;
 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
 
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .card h2 {
@@ -366,7 +370,7 @@
 
             padding: 16px 18px;
 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
         }
 
         .help-toggle span:last-child {
@@ -480,14 +484,112 @@
            RESPONSIVE
         -------------------------------- */
 
-       @media(max-width: 850px) {
+        @media(max-width: 850px) {
 
-    .hero h1 {
-        font-size: 36px;
-    }
+            .hero h1 {
+                font-size: 36px;
+            }
 
-}
+        }
 
+        /* --------------------------------
+   HEALTHCARE MAP MARKERS
+-------------------------------- */
+
+        .map-marker {
+            width: 34px;
+            height: 34px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .map-marker span {
+            transform: rotate(45deg);
+            font-size: 17px;
+        }
+
+        .current-marker {
+            background: #1677ff;
+        }
+
+        .hospital-marker {
+            background: #e53935;
+        }
+
+        .pharmacy-marker {
+            background: #19a463;
+        }
+
+        .clinic-marker {
+            background: #8e44ad;
+        }
+
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #475467;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .legend-current {
+            background: #1677ff;
+        }
+
+        .legend-hospital {
+            background: #e53935;
+        }
+
+        .legend-pharmacy {
+            background: #19a463;
+        }
+
+        .legend-clinic {
+            background: #8e44ad;
+        }
+
+        .direction-button {
+            margin-top: 10px;
+            padding: 9px 14px;
+            border: none;
+            border-radius: 9px;
+            background: #1677ff;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .direction-button:hover {
+            opacity: 0.9;
+        }
+
+        .direction-list {
+            margin-top: 15px;
+            padding-left: 22px;
+        }
+
+        .direction-list li {
+            margin-bottom: 9px;
+            line-height: 1.5;
+        }
     </style>
 
 </head>
@@ -541,253 +643,294 @@
      MAIN
 -------------------------------- -->
 
-<div class="container">
+    <div class="container">
 
 
-    <!-- HOW IT HELPS -->
+        <!-- HOW IT HELPS -->
 
-    <div class="how-help-section">
+        <div class="how-help-section">
 
-        <button
-            class="help-toggle"
-            id="helpToggle"
-            onclick="toggleHelp()"
-        >
+            <button class="help-toggle" id="helpToggle" onclick="toggleHelp()">
 
-            <span>
-                💡 How It Helps
-            </span>
+                <span>
+                    💡 How It Helps
+                </span>
 
-            <span>
-                ▼
-            </span>
+                <span>
+                    ▼
+                </span>
 
-        </button>
+            </button>
 
 
-        <div
-            class="help-content"
-            id="helpContent"
-        >
+            <div class="help-content" id="helpContent">
 
-            <div class="feature">
+                <div class="feature">
 
-                <div class="feature-icon">
-                    🎙️
+                    <div class="feature-icon">
+                        🎙️
+                    </div>
+
+                    <h3>
+                        Voice Support
+                    </h3>
+
+                    <p>
+                        Users can describe symptoms using voice,
+                        helping people who find typing difficult.
+                    </p>
+
                 </div>
 
-                <h3>
-                    Voice Support
-                </h3>
 
-                <p>
-                    Users can describe symptoms using voice,
-                    helping people who find typing difficult.
-                </p>
+                <div class="feature">
 
-            </div>
+                    <div class="feature-icon">
+                        🤖
+                    </div>
 
+                    <h3>
+                        AI Triage
+                    </h3>
 
-            <div class="feature">
+                    <p>
+                        The system provides basic urgency guidance
+                        based on the reported symptoms.
+                    </p>
 
-                <div class="feature-icon">
-                    🤖
                 </div>
 
-                <h3>
-                    AI Triage
-                </h3>
 
-                <p>
-                    The system provides basic urgency guidance
-                    based on the reported symptoms.
-                </p>
+                <div class="feature">
 
-            </div>
+                    <div class="feature-icon">
+                        💊
+                    </div>
 
+                    <h3>
+                        Medicine Availability
+                    </h3>
 
-            <div class="feature">
+                    <p>
+                        Users can search participating pharmacies
+                        for medicine availability.
+                    </p>
 
-                <div class="feature-icon">
-                    💊
                 </div>
 
-                <h3>
-                    Medicine Availability
-                </h3>
 
-                <p>
-                    Users can search participating pharmacies
-                    for medicine availability.
-                </p>
+                <div class="feature">
 
-            </div>
+                    <div class="feature-icon">
+                        🌐
+                    </div>
 
+                    <h3>
+                        Regional Languages
+                    </h3>
 
-            <div class="feature">
+                    <p>
+                        The interface supports English, Hindi,
+                        Kannada and Marathi.
+                    </p>
 
-                <div class="feature-icon">
-                    🌐
                 </div>
-
-                <h3>
-                    Regional Languages
-                </h3>
-
-                <p>
-                    The interface supports English, Hindi,
-                    Kannada and Marathi.
-                </p>
 
             </div>
 
         </div>
 
-    </div>
 
 
+        <!-- AI SYMPTOM TRIAGE -->
 
-    <!-- AI SYMPTOM TRIAGE -->
+        <div class="card">
 
-    <div class="card">
+            <h2>
+                🩺 AI Symptom Triage
+            </h2>
 
-        <h2>
-            🩺 AI Symptom Triage
-        </h2>
-
-        <p class="card-description">
-            Select your symptoms and provide additional details.
-            The system will provide basic urgency guidance.
-        </p>
-
-
-        <label for="language">
-            Preferred Language
-        </label>
-
-        <select id="language">
-
-            <option value="English">
-                English
-            </option>
-
-            <option value="Hindi">
-                Hindi
-            </option>
-
-            <option value="Kannada">
-                Kannada
-            </option>
-
-            <option value="Marathi">
-                Marathi
-            </option>
-
-        </select>
+            <p class="card-description">
+                Select your symptoms and provide additional details.
+                The system will provide basic urgency guidance.
+            </p>
 
 
-        <label for="symptomSelect">
-            Select Symptoms
-        </label>
+            <label for="language">
+                Preferred Language
+            </label>
 
-        <select
-            id="symptomSelect"
-            class="symptom-select"
-        >
+            <select id="language">
 
-            <option value="">
-                Choose a symptom...
-            </option>
+                <option value="English">
+                    English
+                </option>
 
-        </select>
+                <option value="Hindi">
+                    Hindi
+                </option>
 
+                <option value="Kannada">
+                    Kannada
+                </option>
 
-        <div
-            id="selectedTitle"
-            class="selected-title"
-            style="display:none;"
-        >
-            Selected symptoms
-        </div>
+                <option value="Marathi">
+                    Marathi
+                </option>
 
-
-        <div
-            id="selectedSymptomsContainer"
-            class="selected-symptoms"
-        ></div>
+            </select>
 
 
-        <div id="otherSymptomBox">
+            <label for="symptomSelect">
+                Select Symptoms
+            </label>
 
-            <div class="other-row">
+            <select id="symptomSelect" class="symptom-select">
 
-                <input
-                    type="text"
-                    id="otherSymptom"
-                    placeholder="Enter other symptom"
-                >
+                <option value="">
+                    Choose a symptom...
+                </option>
 
-                <button
-                    class="secondary add-other"
-                    onclick="addOtherSymptom()"
-                >
-                    Add
+            </select>
+
+
+            <div id="selectedTitle" class="selected-title" style="display:none;">
+                Selected symptoms
+            </div>
+
+
+            <div id="selectedSymptomsContainer" class="selected-symptoms"></div>
+
+
+            <div id="otherSymptomBox">
+
+                <div class="other-row">
+
+                    <input type="text" id="otherSymptom" placeholder="Enter other symptom">
+
+                    <button class="secondary add-other" onclick="addOtherSymptom()">
+                        Add
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <label for="symptoms">
+                Additional Details
+            </label>
+
+            <textarea id="symptoms" placeholder="Describe any additional symptoms or details..."></textarea>
+
+
+            <div class="button-row">
+
+                <button class="secondary" onclick="startVoice()">
+                    🎙️ Speak Symptoms
+                </button>
+
+                <button class="primary" onclick="checkSeverity()">
+                    ✨ Check Severity
                 </button>
 
             </div>
 
-        </div>
 
+            <div class="result" id="result">
 
-        <label for="symptoms">
-            Additional Details
-        </label>
+                <h3 id="resultTitle">
+                    Assessment
+                </h3>
 
-        <textarea
-            id="symptoms"
-            placeholder="Describe any additional symptoms or details..."
-        ></textarea>
+                <p id="resultText">
+                    Your result will appear here.
+                </p>
 
-
-        <div class="button-row">
-
-            <button
-                class="secondary"
-                onclick="startVoice()"
-            >
-                🎙️ Speak Symptoms
-            </button>
-
-            <button
-                class="primary"
-                onclick="checkSeverity()"
-            >
-                ✨ Check Severity
-            </button>
-
-        </div>
-
-
-        <div
-            class="result"
-            id="result"
-        >
-
-            <h3 id="resultTitle">
-                Assessment
-            </h3>
-
-            <p id="resultText">
-                Your result will appear here.
-            </p>
+            </div>
 
         </div>
 
     </div>
+    <!-- --------------------------------
+     HEALTHCARE MAP
+-------------------------------- -->
 
-</div>
+    <section class="pharmacy">
 
-    
+        <div class="card">
+
+            <h2>🗺️ Nearby Healthcare</h2>
+
+            <p class="card-description">
+                Find hospitals and pharmacies near your current location.
+            </p>
+
+            <div class="button-row">
+
+                <button class="primary" onclick="findNearbyHealthcare()">
+                    📍 Find Near Me
+                </button>
+
+            </div>
+
+            <p id="locationStatus" style="
+                margin-top:15px;
+                color:#667085;
+                line-height:1.5;
+            ">
+                Click "Find Near Me" to locate nearby hospitals and pharmacies.
+            </p>
+
+            <div id="healthcareMap" style="
+                width:100%;
+                height:500px;
+                margin-top:20px;
+                border-radius:18px;
+                overflow:hidden;
+                border:1px solid #e1e8f0;
+            ">
+            </div>
+            <button class="direction-button" onclick="recenterOnUser()" style="margin-top:15px;">
+                📍 Re-centre on Me
+            </button>
+            <div class="map-legend">
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-current"></span>
+                    Your Location
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-hospital"></span>
+                    Hospital
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot legend-clinic"></span>
+                    Clinic
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-pharmacy"></span>
+                    Pharmacy
+                </div>
+
+            </div>
+            <div id="directionsPanel" style="
+        display:none;
+        margin-top:20px;
+        padding:20px;
+        background:#f7fbf8;
+        border-radius:18px;
+        border:1px solid #e1e8f0;
+    ">
+            </div>
+
+        </div>
+
+    </section>
+
+
 
 
     <!-- --------------------------------
@@ -810,25 +953,16 @@
 
             <div class="pharmacy-box">
 
-                <input
-                    type="text"
-                    id="medicine"
-                    placeholder="Enter medicine name..."
-                >
+                <input type="text" id="medicine" placeholder="Enter medicine name...">
 
-                <button
-                    class="primary"
-                    onclick="findMedicine()"
-                >
+                <button class="primary" onclick="findMedicine()">
                     Search
                 </button>
 
             </div>
 
 
-            <div
-                id="pharmacyResult"
-            >
+            <div id="pharmacyResult">
 
                 <p id="pharmacyText"></p>
 
@@ -836,6 +970,107 @@
 
         </div>
 
+    </section>
+
+    <section class="pharmacy">
+        <div class="card">
+            <h2>🏪 Pharmacy / Shopkeeper Portal</h2>
+
+            <p class="card-description">
+                Register your pharmacy and update the availability of medicines
+                for patients searching nearby.
+            </p>
+
+            <!-- Pharmacy Registration -->
+            <div style="
+            background:#f7fbf8;
+            padding:20px;
+            border-radius:16px;
+            margin-top:20px;
+        ">
+                <h3>Register Pharmacy</h3>
+
+                <input type="text" id="pharmacyName" placeholder="Pharmacy name" style="margin-bottom:10px;">
+
+                <input type="text" id="ownerName" placeholder="Owner / Shopkeeper name" style="margin-bottom:10px;">
+
+                <input type="text" id="pharmacyPhone" placeholder="Phone number" style="margin-bottom:10px;">
+
+                <input type="text" id="pharmacyAddress" placeholder="Pharmacy address" style="margin-bottom:10px;">
+
+                <div class="button-row">
+                    <button class="primary" onclick="registerPharmacy()">
+                        🏪 Register Pharmacy
+                    </button>
+                </div>
+
+                <p id="registrationResult" style="margin-top:12px;"></p>
+            </div>
+
+
+            <!-- Medicine Inventory -->
+            <div style="
+            background:#f7fbf8;
+            padding:20px;
+            border-radius:16px;
+            margin-top:20px;
+        ">
+                <h3>Update Medicine Availability</h3>
+
+                <input type="number" id="pharmacyId" placeholder="Pharmacy ID" style="margin-bottom:10px;">
+
+                <input type="text" id="inventoryMedicine" placeholder="Medicine name" style="margin-bottom:10px;">
+
+                <input type="number" id="medicineQuantity" placeholder="Quantity available" min="0"
+                    style="margin-bottom:10px;">
+
+                <label style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                margin:12px 0;
+            ">
+                    <input type="checkbox" id="medicineAvailable">
+
+                    Medicine currently available
+                </label>
+
+                <div class="button-row">
+                    <button class="primary" onclick="updateMedicineInventory()">
+                        💊 Update Availability
+                    </button>
+                </div>
+
+                <p id="inventoryResult" style="margin-top:12px;"></p>
+            </div>
+
+        </div>
+    </section>
+    <section class="pharmacy">
+        <div class="card">
+
+            <h2>📊 Pharmacy Dashboard</h2>
+
+            <p class="card-description">
+                View and manage the medicines currently reported by your pharmacy.
+            </p>
+
+            <div class="pharmacy-box">
+
+                <input type="number" id="dashboardPharmacyId" placeholder="Enter Pharmacy ID..." min="1">
+
+                <button class="primary" onclick="loadPharmacyDashboard()">
+                    📊 Load Dashboard
+                </button>
+
+            </div>
+
+            <div id="dashboardResult" style="
+                margin-top:20px;
+                display:none;
+            "></div>
+
+        </div>
     </section>
 
 
@@ -1081,10 +1316,10 @@
                 language === "Hindi"
                     ? "लक्षण चुनें..."
                     : language === "Kannada"
-                    ? "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
-                    : language === "Marathi"
-                    ? "लक्षण निवडा..."
-                    : "Choose a symptom...";
+                        ? "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+                        : language === "Marathi"
+                            ? "लक्षण निवडा..."
+                            : "Choose a symptom...";
 
             symptomSelect.appendChild(
                 placeholder
@@ -1092,7 +1327,7 @@
 
 
             Object.keys(translations).forEach(
-                function(canonicalValue) {
+                function (canonicalValue) {
 
                     const option =
                         document.createElement("option");
@@ -1165,7 +1400,7 @@
 
         symptomSelect.addEventListener(
             "change",
-            function() {
+            function () {
 
                 const value =
                     this.value;
@@ -1228,7 +1463,7 @@
 
         otherSymptom.addEventListener(
             "keydown",
-            function(event) {
+            function (event) {
 
                 if (
                     event.key === "Enter"
@@ -1294,7 +1529,7 @@
 
 
             selectedSymptoms.forEach(
-                function(symptom, index) {
+                function (symptom, index) {
 
                     const chip =
                         document.createElement("div");
@@ -1357,7 +1592,7 @@
 
         languageSelect.addEventListener(
             "change",
-            function() {
+            function () {
 
                 renderSymptomOptions();
 
@@ -1417,7 +1652,7 @@
 
 
             recognition.onresult =
-                function(event) {
+                function (event) {
 
                     const text =
                         event.results[0][0]
@@ -1432,7 +1667,7 @@
 
 
             recognition.onerror =
-                function() {
+                function () {
 
                     alert(
                         "Voice recognition could not be completed. Please try again."
@@ -1635,7 +1870,7 @@
            MEDICINE SEARCH
         ===================================================== */
 
-        function findMedicine() {
+        async function findMedicine() {
 
             const medicine =
                 document
@@ -1643,18 +1878,16 @@
                     .value
                     .trim();
 
-
             const result =
-                document.getElementById(
-                    "pharmacyResult"
-                );
-
+                document.getElementById("pharmacyResult");
 
             const text =
-                document.getElementById(
-                    "pharmacyText"
-                );
+                document.getElementById("pharmacyText");
 
+
+            // ---------------------------------------------
+            // VALIDATION
+            // ---------------------------------------------
 
             if (!medicine) {
 
@@ -1667,14 +1900,222 @@
             }
 
 
-            result.style.display =
-                "block";
+            // ---------------------------------------------
+            // SHOW RESULT BOX
+            // ---------------------------------------------
+
+            result.style.display = "block";
+
+            text.innerHTML =
+                "🔄 Searching nearby pharmacies...";
 
 
-            text.innerText =
-                "Searching availability for " +
-                medicine +
-                "... Connect this section with the pharmacy database/backend to display real results.";
+            // ---------------------------------------------
+            // CALL FLASK BACKEND
+            // ---------------------------------------------
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/pharmacy/search?medicine=" +
+                        encodeURIComponent(medicine)
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server returned an error."
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                // -----------------------------------------
+                // NO RESULTS
+                // -----------------------------------------
+
+                if (
+                    !data.success ||
+                    data.pharmacies.length === 0
+                ) {
+
+                    text.innerHTML = `
+                <strong>
+                    ❌ No participating pharmacy
+                    reported "${escapeHtml(medicine)}"
+                    as available.
+                </strong>
+
+                <p style="margin-top:8px;">
+                    Try another medicine name or check again later.
+                </p>
+            `;
+
+                    return;
+
+                }
+
+
+                // -----------------------------------------
+                // DISPLAY PHARMACIES
+                // -----------------------------------------
+
+                let html = `
+
+            <h3 style="margin-bottom:15px;">
+                💊 Available Pharmacies
+            </h3>
+
+        `;
+
+
+                data.pharmacies.forEach(
+                    function (pharmacy) {
+
+                        html += `
+
+                    <div
+                        style="
+                            background:white;
+                            padding:16px;
+                            margin-bottom:12px;
+                            border-radius:12px;
+                            border:1px solid #e1e8f0;
+                        "
+                    >
+
+                        <h4
+                            style="
+                                margin:0 0 8px;
+                                color:#1d2939;
+                            "
+                        >
+                            🏪
+                            ${escapeHtml(
+                            pharmacy.pharmacy_name
+                        )}
+                        </h4>
+
+
+                        <p
+                            style="
+                                margin:5px 0;
+                                color:#667085;
+                            "
+                        >
+                            📍
+                            ${escapeHtml(
+                            pharmacy.address
+                            || "Address not provided"
+                        )
+                            }
+                        </p>
+
+
+                        <p
+                            style="
+                                margin:5px 0;
+                                color:#667085;
+                            "
+                        >
+                            💊
+                            ${escapeHtml(
+                                pharmacy.medicine_name
+                            )}
+                        </p>
+
+
+                        <p
+                            style="
+                                margin:5px 0;
+                                color:#667085;
+                            "
+                        >
+                            📦 Quantity reported:
+                            ${pharmacy.quantity ??
+                            "Not specified"
+                            }
+                        </p>
+
+
+                        <p
+                            style="
+                                margin:5px 0;
+                                color:#667085;
+                            "
+                        >
+                            🕒 Last updated:
+                            ${escapeHtml(
+                                pharmacy.updated_at
+                            )
+                            }
+                        </p>
+
+
+                        ${pharmacy.phone
+                                ?
+                                `
+                            <p
+                                style="
+                                    margin:5px 0;
+                                    color:#667085;
+                                "
+                            >
+                                📞
+                                ${escapeHtml(
+                                    pharmacy.phone
+                                )}
+                            </p>
+                            `
+                                :
+                                ""
+                            }
+
+
+                        
+
+                    </div>
+
+                `;
+
+                    }
+                );
+
+
+                text.innerHTML = html;
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Medicine search error:",
+                    error
+                );
+
+
+                text.innerHTML = `
+
+            <strong>
+                ⚠️ Could not connect to the
+                pharmacy database.
+            </strong>
+
+            <p style="margin-top:8px;">
+                Please make sure the RuralCare
+                backend is running and try again.
+            </p>
+
+        `;
+
+            }
 
         }
 
@@ -1684,6 +2125,1693 @@
         ===================================================== */
 
         renderSymptomOptions();
+        /* =====================================================
+          NEARBY HEALTHCARE MAP
+    ===================================================== */
+
+        let healthcareMap = null;
+        let userMarker = null;
+        let healthcareMarkers = [];
+        let locationWatchId = null;
+
+        /* =====================================================
+           FIND NEARBY HEALTHCARE
+        ===================================================== */
+
+        async function findNearbyHealthcare() {
+
+            const status =
+                document.getElementById("locationStatus");
+
+            status.innerText =
+                "📍 Requesting your location...";
+
+
+            if (!navigator.geolocation) {
+
+                status.innerText =
+                    "❌ Your browser does not support location access.";
+
+                return;
+            }
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function (position) {
+
+                    console.log(
+                        "LOCATION FOUND:",
+                        position.coords.latitude,
+                        position.coords.longitude
+                    );
+
+
+                    const latitude =
+                        position.coords.latitude;
+
+                    const longitude =
+                        position.coords.longitude;
+
+
+                    status.innerText =
+                        "📍 Location found. Loading nearby healthcare...";
+
+
+                    /* -----------------------------------------
+                       SHOW USER ON MAP
+                    ----------------------------------------- */
+
+                    initializeHealthcareMap(
+                        latitude,
+                        longitude
+                    );
+                    function startLocationTracking() {
+
+                        if (!navigator.geolocation) {
+
+                            console.error(
+                                "Geolocation is not supported."
+                            );
+
+                            return;
+                        }
+
+                        /* Stop previous watcher */
+
+                        if (locationWatchId !== null) {
+
+                            navigator.geolocation.clearWatch(
+                                locationWatchId
+                            );
+                        }
+
+                        locationWatchId =
+                            navigator.geolocation.watchPosition(
+
+                                function (position) {
+
+                                    const latitude =
+                                        position.coords.latitude;
+
+                                    const longitude =
+                                        position.coords.longitude;
+
+                                    console.log(
+                                        "Live location:",
+                                        latitude,
+                                        longitude
+                                    );
+
+                                    /* Update blue marker */
+
+                                    if (userMarker) {
+
+                                        userMarker.setLatLng([
+                                            latitude,
+                                            longitude
+                                        ]);
+                                    }
+
+                                    /*
+                                     * Move the map with the user
+                                     * only when navigation is active.
+                                     */
+
+                                    if (
+                                        window.navigationActive &&
+                                        healthcareMap
+                                    ) {
+
+                                        healthcareMap.setView(
+                                            [
+                                                latitude,
+                                                longitude
+                                            ],
+                                            healthcareMap.getZoom(),
+                                            {
+                                                animate: true
+                                            }
+                                        );
+                                    }
+
+                                },
+
+                                function (error) {
+
+                                    console.error(
+                                        "Location tracking error:",
+                                        error
+                                    );
+                                },
+
+                                {
+                                    enableHighAccuracy: true,
+                                    timeout: 30000,
+                                    maximumAge: 0
+                                }
+                            );
+                    }
+
+
+                    /* -----------------------------------------
+                       NOW LOAD HEALTHCARE
+                    ----------------------------------------- */
+
+                    loadNearbyHealthcare(
+                        latitude,
+                        longitude
+                    );
+                    startLocationTracking();
+
+                },
+
+
+                function (error) {
+
+                    console.error(
+                        "LOCATION ERROR:",
+                        error
+                    );
+
+
+                    if (error.code === 1) {
+
+                        status.innerText =
+                            "❌ Location permission was denied. Please allow location access for this site.";
+
+                    }
+
+                    else if (error.code === 2) {
+
+                        status.innerText =
+                            "❌ Your location could not be determined. Please check your device location settings.";
+
+                    }
+
+                    else if (error.code === 3) {
+
+                        status.innerText =
+                            "❌ Location request timed out. Please try again.";
+
+                    }
+
+                    else {
+
+                        status.innerText =
+                            "❌ Unable to get your location.";
+
+                    }
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+
+            );
+
+        }
+        async function loadNearbyHealthcare(
+            latitude,
+            longitude
+        ) {
+
+            const status =
+                document.getElementById("locationStatus");
+
+
+            try {
+
+                const radius = 5000;
+
+
+                const query = `
+            [out:json][timeout:25];
+
+            (
+                nwr(
+                    around:${radius},
+                    ${latitude},
+                    ${longitude}
+                )[amenity=hospital];
+                 
+                nwr(
+                    around:${radius},
+                     ${latitude},
+                     ${longitude}
+                    )[amenity="clinic"];
+
+                nwr(
+                    around:${radius},
+                    ${latitude},
+                    ${longitude}
+                )[amenity=pharmacy];
+            );
+
+            out center tags;
+        `;
+
+
+                const response =
+                    await fetch(
+                        "https://overpass-api.de/api/interpreter",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded"
+                            },
+
+                            body:
+                                "data=" +
+                                encodeURIComponent(query)
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Overpass request failed: " +
+                        response.status
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "HEALTHCARE DATA:",
+                    data
+                );
+
+
+                const elements =
+                    data.elements || [];
+
+
+                let hospitals = 0;
+                let clinics = 0;
+                let pharmacies = 0;
+
+                elements.forEach(
+                    function (place) {
+
+                        const tags =
+                            place.tags || {};
+
+
+                        const lat =
+                            place.lat ||
+                            (
+                                place.center &&
+                                place.center.lat
+                            );
+
+
+                        const lon =
+                            place.lon ||
+                            (
+                                place.center &&
+                                place.center.lon
+                            );
+
+
+                        if (
+                            lat === undefined ||
+                            lon === undefined
+                        ) {
+                            return;
+                        }
+
+
+                        const isHospital =
+                            tags.amenity === "hospital";
+                        const isClinic =
+                            tags.amenity === "clinic";
+
+
+                        const isPharmacy =
+                            tags.amenity === "pharmacy";
+
+
+                        if (
+                            !isHospital &&
+                            !isClinic &&
+                            !isPharmacy
+                        ) {
+                            return;
+                        }
+
+
+                        const name =
+                            tags.name ||
+                            (
+                                isHospital
+                                    ? "Hospital"
+                                    : isClinic
+                                        ? "Clinic"
+                                        : "Pharmacy"
+                            );
+
+
+                        let color;
+                        let symbol;
+
+
+                        if (isHospital) {
+
+                            color = "#e53935";
+                            symbol = "🏥";
+                            hospitals++;
+
+                        }
+                        else if (isClinic) {
+
+                            color = "#8e44ad";
+                            symbol = "⚕️";
+                            clinics++;
+
+                        }
+                        else {
+
+                            color = "#19a463";
+                            symbol = "💊";
+                            pharmacies++;
+
+                        }
+
+                        const icon =
+                            L.divIcon({
+
+                                className: "",
+
+                                html: `
+                            <div
+                                style="
+                                    width:34px;
+                                    height:34px;
+                                    background:${color};
+                                    border:3px solid white;
+                                    border-radius:50% 50% 50% 0;
+                                    transform:rotate(-45deg);
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    box-shadow:
+                                        0 3px 10px
+                                        rgba(0,0,0,0.25);
+                                "
+                            >
+                                <span
+                                    style="
+                                        transform:rotate(45deg);
+                                        font-size:17px;
+                                    "
+                                >
+                                    ${symbol}
+                                </span>
+                            </div>
+                        `,
+
+                                iconSize: [34, 34],
+
+                                iconAnchor: [17, 34],
+
+                                popupAnchor: [0, -32]
+
+                            });
+
+
+                        const marker =
+                            L.marker(
+                                [lat, lon],
+                                {
+                                    icon: icon
+                                }
+                            )
+                                .addTo(healthcareMap);
+
+
+                        marker.bindPopup(`
+                    <div style="min-width:180px;">
+
+                        <strong>
+                            ${symbol}
+                            ${escapeHtml(name)}
+                        </strong>
+
+                        <br>
+
+                        <span
+                            style="
+                                color:#667085;
+                                font-size:13px;
+                            "
+                        >
+                           '${isHospital
+                                ? "hospital"
+                                : isClinic
+                                    ? "clinic"
+                                    : "pharmacy"}'
+                        </span>
+
+                        <br>
+
+                        <button
+                            class="direction-button"
+                            onclick="
+                                showRoute(
+                                    ${lat},
+                                    ${lon},
+                                    '${escapeHtml(name).replace(/'/g, "\\'")}',
+                                    '${isHospital ? "hospital" : "pharmacy"}'
+                                )
+                            "
+                        >
+                            🧭 Get Directions
+                        </button>
+
+                    </div>
+                `);
+
+                    }
+                );
+
+
+                status.innerHTML =
+                    `
+            <strong>
+                Nearby healthcare found
+            </strong>
+            <br>
+                🏥 ${hospitals} hospitals
+                     &nbsp;&nbsp;
+                   ⚕️ ${clinics} clinics
+                       &nbsp;&nbsp;
+                    💊 ${pharmacies} pharmacies
+             `;
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "HEALTHCARE ERROR:",
+                    error
+                );
+
+
+                status.innerText =
+                    "⚠️ Your location was found, but nearby healthcare could not be loaded. Please try again.";
+
+            }
+
+        }
+        function showRoute(
+            destinationLatitude,
+            destinationLongitude,
+            destinationName,
+            destinationType
+        ) {
+
+            if (!userMarker) {
+                alert("Please click 'Find Near Me' first.");
+                return;
+            }
+
+            const userPosition = userMarker.getLatLng();
+
+            const startLatitude = userPosition.lat;
+            const startLongitude = userPosition.lng;
+
+            const directionsPanel =
+                document.getElementById("directionsPanel");
+
+            directionsPanel.style.display = "block";
+
+            directionsPanel.innerHTML = `
+        <h3>🧭 Getting directions...</h3>
+        <p>Please wait while we calculate the route.</p>
+    `;
+
+            const routeUrl =
+                `https://router.project-osrm.org/route/v1/driving/` +
+                `${startLongitude},${startLatitude};` +
+                `${destinationLongitude},${destinationLatitude}` +
+                `?overview=full&steps=true&geometries=geojson`;
+
+            fetch(routeUrl)
+                .then(response => response.json())
+                .then(data => {
+
+                    if (
+                        !data.routes ||
+                        data.routes.length === 0
+                    ) {
+                        throw new Error("No route found.");
+                    }
+
+                    const route = data.routes[0];
+                    window.navigationActive = true;
+
+                    /* Remove old route */
+
+                    if (window.currentRoute) {
+                        healthcareMap.removeLayer(
+                            window.currentRoute
+                        );
+                    }
+
+                    /* Draw route on the Leaflet map */
+
+                    window.currentRoute =
+                        L.geoJSON(
+                            route.geometry,
+                            {
+                                style: {
+                                    weight: 6,
+                                    opacity: 0.85
+                                }
+                            }
+                        ).addTo(healthcareMap);
+
+                    /* Zoom to route */
+
+                    healthcareMap.fitBounds(
+                        window.currentRoute.getBounds(),
+                        {
+                            padding: [30, 30]
+                        }
+                    );
+
+                    const distanceKm =
+                        (route.distance / 1000).toFixed(1);
+
+                    const durationMinutes =
+                        Math.round(route.duration / 60);
+
+                    /* Turn-by-turn directions */
+
+                    let stepsHtml = "";
+
+                    if (
+                        route.legs &&
+                        route.legs[0] &&
+                        route.legs[0].steps
+                    ) {
+
+                        stepsHtml =
+                            route.legs[0].steps
+                                .map((step) => {
+
+                                    /* Distance to this step */
+
+                                    const distance =
+                                        step.distance >= 1000
+                                            ? (step.distance / 1000).toFixed(1) + " km"
+                                            : Math.round(step.distance) + " m";
+
+
+                                    /* Work out the instruction */
+
+                                    let instruction =
+                                        "Continue straight";
+
+                                    if (step.maneuver) {
+
+                                        const type =
+                                            step.maneuver.type;
+
+                                        const modifier =
+                                            step.maneuver.modifier;
+
+
+                                        if (type === "depart") {
+
+                                            instruction =
+                                                "Start your journey";
+                                        }
+
+                                        else if (type === "arrive") {
+
+                                            instruction =
+                                                "You have arrived";
+                                        }
+
+                                        else if (type === "turn") {
+
+                                            if (modifier === "left") {
+
+                                                instruction =
+                                                    "Turn left";
+                                            }
+
+                                            else if (modifier === "right") {
+
+                                                instruction =
+                                                    "Turn right";
+                                            }
+
+                                            else if (
+                                                modifier === "slight left"
+                                            ) {
+
+                                                instruction =
+                                                    "Keep slightly left";
+                                            }
+
+                                            else if (
+                                                modifier === "slight right"
+                                            ) {
+
+                                                instruction =
+                                                    "Keep slightly right";
+                                            }
+
+                                            else if (
+                                                modifier === "sharp left"
+                                            ) {
+
+                                                instruction =
+                                                    "Turn sharply left";
+                                            }
+
+                                            else if (
+                                                modifier === "sharp right"
+                                            ) {
+
+                                                instruction =
+                                                    "Turn sharply right";
+                                            }
+
+                                            else {
+
+                                                instruction =
+                                                    "Turn";
+                                            }
+                                        }
+
+                                        else if (
+                                            type === "roundabout"
+                                        ) {
+
+                                            instruction =
+                                                "Enter the roundabout";
+                                        }
+
+                                        else if (
+                                            type === "merge"
+                                        ) {
+
+                                            instruction =
+                                                "Merge onto the road";
+                                        }
+
+                                        else if (
+                                            type === "fork"
+                                        ) {
+
+                                            if (modifier === "left") {
+
+                                                instruction =
+                                                    "Keep left at the fork";
+                                            }
+
+                                            else if (
+                                                modifier === "right"
+                                            ) {
+
+                                                instruction =
+                                                    "Keep right at the fork";
+                                            }
+
+                                            else {
+
+                                                instruction =
+                                                    "Continue at the fork";
+                                            }
+                                        }
+                                    }
+
+
+                                    /* Road name */
+
+                                    const roadName =
+                                        step.name &&
+                                            step.name.trim() !== ""
+                                            ? ` onto <b>${escapeHtml(step.name)}</b>`
+                                            : "";
+
+
+                                    return `
+                    <li>
+                        ${instruction}${roadName}
+
+                        <span
+                            style="
+                                color:#667085;
+                                font-size:13px;
+                            "
+                        >
+                            — ${distance}
+                        </span>
+                    </li>
+                `;
+                                })
+                                .join("");
+                    }
+
+                    directionsPanel.innerHTML = `
+
+                <h3>
+                    🧭 Directions to
+                    ${escapeHtml(destinationName)}
+                </h3>
+
+                <p>
+                    <b>📏 Distance:</b>
+                    ${distanceKm} km
+                </p>
+
+                <p>
+                    <b>⏱️ Estimated time:</b>
+                    ${durationMinutes} minutes
+                </p>
+
+                <h4>Turn-by-turn directions</h4>
+
+                <ol class="direction-list">
+                    ${stepsHtml}
+                </ol>
+
+                <button
+                    class="direction-button"
+                    onclick="clearRoute()"
+                >
+                    ✕ Clear Route
+                </button>
+            `;
+                })
+                .catch(error => {
+
+                    console.error("Route error:", error);
+
+                    directionsPanel.style.display = "block";
+
+                    directionsPanel.innerHTML = `
+                <h3>❌ Unable to calculate route</h3>
+
+                <p>
+                    We could not find a route
+                    to this location.
+                </p>
+
+                <p style="font-size:13px;color:#667085;">
+                    Please check your internet connection
+                    and try again.
+                </p>
+            `;
+                });
+        }
+        function clearRoute() {
+
+            if (window.currentRoute) {
+
+                healthcareMap.removeLayer(
+                    window.currentRoute
+                );
+
+                window.currentRoute = null;
+            }
+
+            const directionsPanel =
+                document.getElementById("directionsPanel");
+
+            directionsPanel.style.display = "none";
+            directionsPanel.innerHTML = "";
+        }
+        /* -----------------------------------------------------
+           INITIALIZE MAP
+        ----------------------------------------------------- */
+
+        function initializeHealthcareMap(
+            latitude,
+            longitude
+        ) {
+
+            if (!healthcareMap) {
+
+                healthcareMap =
+                    L.map("healthcareMap")
+                        .setView(
+                            [latitude, longitude],
+                            14
+                        );
+
+                L.tileLayer(
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    {
+                        maxZoom: 19,
+                        attribution:
+                            '&copy; OpenStreetMap contributors'
+                    }
+                ).addTo(healthcareMap);
+
+            } else {
+
+                healthcareMap.setView(
+                    [latitude, longitude],
+                    14
+                );
+
+            }
+
+
+            /* Remove previous user marker */
+
+            if (userMarker) {
+
+                healthcareMap.removeLayer(
+                    userMarker
+                );
+
+            }
+
+
+            /* User location marker */
+
+            /* User location marker */
+
+            const userIcon = L.divIcon({
+                className: "",
+                html: `
+        <div
+            style="
+                width:46px;
+                height:46px;
+                background:#1677ff;
+                border:4px solid white;
+                border-radius:50% 50% 50% 0;
+                transform:rotate(-45deg);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                box-shadow:0 4px 12px rgba(0,0,0,0.30);
+            "
+        >
+            <span
+                style="
+                    transform:rotate(45deg);
+                    font-size:23px;
+                    line-height:1;
+                "
+            >
+                📍
+            </span>
+        </div>
+    `,
+                iconSize: [46, 46],
+                iconAnchor: [23, 46],
+                popupAnchor: [0, -42]
+            });
+
+
+            userMarker =
+                L.marker(
+                    [latitude, longitude],
+                    {
+                        icon: userIcon
+                    }
+                )
+                    .addTo(healthcareMap)
+                    .bindPopup(
+                        "<b>📍 You are here</b>"
+                    )
+                    .openPopup();
+
+        }
+
+        function escapeHtml(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+        /* -----------------------------------------------------
+           LOAD HEALTHCARE FACILITIES
+        ----------------------------------------------------- */
+
+        async function loadHealthcareFacilities(
+            latitude,
+            longitude
+        ) {
+
+            const radius = 10000;
+
+            const query = `
+        [out:json][timeout:25];
+
+        (
+            nwr(
+                around:${radius},
+                ${latitude},
+                ${longitude}
+            )[amenity=hospital];
+
+            nwr(
+                around:${radius},
+                ${latitude},
+                ${longitude}
+            )[amenity=clinic];
+
+            nwr(
+                around:${radius},
+                ${latitude},
+                ${longitude}
+            )[amenity=pharmacy];
+        );
+
+        out center tags;
+    `;
+
+
+            try {
+
+                const response = await fetch(
+                    "https://overpass-api.de/api/interpreter",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/x-www-form-urlencoded"
+                        },
+
+                        body:
+                            "data=" +
+                            encodeURIComponent(query)
+                    }
+                );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Healthcare data request failed: HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                displayHealthcareFacilities(
+                    data.elements
+                );
+
+
+                document.getElementById(
+                    "locationStatus"
+                ).innerText =
+                    `✅ Found ${data.elements.length} nearby hospitals, clinics and pharmacies.`;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Healthcare loading error:",
+                    error
+                );
+
+                document.getElementById(
+                    "locationStatus"
+                ).innerText =
+                    "❌ Could not load nearby healthcare facilities. Please try again.";
+
+            }
+
+        }
+
+        /* -----------------------------------------------------
+           DISPLAY FACILITIES
+        ----------------------------------------------------- */
+
+        function displayHealthcareFacilities(
+            facilities
+        ) {
+
+            /* Remove old markers */
+
+            healthcareMarkers.forEach(
+                function (marker) {
+
+                    healthcareMap.removeLayer(
+                        marker
+                    );
+
+                }
+            );
+
+            healthcareMarkers = [];
+
+
+            facilities.forEach(
+                function (place) {
+
+                    const tags =
+                        place.tags || {};
+
+
+                    let latitude =
+                        place.lat;
+
+                    let longitude =
+                        place.lon;
+
+
+                    /* Ways and relations use center */
+
+                    if (
+                        latitude === undefined &&
+                        place.center
+                    ) {
+
+                        latitude =
+                            place.center.lat;
+
+                        longitude =
+                            place.center.lon;
+
+                    }
+
+
+                    if (
+                        latitude === undefined ||
+                        longitude === undefined
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const name =
+                        tags.name ||
+                        "Unnamed healthcare facility";
+
+
+                    const type =
+                        tags.amenity;
+
+
+                    /* ------------------------------------------------
+                       FACILITY TYPE
+                    ------------------------------------------------ */
+
+                    let icon =
+                        type === "hospital"
+                            ? "🏥"
+                            : type === "clinic"
+                                ? "⚕️"
+                                : "💊";
+
+
+                    let typeName =
+                        type === "hospital"
+                            ? "Hospital"
+                            : type === "clinic"
+                                ? "Clinic"
+                                : "Pharmacy";
+
+
+                    /* ------------------------------------------------
+                       MARKER COLOUR
+                    ------------------------------------------------ */
+
+                    let markerClass =
+                        type === "hospital"
+                            ? "hospital-marker"
+                            : type === "clinic"
+                                ? "clinic-marker"
+                                : "pharmacy-marker";
+
+
+                    const address =
+                        tags["addr:street"]
+                            ? tags["addr:street"]
+                            : "Address not available";
+
+
+                    const phone =
+                        tags.phone ||
+                        tags["contact:phone"] ||
+                        "";
+
+
+                    /* ------------------------------------------------
+                       POPUP
+                    ------------------------------------------------ */
+
+                    let popup = `
+                <div style="min-width:220px">
+
+                    <h3 style="margin-bottom:6px">
+                        ${icon} ${escapeHtml(name)}
+                    </h3>
+
+                    <p style="margin-bottom:6px">
+                        <b>${typeName}</b>
+                    </p>
+
+                    <p style="margin-bottom:6px">
+                        ${escapeHtml(address)}
+                    </p>
+            `;
+
+
+                    if (phone) {
+
+                        popup += `
+                    <p style="margin-bottom:8px">
+                        📞 ${escapeHtml(phone)}
+                    </p>
+                `;
+
+                    }
+
+
+                    /* ------------------------------------------------
+                       GET DIRECTIONS BUTTON
+                    ------------------------------------------------ */
+
+                    popup += `
+
+                    <button
+                        class="direction-button"
+                        onclick="
+                            showRoute(
+                                ${latitude},
+                                ${longitude},
+                                '${escapeHtml(name).replace(/'/g, "\\'")}',
+                                '${type}'
+                            )
+                        "
+                    >
+                        🧭 Get Directions
+                    </button>
+
+                </div>
+            `;
+
+
+                    /* ------------------------------------------------
+                       CUSTOM MARKER
+                    ------------------------------------------------ */
+
+                    const customIcon =
+                        L.divIcon({
+
+                            className: "",
+
+                            html: `
+                        <div class="map-marker ${markerClass}">
+                            <span>${icon}</span>
+                        </div>
+                    `,
+
+                            iconSize: [
+                                34,
+                                34
+                            ],
+
+                            iconAnchor: [
+                                17,
+                                34
+                            ],
+
+                            popupAnchor: [
+                                0,
+                                -34
+                            ]
+
+                        });
+
+
+                    const marker =
+                        L.marker(
+                            [
+                                latitude,
+                                longitude
+                            ],
+                            {
+                                icon: customIcon
+                            }
+                        )
+                            .addTo(healthcareMap)
+                            .bindPopup(popup);
+
+
+                    healthcareMarkers.push(
+                        marker
+                    );
+
+                }
+            );
+        }
+
+        async function registerPharmacy() {
+
+            const name =
+                document.getElementById("pharmacyName").value.trim();
+
+            const owner_name =
+                document.getElementById("ownerName").value.trim();
+
+            const phone =
+                document.getElementById("pharmacyPhone").value.trim();
+
+            const address =
+                document.getElementById("pharmacyAddress").value.trim();
+
+            const result =
+                document.getElementById("registrationResult");
+
+            if (!name) {
+                result.innerHTML =
+                    "⚠️ Please enter the pharmacy name.";
+                return;
+            }
+
+            result.innerHTML =
+                "🔄 Registering pharmacy...";
+
+            try {
+
+                const response = await fetch(
+                    "/api/pharmacy/register",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            name: name,
+                            owner_name: owner_name,
+                            phone: phone,
+                            address: address
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Could not register pharmacy."
+                    );
+                }
+
+                result.innerHTML = `
+            <strong>
+                ✅ Pharmacy registered successfully!
+            </strong>
+
+            <br><br>
+
+            Your Pharmacy ID is:
+
+            <strong>
+                ${data.pharmacy_id}
+            </strong>
+
+            <br>
+
+            Keep this ID safe. It is used when
+            updating medicine availability.
+        `;
+
+                document.getElementById("pharmacyId").value =
+                    data.pharmacy_id;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Pharmacy registration error:",
+                    error
+                );
+
+                result.innerHTML = `
+            ⚠️ ${escapeHtml(error.message)}
+        `;
+            }
+        }
+
+
+        async function updateMedicineInventory() {
+
+            const pharmacy_id =
+                document.getElementById("pharmacyId").value;
+
+            const medicine_name =
+                document
+                    .getElementById("inventoryMedicine")
+                    .value
+                    .trim();
+
+            const quantity =
+                document.getElementById("medicineQuantity").value;
+
+            const available =
+                document.getElementById("medicineAvailable").checked;
+
+            const result =
+                document.getElementById("inventoryResult");
+
+            if (!pharmacy_id) {
+                result.innerHTML =
+                    "⚠️ Please enter your Pharmacy ID.";
+                return;
+            }
+
+            if (!medicine_name) {
+                result.innerHTML =
+                    "⚠️ Please enter a medicine name.";
+                return;
+            }
+
+            result.innerHTML =
+                "🔄 Updating medicine availability...";
+
+            try {
+
+                const response = await fetch(
+                    "/api/pharmacy/inventory",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            pharmacy_id: pharmacy_id,
+                            medicine_name: medicine_name,
+                            available: available,
+                            quantity: quantity
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Could not update inventory."
+                    );
+                }
+
+                result.innerHTML = `
+            <strong>
+                ✅ Medicine availability updated!
+            </strong>
+
+            <br><br>
+
+            💊 Medicine:
+            ${escapeHtml(data.medicine)}
+
+            <br>
+
+            📦 Quantity:
+            ${data.quantity}
+
+            <br>
+
+            📌 Status:
+            ${data.available ? "Available" : "Not Available"}
+
+            <br>
+
+            🕒 Last updated:
+            ${escapeHtml(data.updated_at)}
+        `;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Inventory update error:",
+                    error
+                );
+
+                result.innerHTML = `
+            ⚠️ ${escapeHtml(error.message)}
+        `;
+            }
+        }
+        async function loadPharmacyDashboard() {
+
+            const pharmacyId =
+                document
+                    .getElementById("dashboardPharmacyId")
+                    .value
+                    .trim();
+
+            const result =
+                document.getElementById("dashboardResult");
+
+            if (!pharmacyId) {
+                alert("Please enter your Pharmacy ID.");
+                return;
+            }
+
+            result.style.display = "block";
+
+            result.innerHTML =
+                "🔄 Loading pharmacy inventory...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/pharmacy/" +
+                        encodeURIComponent(pharmacyId) +
+                        "/inventory"
+                    );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Could not load pharmacy inventory."
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+                if (!data.success) {
+                    throw new Error(
+                        "Inventory could not be loaded."
+                    );
+                }
+
+                if (data.inventory.length === 0) {
+
+                    result.innerHTML = `
+                <div style="
+                    background:#f7fbf8;
+                    padding:20px;
+                    border-radius:14px;
+                ">
+                    <h3>📦 No Medicines Added</h3>
+
+                    <p style="margin-top:8px;">
+                        This pharmacy has not added any
+                        medicines yet.
+                    </p>
+                </div>
+            `;
+
+                    return;
+                }
+
+                let html = `
+            <div style="
+                background:#f7fbf8;
+                padding:20px;
+                border-radius:16px;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:10px;
+                    margin-bottom:18px;
+                    flex-wrap:wrap;
+                ">
+
+                    <div>
+                        <h3 style="margin:0;">
+                            💊 Medicine Inventory
+                        </h3>
+
+                        <p style="
+                            margin:5px 0 0;
+                            color:#667085;
+                        ">
+                            Pharmacy ID: ${pharmacyId}
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary"
+                        onclick="loadPharmacyDashboard()"
+                    >
+                        🔄 Refresh
+                    </button>
+
+                </div>
+        `;
+
+                data.inventory.forEach(
+                    function (item) {
+
+                        const status =
+                            item.available
+                                ? "🟢 Available"
+                                : "🔴 Not Available";
+
+                        html += `
+                    <div style="
+                        background:white;
+                        padding:18px;
+                        margin-bottom:12px;
+                        border-radius:14px;
+                        border:1px solid #e1e8f0;
+                    ">
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                            gap:10px;
+                            flex-wrap:wrap;
+                        ">
+
+                            <h4 style="
+                                margin:0;
+                                color:#1d2939;
+                                font-size:18px;
+                            ">
+                                💊
+                                ${escapeHtml(
+                            item.medicine_name
+                        )}
+                            </h4>
+
+                            <strong>
+                                ${status}
+                            </strong>
+
+                        </div>
+
+                        <p style="
+                            margin:10px 0 5px;
+                            color:#667085;
+                        ">
+                            📦 Quantity:
+                            <strong>
+                                ${item.quantity}
+                            </strong>
+                        </p>
+
+                        <p style="
+                            margin:5px 0;
+                            color:#667085;
+                        ">
+                            🕒 Last updated:
+                            ${escapeHtml(
+                            item.updated_at
+                        )}
+                        </p>
+
+                    </div>
+                `;
+                    }
+                );
+
+                html += `
+            </div>
+        `;
+
+                result.innerHTML = html;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Dashboard error:",
+                    error
+                );
+
+                result.innerHTML = `
+            <div style="
+                background:#fff4f4;
+                padding:18px;
+                border-radius:14px;
+                color:#b42318;
+            ">
+                ⚠️
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+            }
+        }
+        function recenterOnUser() {
+
+            if (!userMarker || !healthcareMap) {
+                return;
+            }
+
+            const position =
+                userMarker.getLatLng();
+
+            healthcareMap.setView(
+                [
+                    position.lat,
+                    position.lng
+                ],
+                17,
+                {
+                    animate: true
+                }
+            );
+
+            window.navigationActive = true;
+        }
 
     </script>
 
