@@ -590,6 +590,167 @@
             margin-bottom: 9px;
             line-height: 1.5;
         }
+
+        /* =========================================
+   NAVIGATION CONTROLS
+========================================= */
+
+        .navigation-card {
+            background: white;
+            border: 1px solid #e1e8f0;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .navigation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .navigation-small {
+            font-size: 13px;
+            color: #667085;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .navigation-header h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #1d2939;
+        }
+
+
+        /* FOUR TRAVEL BUTTONS */
+
+        .travel-modes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .travel-mode {
+            border: 1px solid #d0d5dd;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 13px 8px;
+            cursor: pointer;
+            font-size: 22px;
+            transition: all 0.2s ease;
+            color: #344054;
+        }
+
+        .travel-mode span {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .travel-mode:hover {
+            transform: translateY(-2px);
+            border-color: #1677ff;
+        }
+
+        .travel-mode.active {
+            background: #eef5ff;
+            border: 2px solid #1677ff;
+            color: #1677ff;
+        }
+
+
+        /* ROUTE SUMMARY */
+
+        .route-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .route-summary>div {
+            background: #f7fbf8;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .route-summary strong {
+            display: block;
+            font-size: 20px;
+            color: #1d2939;
+        }
+
+        .route-summary span {
+            display: block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: #667085;
+        }
+
+
+        /* CURRENT NAVIGATION INSTRUCTION */
+
+        .current-navigation-instruction {
+            background: #f2f4f7;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #344054;
+            line-height: 1.5;
+        }
+
+
+        /* ACTION BUTTONS */
+
+        .navigation-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .navigation-actions button {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .danger-button {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            background: #d92d20;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .danger-button:hover {
+            opacity: 0.9;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .travel-modes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .navigation-actions {
+                flex-direction: column;
+            }
+
+            .navigation-actions button {
+                width: 100%;
+            }
+
+        }
     </style>
 
 </head>
@@ -899,9 +1060,7 @@
                 border:1px solid #e1e8f0;
             ">
             </div>
-            <button class="direction-button" onclick="recenterOnUser()" style="margin-top:15px;">
-                📍 Re-centre on Me
-            </button>
+
             <div class="map-legend">
 
                 <div class="legend-item">
@@ -924,102 +1083,7 @@
                 </div>
 
             </div>
-            <div id="navigationControls" style="display:none;">
 
-                <div class="navigation-card">
-
-                    <div class="navigation-header">
-                        <div>
-                            <div class="navigation-small">
-                                🧭 Navigation
-                            </div>
-
-                            <h3 id="navigationDestination">
-                                Destination
-                            </h3>
-                        </div>
-
-                        <button class="voice-toggle" id="voiceNavigationButton" onclick="toggleVoiceNavigation()">
-                            🔊 Voice ON
-                        </button>
-                    </div>
-
-
-                    <div class="travel-modes">
-
-                        <button class="travel-mode active" data-mode="motorcycle"
-                            onclick="selectTravelMode('motorcycle')">
-                            🏍️
-                            <span>2-Wheeler</span>
-                        </button>
-
-                        <button class="travel-mode" data-mode="car" onclick="selectTravelMode('car')">
-                            🚗
-                            <span>Car</span>
-                        </button>
-
-                        <button class="travel-mode" data-mode="bus" onclick="selectTravelMode('bus')">
-                            🚌
-                            <span>Bus</span>
-                        </button>
-
-                        <button class="travel-mode" data-mode="walking" onclick="selectTravelMode('walking')">
-                            🚶
-                            <span>Walk</span>
-                        </button>
-
-                    </div>
-
-
-                    <div class="route-summary">
-
-                        <div>
-                            <strong id="routeDistance">
-                                —
-                            </strong>
-
-                            <span>
-                                distance
-                            </span>
-                        </div>
-
-                        <div>
-                            <strong id="routeTime">
-                                —
-                            </strong>
-
-                            <span>
-                                estimated
-                            </span>
-                        </div>
-
-                    </div>
-
-
-                    <div id="currentNavigationInstruction" class="current-navigation-instruction">
-                        Select a travel mode and start your route.
-                    </div>
-
-
-                    <div class="navigation-actions">
-
-                        <button class="primary navigation-start-button" onclick="startNavigation()">
-                            ▶️ Start Route
-                        </button>
-
-                        <button class="secondary" onclick="recenterOnUser()">
-                            📍 Re-centre
-                        </button>
-
-                        <button class="danger-button" onclick="endNavigation()">
-                            ✕ End Route
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
 
             <div id="directionsPanel" style="
         display:none;
@@ -1029,6 +1093,107 @@
         border-radius:18px;
         border:1px solid #e1e8f0;
     ">
+            </div>
+            <!-- =========================================
+     NAVIGATION CONTROLS
+========================================= -->
+
+            <div id="navigationControls" style="margin-top:20px;">
+
+                <div class="navigation-card">
+
+                    <div class="navigation-header">
+
+                        <div>
+                            <div class="navigation-small">
+                                🧭 Navigation
+                            </div>
+
+                            <h3 id="navigationDestination">
+                                Select a healthcare location
+                            </h3>
+                        </div>
+
+                    </div>
+
+
+                    <!-- FOUR TRAVEL MODE BUTTONS -->
+
+                    <div class="travel-modes">
+
+                        <button class="travel-mode active" data-mode="motorcycle"
+                            onclick="selectTravelMode('motorcycle')">
+                            🏍️
+                            <span>2-Wheeler</span>
+                        </button>
+
+
+                        <button class="travel-mode" data-mode="car" onclick="selectTravelMode('car')">
+                            🚗
+                            <span>Car</span>
+                        </button>
+
+
+                        <button class="travel-mode" data-mode="bus" onclick="selectTravelMode('bus')">
+                            🚌
+                            <span>Bus</span>
+                        </button>
+
+
+                        <button class="travel-mode" data-mode="walking" onclick="selectTravelMode('walking')">
+                            🚶
+                            <span>Walk</span>
+                        </button>
+
+                    </div>
+
+
+                    <!-- ROUTE INFORMATION -->
+
+                    <div class="route-summary">
+
+                        <div>
+                            <strong id="routeDistance">—</strong>
+                            <span>Distance</span>
+                        </div>
+
+                        <div>
+                            <strong id="routeTime">—</strong>
+                            <span>Estimated time</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- CURRENT INSTRUCTION -->
+
+                    <div id="currentNavigationInstruction" class="current-navigation-instruction">
+                        Select a travel mode to begin navigation.
+                    </div>
+
+
+                    <!-- NAVIGATION ACTIONS -->
+
+                    <div class="navigation-actions">
+
+                        <button class="primary navigation-start-button" onclick="startNavigation()">
+                            ▶️ Start Route
+                        </button>
+
+
+                        <button class="secondary" onclick="recenterOnUser()">
+                            📍 Re-centre
+                        </button>
+
+
+                        <button class="danger-button" onclick="endNavigation()">
+                            ✕ End Route
+                        </button>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -1423,7 +1588,1071 @@
 
 
         };
+        /* =====================================================
+   FULL PAGE TRANSLATIONS
+===================================================== */
 
+        const pageTranslations = {
+
+            English: {
+                status: "● AI Healthcare Assistant",
+                heroTitle: "Healthcare Support",
+                heroSubtitle: "Closer to Every Village",
+                heroDescription:
+                    "An AI-powered rural healthcare assistance system that helps users understand symptom urgency and connect with nearby healthcare resources.",
+
+                howItHelps: "💡 How It Helps",
+                voiceSupport: "Voice Support",
+                voiceSupportDesc:
+                    "Users can describe symptoms using voice, helping people who find typing difficult.",
+                aiTriage: "AI Triage",
+                aiTriageDesc:
+                    "The system provides basic urgency guidance based on the reported symptoms.",
+                medicineAvailability: "Medicine Availability",
+                medicineAvailabilityDesc:
+                    "Users can search participating pharmacies for medicine availability.",
+                regionalLanguages: "Regional Languages",
+                regionalLanguagesDesc:
+                    "The interface supports English, Hindi, Kannada, Marathi, Tamil and Telugu.",
+
+                triageTitle: "🩺 AI Symptom Triage",
+                triageDescription:
+                    "Select your symptoms and provide additional details. The system will provide basic urgency guidance.",
+                preferredLanguage: "Preferred Language",
+                selectSymptoms: "Select Symptoms",
+                chooseSymptom: "Choose a symptom...",
+                selectedSymptoms: "Selected symptoms",
+                otherSymptomPlaceholder: "Enter other symptom",
+                add: "Add",
+                additionalDetails: "Additional Details",
+                detailsPlaceholder:
+                    "Describe any additional symptoms or details...",
+                speakSymptoms: "🎙️ Speak Symptoms",
+                checkSeverity: "✨ Check Severity",
+                assessment: "Assessment",
+                resultPlaceholder: "Your result will appear here.",
+
+                nearbyHealthcare: "🗺️ Nearby Healthcare",
+                nearbyHealthcareDescription:
+                    "Find hospitals and pharmacies near your current location.",
+                findNearMe: "📍 Find Near Me",
+                locationInitial:
+                    'Click "Find Near Me" to locate nearby hospitals and pharmacies.',
+                recenterOnMe: "📍 Re-centre on Me",
+                yourLocation: "Your Location",
+                hospital: "Hospital",
+                clinic: "Clinic",
+                pharmacy: "Pharmacy",
+
+                navigation: "🧭 Navigation",
+                destination: "Select a healthcare location",
+                voiceOn: "🔊 Voice ON",
+                twoWheeler: "2-Wheeler",
+                car: "Car",
+                bus: "Bus",
+                walk: "Walk",
+                distance: "Distance",
+                estimatedTime: "Estimated time",
+                navigationInstruction:
+                    "Select a travel mode to begin navigation.",
+                startRoute: "▶️ Start Route",
+                recenter: "📍 Re-centre",
+                endRoute: "✕ End Route",
+
+                medicineSectionTitle: "💊 Medicine Availability",
+                medicineSectionDescription:
+                    "Search for a medicine to check availability at participating nearby pharmacies.",
+                search: "Search",
+
+                pharmacyPortal: "🏪 Pharmacy / Shopkeeper Portal",
+                pharmacyPortalDescription:
+                    "Register your pharmacy and update the availability of medicines for patients searching nearby.",
+                registerPharmacyTitle: "Register Pharmacy",
+                pharmacyNamePlaceholder: "Pharmacy name",
+                ownerNamePlaceholder: "Owner / Shopkeeper name",
+                phonePlaceholder: "Phone number",
+                addressPlaceholder: "Pharmacy address",
+                registerPharmacyButton: "🏪 Register Pharmacy",
+
+                inventoryTitle: "Update Medicine Availability",
+                pharmacyIdPlaceholder: "Pharmacy ID",
+                medicineNamePlaceholder: "Medicine name",
+                quantityPlaceholder: "Quantity available",
+                medicineAvailable: "Medicine currently available",
+                updateAvailability: "💊 Update Availability",
+
+                dashboardTitle: "📊 Pharmacy Dashboard",
+                dashboardDescription:
+                    "View and manage the medicines currently reported by your pharmacy.",
+                dashboardIdPlaceholder: "Enter Pharmacy ID...",
+                loadDashboard: "📊 Load Dashboard",
+
+                footer:
+                    "RuralCare AI is a prototype healthcare assistance system. It does not provide medical diagnosis or prescriptions. Always consult a qualified healthcare professional for medical decisions."
+            },
+
+
+            Hindi: {
+                status: "● AI स्वास्थ्य सहायक",
+                heroTitle: "स्वास्थ्य सहायता",
+                heroSubtitle: "हर गांव के और करीब",
+                heroDescription:
+                    "AI-संचालित ग्रामीण स्वास्थ्य सहायता प्रणाली जो उपयोगकर्ताओं को लक्षणों की तात्कालिकता समझने और आसपास की स्वास्थ्य सेवाओं से जुड़ने में मदद करती है।",
+
+                howItHelps: "💡 यह कैसे मदद करता है",
+                voiceSupport: "वॉइस सहायता",
+                voiceSupportDesc:
+                    "उपयोगकर्ता आवाज़ के माध्यम से अपने लक्षण बता सकते हैं, जिससे टाइप करने में कठिनाई होने पर मदद मिलती है।",
+                aiTriage: "AI ट्रायेज",
+                aiTriageDesc:
+                    "यह प्रणाली बताए गए लक्षणों के आधार पर प्राथमिक तात्कालिकता संबंधी मार्गदर्शन देती है।",
+                medicineAvailability: "दवा की उपलब्धता",
+                medicineAvailabilityDesc:
+                    "उपयोगकर्ता आसपास की भाग लेने वाली फार्मेसियों में दवा की उपलब्धता खोज सकते हैं।",
+                regionalLanguages: "क्षेत्रीय भाषाएँ",
+                regionalLanguagesDesc:
+                    "इंटरफ़ेस अंग्रेज़ी, हिंदी, कन्नड़, मराठी, तमिल और तेलुगु का समर्थन करता है।",
+
+                triageTitle: "🩺 AI लक्षण ट्रायेज",
+                triageDescription:
+                    "अपने लक्षण चुनें और अतिरिक्त विवरण दें। प्रणाली प्राथमिक तात्कालिकता संबंधी मार्गदर्शन देगी।",
+                preferredLanguage: "पसंदीदा भाषा",
+                selectSymptoms: "लक्षण चुनें",
+                chooseSymptom: "लक्षण चुनें...",
+                selectedSymptoms: "चुने गए लक्षण",
+                otherSymptomPlaceholder: "अन्य लक्षण दर्ज करें",
+                add: "जोड़ें",
+                additionalDetails: "अतिरिक्त विवरण",
+                detailsPlaceholder:
+                    "अतिरिक्त लक्षण या विवरण लिखें...",
+                speakSymptoms: "🎙️ लक्षण बोलें",
+                checkSeverity: "✨ गंभीरता जांचें",
+                assessment: "मूल्यांकन",
+                resultPlaceholder: "आपका परिणाम यहां दिखाई देगा।",
+
+                nearbyHealthcare: "🗺️ आसपास की स्वास्थ्य सेवाएँ",
+                nearbyHealthcareDescription:
+                    "अपने वर्तमान स्थान के पास अस्पताल और फार्मेसियाँ खोजें।",
+                findNearMe: "📍 मेरे पास खोजें",
+                locationInitial:
+                    'अस्पताल और फार्मेसियाँ खोजने के लिए "मेरे पास खोजें" दबाएँ।',
+                recenterOnMe: "📍 मेरे स्थान पर केंद्रित करें",
+                yourLocation: "आपका स्थान",
+                hospital: "अस्पताल",
+                clinic: "क्लिनिक",
+                pharmacy: "फार्मेसी",
+
+                navigation: "🧭 नेविगेशन",
+                destination: "स्वास्थ्य केंद्र चुनें",
+                voiceOn: "🔊 वॉइस चालू",
+                twoWheeler: "दोपहिया",
+                car: "कार",
+                bus: "बस",
+                walk: "पैदल",
+                distance: "दूरी",
+                estimatedTime: "अनुमानित समय",
+                navigationInstruction:
+                    "नेविगेशन शुरू करने के लिए यात्रा का तरीका चुनें।",
+                startRoute: "▶️ मार्ग शुरू करें",
+                recenter: "📍 फिर से केंद्रित करें",
+                endRoute: "✕ मार्ग समाप्त करें",
+
+                medicineSectionTitle: "💊 दवा की उपलब्धता",
+                medicineSectionDescription:
+                    "पास की भाग लेने वाली फार्मेसियों में दवा की उपलब्धता खोजें।",
+                search: "खोजें",
+
+                pharmacyPortal: "🏪 फार्मेसी / दुकानदार पोर्टल",
+                pharmacyPortalDescription:
+                    "अपनी फार्मेसी पंजीकृत करें और मरीजों के लिए दवाओं की उपलब्धता अपडेट करें।",
+                registerPharmacyTitle: "फार्मेसी पंजीकृत करें",
+                pharmacyNamePlaceholder: "फार्मेसी का नाम",
+                ownerNamePlaceholder: "मालिक / दुकानदार का नाम",
+                phonePlaceholder: "फोन नंबर",
+                addressPlaceholder: "फार्मेसी का पता",
+                registerPharmacyButton: "🏪 फार्मेसी पंजीकृत करें",
+
+                inventoryTitle: "दवा की उपलब्धता अपडेट करें",
+                pharmacyIdPlaceholder: "फार्मेसी ID",
+                medicineNamePlaceholder: "दवा का नाम",
+                quantityPlaceholder: "उपलब्ध मात्रा",
+                medicineAvailable: "दवा अभी उपलब्ध है",
+                updateAvailability: "💊 उपलब्धता अपडेट करें",
+
+                dashboardTitle: "📊 फार्मेसी डैशबोर्ड",
+                dashboardDescription:
+                    "अपनी फार्मेसी द्वारा रिपोर्ट की गई दवाओं को देखें और प्रबंधित करें।",
+                dashboardIdPlaceholder: "फार्मेसी ID दर्ज करें...",
+                loadDashboard: "📊 डैशबोर्ड लोड करें",
+
+                footer:
+                    "RuralCare AI एक प्रोटोटाइप स्वास्थ्य सहायता प्रणाली है। यह चिकित्सा निदान या दवाओं की सलाह प्रदान नहीं करती। चिकित्सा संबंधी निर्णयों के लिए हमेशा योग्य स्वास्थ्य पेशेवर से परामर्श करें।"
+            },
+
+
+            Kannada: {
+                status: "● AI ಆರೋಗ್ಯ ಸಹಾಯಕ",
+                heroTitle: "ಆರೋಗ್ಯ ಸಹಾಯ",
+                heroSubtitle: "ಪ್ರತಿಯೊಂದು ಹಳ್ಳಿಗೂ ಇನ್ನಷ್ಟು ಹತ್ತಿರ",
+                heroDescription:
+                    "AI ಆಧಾರಿತ ಗ್ರಾಮೀಣ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯು ಬಳಕೆದಾರರಿಗೆ ಲಕ್ಷಣಗಳ ತುರ್ತು ಮಟ್ಟವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಮತ್ತು ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.",
+
+                howItHelps: "💡 ಇದು ಹೇಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ",
+                voiceSupport: "ಧ್ವನಿ ಸಹಾಯ",
+                voiceSupportDesc:
+                    "ಟೈಪ್ ಮಾಡಲು ಕಷ್ಟವಾಗುವ ಬಳಕೆದಾರರು ಧ್ವನಿಯ ಮೂಲಕ ತಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ತಿಳಿಸಬಹುದು.",
+                aiTriage: "AI ಟ್ರಯಾಜ್",
+                aiTriageDesc:
+                    "ವರದಿ ಮಾಡಿದ ಲಕ್ಷಣಗಳ ಆಧಾರದ ಮೇಲೆ ವ್ಯವಸ್ಥೆಯು ಪ್ರಾಥಮಿಕ ತುರ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತದೆ.",
+                medicineAvailability: "ಔಷಧ ಲಭ್ಯತೆ",
+                medicineAvailabilityDesc:
+                    "ಬಳಕೆದಾರರು ಸಮೀಪದ ಭಾಗವಹಿಸುವ ಔಷಧ ಅಂಗಡಿಗಳಲ್ಲಿ ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ಹುಡುಕಬಹುದು.",
+                regionalLanguages: "ಪ್ರಾದೇಶಿಕ ಭಾಷೆಗಳು",
+                regionalLanguagesDesc:
+                    "ಇಂಟರ್‌ಫೇಸ್ ಇಂಗ್ಲಿಷ್, ಹಿಂದಿ, ಕನ್ನಡ, ಮರಾಠಿ, ತಮಿಳು ಮತ್ತು ತೆಲುಗನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ.",
+
+                triageTitle: "🩺 AI ಲಕ್ಷಣಗಳ ಟ್ರಯಾಜ್",
+                triageDescription:
+                    "ನಿಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಹೆಚ್ಚುವರಿ ವಿವರಗಳನ್ನು ನೀಡಿ. ವ್ಯವಸ್ಥೆಯು ಪ್ರಾಥಮಿಕ ತುರ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತದೆ.",
+                preferredLanguage: "ಆದ್ಯತೆಯ ಭಾಷೆ",
+                selectSymptoms: "ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                chooseSymptom: "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ...",
+                selectedSymptoms: "ಆಯ್ಕೆಮಾಡಿದ ಲಕ್ಷಣಗಳು",
+                otherSymptomPlaceholder: "ಇತರ ಲಕ್ಷಣವನ್ನು ನಮೂದಿಸಿ",
+                add: "ಸೇರಿಸಿ",
+                additionalDetails: "ಹೆಚ್ಚುವರಿ ವಿವರಗಳು",
+                detailsPlaceholder:
+                    "ಹೆಚ್ಚುವರಿ ಲಕ್ಷಣಗಳು ಅಥವಾ ವಿವರಗಳನ್ನು ಬರೆಯಿರಿ...",
+                speakSymptoms: "🎙️ ಲಕ್ಷಣಗಳನ್ನು ಹೇಳಿ",
+                checkSeverity: "✨ ತೀವ್ರತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+                assessment: "ಮೌಲ್ಯಮಾಪನ",
+                resultPlaceholder: "ನಿಮ್ಮ ಫಲಿತಾಂಶ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
+
+                nearbyHealthcare: "🗺️ ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳು",
+                nearbyHealthcareDescription:
+                    "ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಸ್ಥಳದ ಸಮೀಪದ ಆಸ್ಪತ್ರೆಗಳು ಮತ್ತು ಔಷಧ ಅಂಗಡಿಗಳನ್ನು ಹುಡುಕಿ.",
+                findNearMe: "📍 ಹತ್ತಿರದಲ್ಲಿರುವುದನ್ನು ಹುಡುಕಿ",
+                locationInitial:
+                    '"ಹತ್ತಿರದಲ್ಲಿರುವುದನ್ನು ಹುಡುಕಿ" ಒತ್ತಿ ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳನ್ನು ಹುಡುಕಿ.',
+                recenterOnMe: "📍 ನನ್ನ ಸ್ಥಳಕ್ಕೆ ಮರುಕೇಂದ್ರಗೊಳಿಸಿ",
+                yourLocation: "ನಿಮ್ಮ ಸ್ಥಳ",
+                hospital: "ಆಸ್ಪತ್ರೆ",
+                clinic: "ಕ್ಲಿನಿಕ್",
+                pharmacy: "ಔಷಧ ಅಂಗಡಿ",
+
+                navigation: "🧭 ನ್ಯಾವಿಗೇಶನ್",
+                destination: "ಆರೋಗ್ಯ ಕೇಂದ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                voiceOn: "🔊 ಧ್ವನಿ ಆನ್",
+                twoWheeler: "ದ್ವಿಚಕ್ರ ವಾಹನ",
+                car: "ಕಾರು",
+                bus: "ಬಸ್",
+                walk: "ನಡೆದು",
+                distance: "ದೂರ",
+                estimatedTime: "ಅಂದಾಜು ಸಮಯ",
+                navigationInstruction:
+                    "ನ್ಯಾವಿಗೇಶನ್ ಪ್ರಾರಂಭಿಸಲು ಪ್ರಯಾಣದ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+                startRoute: "▶️ ಮಾರ್ಗ ಪ್ರಾರಂಭಿಸಿ",
+                recenter: "📍 ಮರುಕೇಂದ್ರಗೊಳಿಸಿ",
+                endRoute: "✕ ಮಾರ್ಗ ಕೊನೆಗೊಳಿಸಿ",
+
+                medicineSectionTitle: "💊 ಔಷಧ ಲಭ್ಯತೆ",
+                medicineSectionDescription:
+                    "ಸಮೀಪದ ಭಾಗವಹಿಸುವ ಔಷಧ ಅಂಗಡಿಗಳಲ್ಲಿ ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ಹುಡುಕಿ.",
+                search: "ಹುಡುಕಿ",
+
+                pharmacyPortal: "🏪 ಔಷಧ ಅಂಗಡಿ / ಅಂಗಡಿಕಾರರ ಪೋರ್ಟಲ್",
+                pharmacyPortalDescription:
+                    "ನಿಮ್ಮ ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ ಮತ್ತು ರೋಗಿಗಳಿಗೆ ಔಷಧಗಳ ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ.",
+                registerPharmacyTitle: "ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ",
+                pharmacyNamePlaceholder: "ಔಷಧ ಅಂಗಡಿಯ ಹೆಸರು",
+                ownerNamePlaceholder: "ಮಾಲೀಕ / ಅಂಗಡಿಕಾರರ ಹೆಸರು",
+                phonePlaceholder: "ಫೋನ್ ಸಂಖ್ಯೆ",
+                addressPlaceholder: "ಔಷಧ ಅಂಗಡಿಯ ವಿಳಾಸ",
+                registerPharmacyButton: "🏪 ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ",
+
+                inventoryTitle: "ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ",
+                pharmacyIdPlaceholder: "ಔಷಧ ಅಂಗಡಿ ID",
+                medicineNamePlaceholder: "ಔಷಧದ ಹೆಸರು",
+                quantityPlaceholder: "ಲಭ್ಯವಿರುವ ಪ್ರಮಾಣ",
+                medicineAvailable: "ಔಷಧ ಪ್ರಸ್ತುತ ಲಭ್ಯವಿದೆ",
+                updateAvailability: "💊 ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ",
+
+                dashboardTitle: "📊 ಔಷಧ ಅಂಗಡಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+                dashboardDescription:
+                    "ನಿಮ್ಮ ಔಷಧ ಅಂಗಡಿಯಿಂದ ವರದಿಯಾದ ಔಷಧಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ.",
+                dashboardIdPlaceholder: "ಔಷಧ ಅಂಗಡಿ ID ನಮೂದಿಸಿ...",
+                loadDashboard: "📊 ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಲೋಡ್ ಮಾಡಿ",
+
+                footer:
+                    "RuralCare AI ಒಂದು ಪ್ರೋಟೋಟೈಪ್ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯಾಗಿದೆ. ಇದು ವೈದ್ಯಕೀಯ ರೋಗನಿರ್ಣಯ ಅಥವಾ ಔಷಧ ಸಲಹೆಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ. ವೈದ್ಯಕೀಯ ನಿರ್ಧಾರಗಳಿಗಾಗಿ ಯಾವಾಗಲೂ ಅರ್ಹ ಆರೋಗ್ಯ ವೃತ್ತಿಪರರನ್ನು ಸಂಪರ್ಕಿಸಿ."
+            },
+
+
+            Marathi: {
+                status: "● AI आरोग्य सहाय्यक",
+                heroTitle: "आरोग्य सहाय्य",
+                heroSubtitle: "प्रत्येक गावाच्या आणखी जवळ",
+                heroDescription:
+                    "AI-आधारित ग्रामीण आरोग्य सहाय्य प्रणाली वापरकर्त्यांना लक्षणांची तातडी समजून घेण्यास आणि जवळच्या आरोग्य सेवांशी जोडण्यास मदत करते.",
+
+                howItHelps: "💡 हे कसे मदत करते",
+                voiceSupport: "आवाजाची सुविधा",
+                voiceSupportDesc:
+                    "टाइप करणे कठीण असल्यास वापरकर्ते आवाजाद्वारे आपली लक्षणे सांगू शकतात.",
+                aiTriage: "AI ट्रायेज",
+                aiTriageDesc:
+                    "नोंदवलेल्या लक्षणांवर आधारित प्रणाली प्राथमिक तातडीचे मार्गदर्शन देते.",
+                medicineAvailability: "औषध उपलब्धता",
+                medicineAvailabilityDesc:
+                    "वापरकर्ते जवळील सहभागी औषधालयांमध्ये औषधांची उपलब्धता शोधू शकतात.",
+                regionalLanguages: "प्रादेशिक भाषा",
+                regionalLanguagesDesc:
+                    "इंटरफेस इंग्रजी, हिंदी, कन्नड, मराठी, तमिळ आणि तेलुगूला समर्थन देतो.",
+
+                triageTitle: "🩺 AI लक्षण ट्रायेज",
+                triageDescription:
+                    "आपली लक्षणे निवडा आणि अतिरिक्त माहिती द्या. प्रणाली प्राथमिक तातडीचे मार्गदर्शन देईल.",
+                preferredLanguage: "पसंतीची भाषा",
+                selectSymptoms: "लक्षणे निवडा",
+                chooseSymptom: "लक्षण निवडा...",
+                selectedSymptoms: "निवडलेली लक्षणे",
+                otherSymptomPlaceholder: "इतर लक्षण लिहा",
+                add: "जोडा",
+                additionalDetails: "अतिरिक्त माहिती",
+                detailsPlaceholder:
+                    "अतिरिक्त लक्षणे किंवा माहिती लिहा...",
+                speakSymptoms: "🎙️ लक्षणे बोला",
+                checkSeverity: "✨ तीव्रता तपासा",
+                assessment: "मूल्यांकन",
+                resultPlaceholder: "तुमचा निकाल येथे दिसेल.",
+
+                nearbyHealthcare: "🗺️ जवळील आरोग्यसेवा",
+                nearbyHealthcareDescription:
+                    "आपल्या सध्याच्या स्थानाजवळील रुग्णालये आणि औषधालये शोधा.",
+                findNearMe: "📍 माझ्या जवळ शोधा",
+                locationInitial:
+                    'जवळील रुग्णालये आणि औषधालये शोधण्यासाठी "माझ्या जवळ शोधा" दाबा.',
+                recenterOnMe: "📍 माझ्या स्थानावर पुन्हा केंद्रित करा",
+                yourLocation: "तुमचे स्थान",
+                hospital: "रुग्णालय",
+                clinic: "क्लिनिक",
+                pharmacy: "औषधालय",
+
+                navigation: "🧭 दिशादर्शन",
+                destination: "आरोग्य केंद्र निवडा",
+                voiceOn: "🔊 आवाज सुरू",
+                twoWheeler: "दुचाकी",
+                car: "कार",
+                bus: "बस",
+                walk: "पायी",
+                distance: "अंतर",
+                estimatedTime: "अंदाजे वेळ",
+                navigationInstruction:
+                    "दिशादर्शन सुरू करण्यासाठी प्रवासाचा प्रकार निवडा.",
+                startRoute: "▶️ मार्ग सुरू करा",
+                recenter: "📍 पुन्हा केंद्रित करा",
+                endRoute: "✕ मार्ग समाप्त करा",
+
+                medicineSectionTitle: "💊 औषध उपलब्धता",
+                medicineSectionDescription:
+                    "जवळील सहभागी औषधालयांमध्ये औषधांची उपलब्धता शोधा.",
+                search: "शोधा",
+
+                pharmacyPortal: "🏪 औषधालय / दुकानदार पोर्टल",
+                pharmacyPortalDescription:
+                    "आपले औषधालय नोंदणी करा आणि रुग्णांसाठी औषधांची उपलब्धता अद्यतनित करा.",
+                registerPharmacyTitle: "औषधालय नोंदणी करा",
+                pharmacyNamePlaceholder: "औषधालयाचे नाव",
+                ownerNamePlaceholder: "मालक / दुकानदाराचे नाव",
+                phonePlaceholder: "फोन नंबर",
+                addressPlaceholder: "औषधालयाचा पत्ता",
+                registerPharmacyButton: "🏪 औषधालय नोंदणी करा",
+
+                inventoryTitle: "औषध उपलब्धता अद्यतनित करा",
+                pharmacyIdPlaceholder: "औषधालय ID",
+                medicineNamePlaceholder: "औषधाचे नाव",
+                quantityPlaceholder: "उपलब्ध प्रमाण",
+                medicineAvailable: "औषध सध्या उपलब्ध आहे",
+                updateAvailability: "💊 उपलब्धता अद्यतनित करा",
+
+                dashboardTitle: "📊 औषधालय डॅशबोर्ड",
+                dashboardDescription:
+                    "आपल्या औषधालयाने नोंदवलेली औषधे पहा आणि व्यवस्थापित करा.",
+                dashboardIdPlaceholder: "औषधालय ID प्रविष्ट करा...",
+                loadDashboard: "📊 डॅशबोर्ड लोड करा",
+
+                footer:
+                    "RuralCare AI ही एक प्रोटोटाइप आरोग्य सहाय्य प्रणाली आहे. ती वैद्यकीय निदान किंवा औषधांचे प्रिस्क्रिप्शन देत नाही. वैद्यकीय निर्णयांसाठी नेहमी पात्र आरोग्य व्यावसायिकांचा सल्ला घ्या."
+            },
+
+
+            Telugu: {
+                status: "● AI ఆరోగ్య సహాయకుడు",
+                heroTitle: "ఆరోగ్య సహాయం",
+                heroSubtitle: "ప్రతి గ్రామానికి మరింత చేరువగా",
+                heroDescription:
+                    "AI ఆధారిత గ్రామీణ ఆరోగ్య సహాయ వ్యవస్థ వినియోగదారులకు లక్షణాల అత్యవసర స్థాయిని అర్థం చేసుకోవడంలో మరియు సమీప ఆరోగ్య సేవలతో అనుసంధానం కావడంలో సహాయపడుతుంది.",
+
+                howItHelps: "💡 ఇది ఎలా సహాయపడుతుంది",
+                voiceSupport: "వాయిస్ సహాయం",
+                voiceSupportDesc:
+                    "టైప్ చేయడం కష్టంగా ఉన్నవారు వాయిస్ ద్వారా తమ లక్షణాలను వివరించవచ్చు.",
+                aiTriage: "AI ట్రయాజ్",
+                aiTriageDesc:
+                    "తెలిపిన లక్షణాల ఆధారంగా వ్యవస్థ ప్రాథమిక అత్యవసర మార్గదర్శకత్వాన్ని అందిస్తుంది.",
+                medicineAvailability: "మందుల లభ్యత",
+                medicineAvailabilityDesc:
+                    "వినియోగదారులు సమీపంలోని పాల్గొనే ఫార్మసీలలో మందుల లభ్యతను వెతకవచ్చు.",
+                regionalLanguages: "ప్రాంతీయ భాషలు",
+                regionalLanguagesDesc:
+                    "ఇంటర్‌ఫేస్ ఇంగ్లీష్, హిందీ, కన్నడ, మరాఠీ, తమిళం మరియు తెలుగును మద్దతు ఇస్తుంది.",
+
+                triageTitle: "🩺 AI లక్షణాల ట్రయాజ్",
+                triageDescription:
+                    "మీ లక్షణాలను ఎంచుకుని అదనపు వివరాలను ఇవ్వండి. వ్యవస్థ ప్రాథమిక అత్యవసర మార్గదర్శకత్వాన్ని అందిస్తుంది.",
+                preferredLanguage: "ప్రాధాన్య భాష",
+                selectSymptoms: "లక్షణాలను ఎంచుకోండి",
+                chooseSymptom: "లక్షణాన్ని ఎంచుకోండి...",
+                selectedSymptoms: "ఎంచుకున్న లక్షణాలు",
+                otherSymptomPlaceholder: "ఇతర లక్షణాన్ని నమోదు చేయండి",
+                add: "చేర్చండి",
+                additionalDetails: "అదనపు వివరాలు",
+                detailsPlaceholder:
+                    "అదనపు లక్షణాలు లేదా వివరాలను నమోదు చేయండి...",
+                speakSymptoms: "🎙️ లక్షణాలను చెప్పండి",
+                checkSeverity: "✨ తీవ్రతను తనిఖీ చేయండి",
+                assessment: "అంచనా",
+                resultPlaceholder: "మీ ఫలితం ఇక్కడ కనిపిస్తుంది.",
+
+                nearbyHealthcare: "🗺️ సమీప ఆరోగ్య సేవలు",
+                nearbyHealthcareDescription:
+                    "మీ ప్రస్తుత స్థానానికి సమీపంలోని ఆసుపత్రులు మరియు ఫార్మసీలను కనుగొనండి.",
+                findNearMe: "📍 నా దగ్గర వెతకండి",
+                locationInitial:
+                    '"నా దగ్గర వెతకండి" నొక్కి సమీప ఆసుపత్రులు మరియు ఫార్మసీలను కనుగొనండి.',
+                recenterOnMe: "📍 నా స్థానానికి మళ్లీ కేంద్రీకరించండి",
+                yourLocation: "మీ స్థానం",
+                hospital: "ఆసుపత్రి",
+                clinic: "క్లినిక్",
+                pharmacy: "ఫార్మసీ",
+
+                navigation: "🧭 నావిగేషన్",
+                destination: "ఆరోగ్య కేంద్రాన్ని ఎంచుకోండి",
+                voiceOn: "🔊 వాయిస్ ఆన్",
+                twoWheeler: "ద్విచక్ర వాహనం",
+                car: "కారు",
+                bus: "బస్",
+                walk: "నడక",
+                distance: "దూరం",
+                estimatedTime: "అంచనా సమయం",
+                navigationInstruction:
+                    "నావిగేషన్ ప్రారంభించడానికి ప్రయాణ విధానాన్ని ఎంచుకోండి.",
+                startRoute: "▶️ మార్గాన్ని ప్రారంభించండి",
+                recenter: "📍 మళ్లీ కేంద్రీకరించండి",
+                endRoute: "✕ మార్గాన్ని ముగించండి",
+
+                medicineSectionTitle: "💊 మందుల లభ్యత",
+                medicineSectionDescription:
+                    "సమీపంలోని పాల్గొనే ఫార్మసీలలో మందుల లభ్యతను వెతకండి.",
+                search: "వెతకండి",
+
+                pharmacyPortal: "🏪 ఫార్మసీ / దుకాణదారు పోర్టల్",
+                pharmacyPortalDescription:
+                    "మీ ఫార్మసీని నమోదు చేసి, రోగుల కోసం మందుల లభ్యతను నవీకరించండి.",
+                registerPharmacyTitle: "ఫార్మసీని నమోదు చేయండి",
+                pharmacyNamePlaceholder: "ఫార్మసీ పేరు",
+                ownerNamePlaceholder: "యజమాని / దుకాణదారు పేరు",
+                phonePlaceholder: "ఫోన్ నంబర్",
+                addressPlaceholder: "ఫార్మసీ చిరునామా",
+                registerPharmacyButton: "🏪 ఫార్మసీని నమోదు చేయండి",
+
+                inventoryTitle: "మందుల లభ్యతను నవీకరించండి",
+                pharmacyIdPlaceholder: "ఫార్మసీ ID",
+                medicineNamePlaceholder: "మందు పేరు",
+                quantityPlaceholder: "అందుబాటులో ఉన్న పరిమాణం",
+                medicineAvailable: "మందు ప్రస్తుతం అందుబాటులో ఉంది",
+                updateAvailability: "💊 లభ్యతను నవీకరించండి",
+
+                dashboardTitle: "📊 ఫార్మసీ డ్యాష్‌బోర్డ్",
+                dashboardDescription:
+                    "మీ ఫార్మసీ ద్వారా నివేదించబడిన మందులను వీక్షించి నిర్వహించండి.",
+                dashboardIdPlaceholder: "ఫార్మసీ ID నమోదు చేయండి...",
+                loadDashboard: "📊 డ్యాష్‌బోర్డ్‌ను లోడ్ చేయండి",
+
+                footer:
+                    "RuralCare AI ఒక ప్రోటోటైప్ ఆరోగ్య సహాయ వ్యవస్థ. ఇది వైద్య నిర్ధారణ లేదా మందుల ప్రిస్క్రిప్షన్ ఇవ్వదు. వైద్య నిర్ణయాల కోసం ఎల్లప్పుడూ అర్హత కలిగిన ఆరోగ్య నిపుణుడిని సంప్రదించండి."
+            },
+
+
+            Tamil: {
+                status: "● AI சுகாதார உதவியாளர்",
+                heroTitle: "சுகாதார உதவி",
+                heroSubtitle: "ஒவ்வொரு கிராமத்திற்கும் மேலும் அருகில்",
+                heroDescription:
+                    "AI அடிப்படையிலான கிராமப்புற சுகாதார உதவி அமைப்பு, அறிகுறிகளின் அவசர நிலையைப் புரிந்துகொள்ளவும் அருகிலுள்ள சுகாதார சேவைகளுடன் இணைக்கவும் பயனர்களுக்கு உதவுகிறது.",
+
+                howItHelps: "💡 இது எப்படி உதவுகிறது",
+                voiceSupport: "குரல் உதவி",
+                voiceSupportDesc:
+                    "தட்டச்சு செய்வது கடினமாக இருக்கும் பயனர்கள் குரல் மூலம் தங்கள் அறிகுறிகளை தெரிவிக்கலாம்.",
+                aiTriage: "AI ட்ரையாஜ்",
+                aiTriageDesc:
+                    "தெரிவிக்கப்பட்ட அறிகுறிகளின் அடிப்படையில் அமைப்பு ஆரம்ப நிலை அவசர வழிகாட்டுதலை வழங்குகிறது.",
+                medicineAvailability: "மருந்து கிடைக்கும் நிலை",
+                medicineAvailabilityDesc:
+                    "பயனர்கள் அருகிலுள்ள பங்கேற்கும் மருந்தகங்களில் மருந்துகளின் கிடைப்பைத் தேடலாம்.",
+                regionalLanguages: "பிராந்திய மொழிகள்",
+                regionalLanguagesDesc:
+                    "இடைமுகம் ஆங்கிலம், இந்தி, கன்னடம், மராத்தி, தமிழ் மற்றும் தெலுங்கை ஆதரிக்கிறது.",
+
+                triageTitle: "🩺 AI அறிகுறி ட்ரையாஜ்",
+                triageDescription:
+                    "உங்கள் அறிகுறிகளைத் தேர்ந்தெடுத்து கூடுதல் விவரங்களை வழங்கவும். அமைப்பு ஆரம்ப நிலை அவசர வழிகாட்டுதலை வழங்கும்.",
+                preferredLanguage: "விருப்ப மொழி",
+                selectSymptoms: "அறிகுறிகளைத் தேர்ந்தெடுக்கவும்",
+                chooseSymptom: "அறிகுறியைத் தேர்ந்தெடுக்கவும்...",
+                selectedSymptoms: "தேர்ந்தெடுத்த அறிகுறிகள்",
+                otherSymptomPlaceholder: "மற்ற அறிகுறியை உள்ளிடவும்",
+                add: "சேர்க்கவும்",
+                additionalDetails: "கூடுதல் விவரங்கள்",
+                detailsPlaceholder:
+                    "கூடுதல் அறிகுறிகள் அல்லது விவரங்களை உள்ளிடவும்...",
+                speakSymptoms: "🎙️ அறிகுறிகளைப் பேசுங்கள்",
+                checkSeverity: "✨ தீவிரத்தைச் சரிபார்க்கவும்",
+                assessment: "மதிப்பீடு",
+                resultPlaceholder: "உங்கள் முடிவு இங்கே தோன்றும்.",
+
+                nearbyHealthcare: "🗺️ அருகிலுள்ள சுகாதார சேவைகள்",
+                nearbyHealthcareDescription:
+                    "உங்கள் தற்போதைய இருப்பிடத்திற்கு அருகிலுள்ள மருத்துவமனைகள் மற்றும் மருந்தகங்களைக் கண்டறியவும்.",
+                findNearMe: "📍 அருகில் தேடு",
+                locationInitial:
+                    '"அருகில் தேடு" என்பதை அழுத்தி அருகிலுள்ள மருத்துவமனைகள் மற்றும் மருந்தகங்களைக் கண்டறியவும்.',
+                recenterOnMe: "📍 என்னை மையப்படுத்து",
+                yourLocation: "உங்கள் இருப்பிடம்",
+                hospital: "மருத்துவமனை",
+                clinic: "கிளினிக்",
+                pharmacy: "மருந்தகம்",
+
+                navigation: "🧭 வழிசெலுத்தல்",
+                destination: "சுகாதார மையத்தைத் தேர்ந்தெடுக்கவும்",
+                voiceOn: "🔊 குரல் ஆன்",
+                twoWheeler: "இருசக்கர வாகனம்",
+                car: "கார்",
+                bus: "பஸ்",
+                walk: "நடந்து",
+                distance: "தூரம்",
+                estimatedTime: "மதிப்பிடப்பட்ட நேரம்",
+                navigationInstruction:
+                    "வழிசெலுத்தலைத் தொடங்க பயண முறையைத் தேர்ந்தெடுக்கவும்.",
+                startRoute: "▶️ வழியைத் தொடங்கு",
+                recenter: "📍 மீண்டும் மையப்படுத்து",
+                endRoute: "✕ வழியை முடி",
+
+                medicineSectionTitle: "💊 மருந்து கிடைக்கும் நிலை",
+                medicineSectionDescription:
+                    "அருகிலுள்ள பங்கேற்கும் மருந்தகங்களில் மருந்துகளின் கிடைப்பைத் தேடுங்கள்.",
+                search: "தேடு",
+
+                pharmacyPortal: "🏪 மருந்தகம் / கடைக்காரர் போர்டல்",
+                pharmacyPortalDescription:
+                    "உங்கள் மருந்தகத்தைப் பதிவு செய்து நோயாளிகளுக்கான மருந்து கிடைப்பை புதுப்பிக்கவும்.",
+                registerPharmacyTitle: "மருந்தகத்தைப் பதிவு செய்க",
+                pharmacyNamePlaceholder: "மருந்தகத்தின் பெயர்",
+                ownerNamePlaceholder: "உரிமையாளர் / கடைக்காரர் பெயர்",
+                phonePlaceholder: "தொலைபேசி எண்",
+                addressPlaceholder: "மருந்தக முகவரி",
+                registerPharmacyButton: "🏪 மருந்தகத்தைப் பதிவு செய்க",
+
+                inventoryTitle: "மருந்து கிடைப்பை புதுப்பிக்கவும்",
+                pharmacyIdPlaceholder: "மருந்தக ID",
+                medicineNamePlaceholder: "மருந்தின் பெயர்",
+                quantityPlaceholder: "கிடைக்கும் அளவு",
+                medicineAvailable: "மருந்து தற்போது கிடைக்கிறது",
+                updateAvailability: "💊 கிடைப்பை புதுப்பிக்கவும்",
+
+                dashboardTitle: "📊 மருந்தக டாஷ்போர்டு",
+                dashboardDescription:
+                    "உங்கள் மருந்தகத்தால் தெரிவிக்கப்பட்ட மருந்துகளைப் பார்த்து நிர்வகிக்கவும்.",
+                dashboardIdPlaceholder: "மருந்தக ID உள்ளிடவும்...",
+                loadDashboard: "📊 டாஷ்போர்டை ஏற்றவும்",
+
+                footer:
+                    "RuralCare AI ஒரு முன்மாதிரி சுகாதார உதவி அமைப்பு. இது மருத்துவ நோயறிதல் அல்லது மருந்து பரிந்துரைகளை வழங்காது. மருத்துவ முடிவுகளுக்கு எப்போதும் தகுதி பெற்ற சுகாதார நிபுணரை அணுகவும்."
+            }
+
+        };
+
+        /* =====================================================
+           APPLY FULL PAGE LANGUAGE
+        ===================================================== */
+
+        function applyPageLanguage() {
+
+            const language = languageSelect.value;
+
+            const t = pageTranslations[language];
+
+            if (!t) {
+                return;
+            }
+
+            /* Navbar */
+            document.querySelector(".status").innerText =
+                t.status;
+
+            /* Hero */
+            document.querySelector(".hero h1").innerHTML =
+                `${t.heroTitle}<br><span>${t.heroSubtitle}</span>`;
+
+            document.querySelector(".hero p").innerText =
+                t.heroDescription;
+
+
+            /* How it helps */
+            document.querySelector(
+                "#helpToggle span:first-child"
+            ).innerText = t.howItHelps;
+
+
+            const features =
+                document.querySelectorAll(".feature");
+
+            if (features[0]) {
+                features[0].querySelector("h3").innerText =
+                    t.voiceSupport;
+                features[0].querySelector("p").innerText =
+                    t.voiceSupportDesc;
+            }
+
+            if (features[1]) {
+                features[1].querySelector("h3").innerText =
+                    t.aiTriage;
+                features[1].querySelector("p").innerText =
+                    t.aiTriageDesc;
+            }
+
+            if (features[2]) {
+                features[2].querySelector("h3").innerText =
+                    t.medicineAvailability;
+                features[2].querySelector("p").innerText =
+                    t.medicineAvailabilityDesc;
+            }
+
+            if (features[3]) {
+                features[3].querySelector("h3").innerText =
+                    t.regionalLanguages;
+                features[3].querySelector("p").innerText =
+                    t.regionalLanguagesDesc;
+            }
+
+
+            /* AI Triage */
+            const triageCard =
+                document.getElementById("language").closest(".card");
+
+            if (triageCard) {
+
+                triageCard.querySelector("h2").innerText =
+                    t.triageTitle;
+
+                triageCard.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.triageDescription;
+
+                triageCard.querySelector(
+                    'label[for="language"]'
+                ).innerText =
+                    t.preferredLanguage;
+
+                triageCard.querySelector(
+                    'label[for="symptomSelect"]'
+                ).innerText =
+                    t.selectSymptoms;
+
+                triageCard.querySelector(
+                    "#selectedTitle"
+                ).innerText =
+                    t.selectedSymptoms;
+
+                triageCard.querySelector(
+                    'label[for="symptoms"]'
+                ).innerText =
+                    t.additionalDetails;
+
+                triageCard.querySelector(
+                    'button[onclick="startVoice()"]'
+                ).innerText =
+                    t.speakSymptoms;
+
+                triageCard.querySelector(
+                    'button[onclick="checkSeverity()"]'
+                ).innerText =
+                    t.checkSeverity;
+
+                triageCard.querySelector(
+                    "#resultTitle"
+                ).innerText =
+                    t.assessment;
+
+                triageCard.querySelector(
+                    "#resultText"
+                ).innerText =
+                    t.resultPlaceholder;
+            }
+
+
+            /* Placeholders */
+            document.getElementById(
+                "otherSymptom"
+            ).placeholder =
+                t.otherSymptomPlaceholder;
+
+            document.getElementById(
+                "symptoms"
+            ).placeholder =
+                t.detailsPlaceholder;
+
+
+            /* Add button */
+            const addButton =
+                document.querySelector(
+                    'button[onclick="addOtherSymptom()"]'
+                );
+
+            if (addButton) {
+                addButton.innerText = t.add;
+            }
+
+
+            /* Nearby healthcare */
+            const healthcareSection =
+                document.querySelectorAll(".pharmacy")[0];
+
+            if (healthcareSection) {
+
+                healthcareSection.querySelector("h2").innerText =
+                    t.nearbyHealthcare;
+
+                healthcareSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.nearbyHealthcareDescription;
+
+                healthcareSection.querySelector(
+                    'button[onclick="findNearbyHealthcare()"]'
+                ).innerText =
+                    t.findNearMe;
+
+                const locationStatus =
+                    document.getElementById("locationStatus");
+
+                if (locationStatus &&
+                    locationStatus.innerText.includes(
+                        "Click"
+                    )) {
+                    locationStatus.innerText =
+                        t.locationInitial;
+                }
+
+                const oldRecenter =
+                    healthcareSection.querySelector(
+                        'button[onclick="recenterOnUser()"]'
+                    );
+
+                if (oldRecenter) {
+                    oldRecenter.innerText =
+                        t.recenterOnMe;
+                }
+
+                const legendItems =
+                    healthcareSection.querySelectorAll(
+                        ".legend-item"
+                    );
+
+                if (legendItems[0]) {
+                    legendItems[0].lastChild.textContent =
+                        " " + t.yourLocation;
+                }
+
+                if (legendItems[1]) {
+                    legendItems[1].lastChild.textContent =
+                        " " + t.hospital;
+                }
+
+                if (legendItems[2]) {
+                    legendItems[2].lastChild.textContent =
+                        " " + t.clinic;
+                }
+
+                if (legendItems[3]) {
+                    legendItems[3].lastChild.textContent =
+                        " " + t.pharmacy;
+                }
+            }
+
+
+            /* Navigation */
+            document.querySelectorAll(
+                ".navigation-card"
+            ).forEach(function (card) {
+
+                const small =
+                    card.querySelector(
+                        ".navigation-small"
+                    );
+
+                if (small) {
+                    small.innerText = t.navigation;
+                }
+
+                const modes =
+                    card.querySelectorAll(
+                        ".travel-mode"
+                    );
+
+                modes.forEach(function (button) {
+
+                    const mode =
+                        button.dataset.mode;
+
+                    const span =
+                        button.querySelector("span");
+
+                    if (!span) {
+                        return;
+                    }
+
+                    if (mode === "motorcycle") {
+                        span.innerText = t.twoWheeler;
+                    }
+
+                    else if (mode === "car") {
+                        span.innerText = t.car;
+                    }
+
+                    else if (mode === "bus") {
+                        span.innerText = t.bus;
+                    }
+
+                    else if (mode === "walking") {
+                        span.innerText = t.walk;
+                    }
+                });
+
+
+                card.querySelectorAll(
+                    ".route-summary span"
+                ).forEach(function (span) {
+
+                    if (
+                        span.innerText.toLowerCase()
+                            .includes("distance")
+                    ) {
+                        span.innerText = t.distance;
+                    }
+
+                    else {
+                        span.innerText = t.estimatedTime;
+                    }
+                });
+
+
+                card.querySelectorAll(
+                    ".navigation-start-button"
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.startRoute;
+                });
+
+
+                card.querySelectorAll(
+                    'button[onclick="recenterOnUser()"]'
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.recenter;
+                });
+
+
+                card.querySelectorAll(
+                    ".danger-button"
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.endRoute;
+                });
+
+
+                const instruction =
+                    card.querySelector(
+                        "#currentNavigationInstruction"
+                    );
+
+                if (instruction &&
+                    !window.navigationActive) {
+
+                    instruction.innerText =
+                        t.navigationInstruction;
+                }
+            });
+
+
+            /* Medicine search */
+            const medicineSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[1];
+
+            if (medicineSection) {
+
+                medicineSection.querySelector("h2").innerText =
+                    t.medicineSectionTitle;
+
+                medicineSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.medicineSectionDescription;
+
+                document.getElementById(
+                    "medicine"
+                ).placeholder =
+                    language === "English"
+                        ? "Enter medicine name..."
+                        : language === "Hindi"
+                            ? "दवा का नाम दर्ज करें..."
+                            : language === "Kannada"
+                                ? "ಔಷಧದ ಹೆಸರು ನಮೂದಿಸಿ..."
+                                : language === "Marathi"
+                                    ? "औषधाचे नाव प्रविष्ट करा..."
+                                    : language === "Telugu"
+                                        ? "మందు పేరు నమోదు చేయండి..."
+                                        : "மருந்தின் பெயரை உள்ளிடவும்...";
+
+                medicineSection.querySelector(
+                    'button[onclick="findMedicine()"]'
+                ).innerText =
+                    t.search;
+            }
+
+
+            /* Pharmacy portal */
+            const portalSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[2];
+
+            if (portalSection) {
+
+                portalSection.querySelector("h2").innerText =
+                    t.pharmacyPortal;
+
+                portalSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.pharmacyPortalDescription;
+
+                portalSection.querySelector(
+                    "h3"
+                ).innerText =
+                    t.registerPharmacyTitle;
+
+                document.getElementById(
+                    "pharmacyName"
+                ).placeholder =
+                    t.pharmacyNamePlaceholder;
+
+                document.getElementById(
+                    "ownerName"
+                ).placeholder =
+                    t.ownerNamePlaceholder;
+
+                document.getElementById(
+                    "pharmacyPhone"
+                ).placeholder =
+                    t.phonePlaceholder;
+
+                document.getElementById(
+                    "pharmacyAddress"
+                ).placeholder =
+                    t.addressPlaceholder;
+
+                portalSection.querySelector(
+                    'button[onclick="registerPharmacy()"]'
+                ).innerText =
+                    t.registerPharmacyButton;
+
+
+                const headings =
+                    portalSection.querySelectorAll("h3");
+
+                if (headings[1]) {
+                    headings[1].innerText =
+                        t.inventoryTitle;
+                }
+
+                document.getElementById(
+                    "pharmacyId"
+                ).placeholder =
+                    t.pharmacyIdPlaceholder;
+
+                document.getElementById(
+                    "inventoryMedicine"
+                ).placeholder =
+                    t.medicineNamePlaceholder;
+
+                document.getElementById(
+                    "medicineQuantity"
+                ).placeholder =
+                    t.quantityPlaceholder;
+
+                document.getElementById(
+                    "medicineAvailable"
+                ).parentElement.lastChild.textContent =
+                    " " + t.medicineAvailable;
+
+                portalSection.querySelector(
+                    'button[onclick="updateMedicineInventory()"]'
+                ).innerText =
+                    t.updateAvailability;
+            }
+
+
+            /* Dashboard */
+            const dashboardSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[3];
+
+            if (dashboardSection) {
+
+                dashboardSection.querySelector("h2").innerText =
+                    t.dashboardTitle;
+
+                dashboardSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.dashboardDescription;
+
+                document.getElementById(
+                    "dashboardPharmacyId"
+                ).placeholder =
+                    t.dashboardIdPlaceholder;
+
+                dashboardSection.querySelector(
+                    'button[onclick="loadPharmacyDashboard()"]'
+                ).innerText =
+                    t.loadDashboard;
+            }
+
+
+            /* Footer */
+            document.querySelector("footer").innerText =
+                t.footer;
+
+
+            /* Re-render symptoms in selected language */
+            renderSymptomOptions();
+        }
 
         /* =====================================================
            ELEMENTS
@@ -1774,10 +3003,12 @@
         languageSelect.addEventListener(
             "change",
             function () {
-
+                applyPageLanguage();
                 renderSymptomOptions();
-
             }
+
+
+
         );
 
 
@@ -2953,6 +4184,21 @@
             destinationType
         ) {
 
+            // SAVE DESTINATION FOR NAVIGATION
+            window.navigationDestination = {
+                latitude: destinationLatitude,
+                longitude: destinationLongitude,
+                name: destinationName,
+                type: destinationType
+            };
+
+            // DEFAULT MODE
+            window.selectedTravelMode =
+                window.selectedTravelMode || "motorcycle";
+
+
+            // YOUR ORIGINAL showRoute CODE STARTS HERE
+
             if (!userMarker) {
                 alert("Please click 'Find Near Me' first.");
                 return;
@@ -2983,25 +4229,19 @@
                 .then(response => response.json())
                 .then(data => {
 
-                    if (
-                        !data.routes ||
-                        data.routes.length === 0
-                    ) {
+                    if (!data.routes || data.routes.length === 0) {
                         throw new Error("No route found.");
                     }
 
                     const route = data.routes[0];
-                    window.navigationActive = true;
 
-                    /* Remove old route */
+                    window.navigationActive = true;
 
                     if (window.currentRoute) {
                         healthcareMap.removeLayer(
                             window.currentRoute
                         );
                     }
-
-                    /* Draw route on the Leaflet map */
 
                     window.currentRoute =
                         L.geoJSON(
@@ -3013,8 +4253,6 @@
                                 }
                             }
                         ).addTo(healthcareMap);
-
-                    /* Zoom to route */
 
                     healthcareMap.fitBounds(
                         window.currentRoute.getBounds(),
@@ -3029,7 +4267,34 @@
                     const durationMinutes =
                         Math.round(route.duration / 60);
 
-                    /* Turn-by-turn directions */
+                    /*
+                     * STORE DISTANCE FOR THE
+                     * TRAVEL-MODE BUTTONS
+                     */
+                    window.currentRouteDistance =
+                        parseFloat(distanceKm);
+
+                    /*
+                     * UPDATE NAVIGATION SUMMARY
+                     */
+                    const distanceElement =
+                        document.getElementById("routeDistance");
+
+                    if (distanceElement) {
+                        distanceElement.innerText =
+                            distanceKm + " km";
+                    }
+
+                    /*
+                     * UPDATE TIME ACCORDING TO
+                     * SELECTED TRAVEL MODE
+                     */
+                    updateRouteModeTime();
+
+                    /*
+                     * YOUR EXISTING TURN-BY-TURN
+                     * CODE CONTINUES HERE
+                     */
 
                     let stepsHtml = "";
 
@@ -3043,15 +4308,10 @@
                             route.legs[0].steps
                                 .map((step) => {
 
-                                    /* Distance to this step */
-
                                     const distance =
                                         step.distance >= 1000
                                             ? (step.distance / 1000).toFixed(1) + " km"
                                             : Math.round(step.distance) + " m";
-
-
-                                    /* Work out the instruction */
 
                                     let instruction =
                                         "Continue straight";
@@ -3064,15 +4324,12 @@
                                         const modifier =
                                             step.maneuver.modifier;
 
-
                                         if (type === "depart") {
-
                                             instruction =
                                                 "Start your journey";
                                         }
 
                                         else if (type === "arrive") {
-
                                             instruction =
                                                 "You have arrived";
                                         }
@@ -3080,21 +4337,16 @@
                                         else if (type === "turn") {
 
                                             if (modifier === "left") {
-
-                                                instruction =
-                                                    "Turn left";
+                                                instruction = "Turn left";
                                             }
 
                                             else if (modifier === "right") {
-
-                                                instruction =
-                                                    "Turn right";
+                                                instruction = "Turn right";
                                             }
 
                                             else if (
                                                 modifier === "slight left"
                                             ) {
-
                                                 instruction =
                                                     "Keep slightly left";
                                             }
@@ -3102,7 +4354,6 @@
                                             else if (
                                                 modifier === "slight right"
                                             ) {
-
                                                 instruction =
                                                     "Keep slightly right";
                                             }
@@ -3110,7 +4361,6 @@
                                             else if (
                                                 modifier === "sharp left"
                                             ) {
-
                                                 instruction =
                                                     "Turn sharply left";
                                             }
@@ -3118,40 +4368,30 @@
                                             else if (
                                                 modifier === "sharp right"
                                             ) {
-
                                                 instruction =
                                                     "Turn sharply right";
                                             }
 
                                             else {
-
-                                                instruction =
-                                                    "Turn";
+                                                instruction = "Turn";
                                             }
                                         }
 
                                         else if (
                                             type === "roundabout"
                                         ) {
-
                                             instruction =
                                                 "Enter the roundabout";
                                         }
 
-                                        else if (
-                                            type === "merge"
-                                        ) {
-
+                                        else if (type === "merge") {
                                             instruction =
                                                 "Merge onto the road";
                                         }
 
-                                        else if (
-                                            type === "fork"
-                                        ) {
+                                        else if (type === "fork") {
 
                                             if (modifier === "left") {
-
                                                 instruction =
                                                     "Keep left at the fork";
                                             }
@@ -3159,21 +4399,16 @@
                                             else if (
                                                 modifier === "right"
                                             ) {
-
                                                 instruction =
                                                     "Keep right at the fork";
                                             }
 
                                             else {
-
                                                 instruction =
                                                     "Continue at the fork";
                                             }
                                         }
                                     }
-
-
-                                    /* Road name */
 
                                     const roadName =
                                         step.name &&
@@ -3181,21 +4416,21 @@
                                             ? ` onto <b>${escapeHtml(step.name)}</b>`
                                             : "";
 
-
                                     return `
-                    <li>
-                        ${instruction}${roadName}
+                                <li>
+                                    ${instruction}${roadName}
 
-                        <span
-                            style="
-                                color:#667085;
-                                font-size:13px;
-                            "
-                        >
-                            — ${distance}
-                        </span>
-                    </li>
-                `;
+                                    <span
+                                        style="
+                                            color:#667085;
+                                            font-size:13px;
+                                        "
+                                    >
+                                        — ${distance}
+                                    </span>
+                                </li>
+                            `;
+
                                 })
                                 .join("");
                     }
@@ -3214,7 +4449,9 @@
 
                 <p>
                     <b>⏱️ Estimated time:</b>
-                    ${durationMinutes} minutes
+                    <span id="routeTime">
+                        ${durationMinutes} minutes
+                    </span>
                 </p>
 
                 <h4>Turn-by-turn directions</h4>
@@ -3252,6 +4489,144 @@
             `;
                 });
         }
+
+
+        /* =====================================================
+           TRAVEL MODE TIME CALCULATION
+        ===================================================== */
+
+        function updateRouteModeTime() {
+
+            const distance =
+                window.currentRouteDistance;
+
+            const timeElement =
+                document.getElementById("routeTime");
+
+            if (!distance || !timeElement) {
+                return;
+            }
+
+            const mode =
+                window.selectedTravelMode || "motorcycle";
+
+            let speed;
+
+            switch (mode) {
+
+                case "motorcycle":
+                    speed = 35;
+                    break;
+
+                case "car":
+                    speed = 30;
+                    break;
+
+                case "bus":
+                    speed = 22;
+                    break;
+
+                case "walking":
+                    speed = 5;
+                    break;
+
+                default:
+                    speed = 30;
+            }
+
+            const minutes =
+                Math.max(
+                    1,
+                    Math.round((distance / speed) * 60)
+                );
+
+            timeElement.innerText =
+                minutes + " minutes";
+        }
+
+
+        /* =====================================================
+           START ROUTE
+        ===================================================== */
+
+        function startNavigation() {
+
+            if (!window.navigationDestination) {
+
+                alert(
+                    "Please select a healthcare location first."
+                );
+
+                return;
+            }
+
+            window.navigationActive = true;
+
+            const instruction =
+                document.getElementById(
+                    "currentNavigationInstruction"
+                );
+
+            if (instruction) {
+
+                instruction.innerText =
+                    "🧭 Navigation started. Follow the route on the map.";
+            }
+
+            if ("speechSynthesis" in window) {
+
+                const destination =
+                    window.navigationDestination.name;
+
+                speechSynthesis.cancel();
+
+                const utterance =
+                    new SpeechSynthesisUtterance(
+                        "Navigation started to " + destination
+                    );
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* =====================================================
+           END ROUTE
+        ===================================================== */
+
+        function endNavigation() {
+
+            window.navigationActive = false;
+
+            if (window.currentRoute) {
+
+                healthcareMap.removeLayer(
+                    window.currentRoute
+                );
+
+                window.currentRoute = null;
+            }
+
+            if ("speechSynthesis" in window) {
+                speechSynthesis.cancel();
+            }
+
+            const instruction =
+                document.getElementById(
+                    "currentNavigationInstruction"
+                );
+
+            if (instruction) {
+
+                instruction.innerText =
+                    "Navigation ended.";
+            }
+        }
+
+
+        /* =====================================================
+           YOUR EXISTING clearRoute
+        ===================================================== */
+
         function clearRoute() {
 
             if (window.currentRoute) {
@@ -3262,6 +4637,8 @@
 
                 window.currentRoute = null;
             }
+
+            window.navigationActive = false;
 
             const directionsPanel =
                 document.getElementById("directionsPanel");
@@ -4121,6 +5498,51 @@
 
             window.navigationActive = true;
         }
+        let selectedTravelMode = "motorcycle";
+
+        function selectTravelMode(mode) {
+
+            // Save selected travel mode
+            selectedTravelMode = mode;
+            window.selectedTravelMode = mode;
+
+            // Remove active from every button
+            document.querySelectorAll(".travel-mode").forEach(function (button) {
+                button.classList.remove("active");
+            });
+
+            // Activate the selected button
+            const selectedButton = document.querySelector(
+                `.travel-mode[data-mode="${mode}"]`
+            );
+
+            if (selectedButton) {
+                selectedButton.classList.add("active");
+            }
+
+            // Change estimated time
+            updateRouteModeTime();
+
+            // Change instruction text
+            const instructionElement =
+                document.getElementById("currentNavigationInstruction");
+
+            const modeNames = {
+                motorcycle: "2-Wheeler",
+                car: "Car",
+                bus: "Bus",
+                walking: "Walking"
+            };
+
+            if (instructionElement) {
+
+                instructionElement.innerText =
+                    "🧭 " +
+                    modeNames[mode] +
+                    " selected. Press Start Route to begin navigation.";
+            }
+        }
+
 
     </script>
 
