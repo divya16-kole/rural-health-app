@@ -22,7 +22,7 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #eef7ff, #f8fbff);
+            background: linear-gradient(to right, #da90f2, #accffc);
             color: #172033;
             min-height: 100vh;
             overflow-x: hidden;
@@ -83,7 +83,7 @@
         .logo {
             font-size: 22px;
             font-weight: 800;
-            color: #1677ff;
+            color: #1473f7;
         }
 
         .status {
@@ -731,7 +731,7 @@
 
                     <p>
                         The interface supports English, Hindi,
-                        Kannada and Marathi.
+                        Kannada,Marathi,Tamil and Telugu.
                     </p>
 
                 </div>
@@ -776,6 +776,14 @@
 
                 <option value="Marathi">
                     Marathi
+                </option>
+
+                <option value="Tamil">
+                    Tamil
+                </option>
+
+                <option value="Telugu">
+                    Telugu
                 </option>
 
             </select>
@@ -916,6 +924,103 @@
                 </div>
 
             </div>
+            <div id="navigationControls" style="display:none;">
+
+                <div class="navigation-card">
+
+                    <div class="navigation-header">
+                        <div>
+                            <div class="navigation-small">
+                                🧭 Navigation
+                            </div>
+
+                            <h3 id="navigationDestination">
+                                Destination
+                            </h3>
+                        </div>
+
+                        <button class="voice-toggle" id="voiceNavigationButton" onclick="toggleVoiceNavigation()">
+                            🔊 Voice ON
+                        </button>
+                    </div>
+
+
+                    <div class="travel-modes">
+
+                        <button class="travel-mode active" data-mode="motorcycle"
+                            onclick="selectTravelMode('motorcycle')">
+                            🏍️
+                            <span>2-Wheeler</span>
+                        </button>
+
+                        <button class="travel-mode" data-mode="car" onclick="selectTravelMode('car')">
+                            🚗
+                            <span>Car</span>
+                        </button>
+
+                        <button class="travel-mode" data-mode="bus" onclick="selectTravelMode('bus')">
+                            🚌
+                            <span>Bus</span>
+                        </button>
+
+                        <button class="travel-mode" data-mode="walking" onclick="selectTravelMode('walking')">
+                            🚶
+                            <span>Walk</span>
+                        </button>
+
+                    </div>
+
+
+                    <div class="route-summary">
+
+                        <div>
+                            <strong id="routeDistance">
+                                —
+                            </strong>
+
+                            <span>
+                                distance
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong id="routeTime">
+                                —
+                            </strong>
+
+                            <span>
+                                estimated
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div id="currentNavigationInstruction" class="current-navigation-instruction">
+                        Select a travel mode and start your route.
+                    </div>
+
+
+                    <div class="navigation-actions">
+
+                        <button class="primary navigation-start-button" onclick="startNavigation()">
+                            ▶️ Start Route
+                        </button>
+
+                        <button class="secondary" onclick="recenterOnUser()">
+                            📍 Re-centre
+                        </button>
+
+                        <button class="danger-button" onclick="endNavigation()">
+                            ✕ End Route
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
             <div id="directionsPanel" style="
         display:none;
         margin-top:20px;
@@ -1243,7 +1348,79 @@
                 "Frequent urination": "वारंवार लघवी होणे",
                 "Other": "इतर"
 
+            },
+            Telugu: {
+
+                "Fever": "జ్వరం",
+                "Headache": "తలనొప్పి",
+                "Cough": "దగ్గు",
+                "Cold": "జలుబు",
+                "Sore throat": "గొంతు నొప్పి",
+                "Runny nose": "ముక్కు కారడం",
+                "Body pain": "శరీర నొప్పి",
+                "Fatigue": "అలసట",
+                "Dizziness": "తల తిరగడం",
+                "Nausea": "వికారం",
+                "Vomiting": "వాంతులు",
+                "Stomach pain": "కడుపు నొప్పి",
+                "Diarrhea": "విరేచనాలు",
+                "Chest pain": "ఛాతీ నొప్పి",
+                "Shortness of breath": "శ్వాస తీసుకోవడంలో ఇబ్బంది",
+                "Back pain": "వెన్నునొప్పి",
+                "Joint pain": "కీళ్ల నొప్పి",
+                "Muscle pain": "కండరాల నొప్పి",
+                "Abdominal pain": "ఉదర నొప్పి",
+                "Loss of appetite": "ఆకలి లేకపోవడం",
+                "Weakness": "బలహీనత",
+                "Chills": "చలి",
+                "Skin rash": "చర్మంపై దద్దుర్లు",
+                "Itching": "దురద",
+                "Eye pain": "కంటి నొప్పి",
+                "Ear pain": "చెవి నొప్పి",
+                "Tooth pain": "పంటి నొప్పి",
+                "Constipation": "మలబద్ధకం",
+                "Burning urination": "మూత్ర విసర్జన సమయంలో మంట",
+                "Frequent urination": "తరచుగా మూత్ర విసర్జన",
+                "Other": "ఇతర"
+
+            },
+
+            Tamil: {
+
+                "Fever": "காய்ச்சல்",
+                "Headache": "தலைவலி",
+                "Cough": "இருமல்",
+                "Cold": "சளி",
+                "Sore throat": "தொண்டை வலி",
+                "Runny nose": "மூக்கு ஒழுகுதல்",
+                "Body pain": "உடல் வலி",
+                "Fatigue": "சோர்வு",
+                "Dizziness": "தலைச்சுற்றல்",
+                "Nausea": "குமட்டல்",
+                "Vomiting": "வாந்தி",
+                "Stomach pain": "வயிற்று வலி",
+                "Diarrhea": "வயிற்றுப்போக்கு",
+                "Chest pain": "மார்பு வலி",
+                "Shortness of breath": "மூச்சுத்திணறல்",
+                "Back pain": "முதுகுவலி",
+                "Joint pain": "மூட்டு வலி",
+                "Muscle pain": "தசை வலி",
+                "Abdominal pain": "வயிற்று வலி",
+                "Loss of appetite": "பசியின்மை",
+                "Weakness": "பலவீனம்",
+                "Chills": "குளிர்ச்சியுடன் நடுக்கம்",
+                "Skin rash": "தோலில் தடிப்பு",
+                "Itching": "அரிப்பு",
+                "Eye pain": "கண் வலி",
+                "Ear pain": "காது வலி",
+                "Tooth pain": "பல் வலி",
+                "Constipation": "மலச்சிக்கல்",
+                "Burning urination": "சிறுநீர் கழிக்கும்போது எரிச்சல்",
+                "Frequent urination": "அடிக்கடி சிறுநீர் கழித்தல்",
+                "Other": "மற்றவை"
+
             }
+
 
         };
 
@@ -1319,7 +1496,11 @@
                         ? "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
                         : language === "Marathi"
                             ? "लक्षण निवडा..."
-                            : "Choose a symptom...";
+                            : language === "Telugu"
+                                ? "లక్షణాన్ని ఎంచుకోండి..."
+                                : language === "Tamil"
+                                    ? "அறிகுறியைத் தேர்ந்தெடுக்கவும்..."
+                                    : "Choose a symptom...";
 
             symptomSelect.appendChild(
                 placeholder
@@ -1603,6 +1784,7 @@
         /* =====================================================
            VOICE SUPPORT
         ===================================================== */
+        let activeRecognition = null;
 
         function startVoice() {
 
@@ -1610,71 +1792,198 @@
                 window.SpeechRecognition ||
                 window.webkitSpeechRecognition;
 
+            const button =
+                document.querySelector(
+                    'button[onclick="startVoice()"]'
+                );
+
+            const textarea =
+                document.getElementById("symptoms");
 
             if (!SpeechRecognition) {
 
                 alert(
-                    "Voice recognition is not supported in this browser."
+                    "Voice recognition is not supported in this browser. Please try Google Chrome."
                 );
 
                 return;
-
             }
 
+            /*
+             * If recognition is already running,
+             * stop it instead of starting another one.
+             */
 
-            const recognition =
-                new SpeechRecognition();
+            if (activeRecognition) {
 
+                try {
+                    activeRecognition.stop();
+                } catch (error) {
+                    console.log(error);
+                }
+
+                activeRecognition = null;
+
+                return;
+            }
 
             const language =
-                languageSelect.value;
-
+                document.getElementById("language").value;
 
             const voiceLanguages = {
 
                 English: "en-IN",
-
                 Hindi: "hi-IN",
-
                 Kannada: "kn-IN",
-
-                Marathi: "mr-IN"
+                Marathi: "mr-IN",
+                Telugu: "te-IN",
+                Tamil: "ta-IN"
 
             };
 
+            const recognition =
+                new SpeechRecognition();
+
+            activeRecognition = recognition;
 
             recognition.lang =
-                voiceLanguages[language]
-                || "en-IN";
+                voiceLanguages[language] || "en-IN";
 
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
 
-            recognition.start();
+            /*
+             * Listening state
+             */
 
+            if (button) {
+
+                button.innerHTML =
+                    "🔴 Listening...";
+
+                button.disabled = true;
+            }
+
+            recognition.onstart = function () {
+
+                console.log(
+                    "Voice recognition started:",
+                    recognition.lang
+                );
+
+                if (button) {
+
+                    button.innerHTML =
+                        "🔴 Listening... Speak now";
+                }
+            };
 
             recognition.onresult =
                 function (event) {
 
-                    const text =
-                        event.results[0][0]
-                            .transcript;
+                    const transcript =
+                        event.results[0][0].transcript;
 
-
-                    document.getElementById(
-                        "symptoms"
-                    ).value = text;
-
-                };
-
-
-            recognition.onerror =
-                function () {
-
-                    alert(
-                        "Voice recognition could not be completed. Please try again."
+                    console.log(
+                        "Recognized speech:",
+                        transcript
                     );
 
+                    /*
+                     * Put recognized speech into
+                     * the additional-details box.
+                     */
+
+                    textarea.value =
+                        transcript;
+
+                    textarea.focus();
                 };
 
+            recognition.onerror =
+                function (event) {
+
+                    console.error(
+                        "Speech recognition error:",
+                        event.error
+                    );
+
+                    let message =
+                        "Voice recognition could not be completed.";
+
+                    if (event.error === "not-allowed") {
+
+                        message =
+                            "Microphone permission was denied. Please allow microphone access.";
+
+                    }
+                    else if (event.error === "no-speech") {
+
+                        message =
+                            "No speech was detected. Please try again.";
+
+                    }
+                    else if (event.error === "language-not-supported") {
+
+                        message =
+                            "This language is not supported by your current browser.";
+
+                    }
+                    else if (event.error === "network") {
+
+                        message =
+                            "Voice recognition needs an internet connection in this browser.";
+
+                    }
+
+                    alert(message);
+                };
+
+            recognition.onend =
+                function () {
+
+                    console.log(
+                        "Voice recognition ended."
+                    );
+
+                    if (button) {
+
+                        button.innerHTML =
+                            "🎙️ Speak Symptoms";
+
+                        button.disabled = false;
+                    }
+
+                    activeRecognition = null;
+                };
+
+            try {
+
+                recognition.start();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Could not start speech recognition:",
+                    error
+                );
+
+                if (button) {
+
+                    button.innerHTML =
+                        "🎙️ Speak Symptoms";
+
+                    button.disabled = false;
+                }
+
+                activeRecognition = null;
+
+                alert(
+                    "Could not start the microphone. Please try again."
+                );
+            }
         }
 
 
