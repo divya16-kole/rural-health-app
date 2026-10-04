@@ -823,6 +823,20 @@ def transcribe_audio():
             "message": f"Voice transcription failed: {error}"
         }), 500
 
+
+    @app.route("/api/admin/stats", methods=["GET"])
+    def admin_stats():
+     conn = get_db()
+     c = conn.cursor()
+     pharmacies = c.execute("SELECT COUNT(*) FROM pharmacies").fetchone()[0]
+     medicines = c.execute(
+        "SELECT COUNT(DISTINCT LOWER(medicine_name)) FROM medicine_inventory"
+     ).fetchone()[0]
+     conn.close()
+     return jsonify({"pharmacies": pharmacies, "medicines": medicines})
+    
+    
+
 # ==================================================
 # INITIALIZE DATABASE
 # ==================================================

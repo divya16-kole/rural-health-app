@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
     </script>
 
-    <title>RuralCare AI</title>
+    <title>Healvia</title>
 
 
     <style>
@@ -918,6 +918,453 @@
                 width: 100%
             }
         }
+
+        /* ===== Healvia theme layer ===== */
+        :root {
+            --green: #0b6b4d;
+            --green-dark: #064e3b;
+            --green-soft: #e8f5ee;
+            --mint: #f3faf6
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap
+        }
+
+        nav .logo small {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: #667085
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        nav .nav-links a {
+            cursor: pointer;
+            padding: 6px 2px;
+            border-bottom: 2px solid transparent;
+            font-size: 14px
+        }
+
+        nav .nav-links a.on {
+            color: var(--green);
+            border-color: var(--green);
+            font-weight: 700
+        }
+
+        .spage {
+            display: none
+        }
+
+        .spage.on {
+            display: block
+        }
+
+        .quick {
+            display: flex;
+            gap: 26px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 22px auto;
+            max-width: 900px
+        }
+
+        .quick div {
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            width: 120px
+        }
+
+        .quick span {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            font-size: 26px
+        }
+
+        .quick small {
+            display: block;
+            font-weight: 400;
+            color: #667085;
+            font-size: 11px
+        }
+
+        .langbar {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            border-radius: 14px;
+            padding: 16px
+        }
+
+        #chips {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        #chips span {
+            padding: 8px 18px;
+            border: 1px solid #dce9e2;
+            border-radius: 8px;
+            cursor: pointer
+        }
+
+        #chips span.on {
+            background: var(--green);
+            color: #fff
+        }
+
+        .stepper {
+            display: flex;
+            gap: 22px;
+            margin: 0 0 18px;
+            font-size: 13px;
+            color: #667085;
+            flex-wrap: wrap
+        }
+
+        .stepper b {
+            display: inline-grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #cbd5d0;
+            color: #fff;
+            margin-right: 6px
+        }
+
+        .stepper .on {
+            color: #17352a;
+            font-weight: 700
+        }
+
+        .stepper .on b {
+            background: var(--green)
+        }
+
+        .call108 {
+            display: inline-block;
+            background: #b42318;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 12px 0
+        }
+
+        .tips {
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.6
+        }
+
+        .tips p {
+            margin: 6px 0
+        }
+
+        .tips .disc {
+            background: #fff8e6;
+            border: 1px solid #f5c26b;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px
+        }
+
+        .ftabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0
+        }
+
+        .ftabs button {
+            padding: 8px 16px;
+            border: 1px solid #dce9e2;
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .ftabs button.on {
+            background: var(--green);
+            color: #fff
+        }
+
+        .pwrap {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            max-width: 1150px;
+            margin: 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #dce9e2;
+            background: #fff
+        }
+
+        .pside {
+            background: var(--green-dark);
+            color: #fff;
+            padding: 16px 10px
+        }
+
+        .pside b {
+            display: block;
+            padding: 8px 12px 16px
+        }
+
+        .pside a {
+            display: block;
+            padding: 11px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            font-size: 14px
+        }
+
+        .pside a.on,
+        .pside a:hover {
+            background: #ffffff26
+        }
+
+        .pmain {
+            padding: 10px;
+            min-width: 0
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 14px 0 22px
+        }
+
+        .stats div {
+            border: 1px solid #dce9e2;
+            border-radius: 12px;
+            padding: 14px
+        }
+
+        .stats b {
+            display: block;
+            font-size: 26px;
+            color: var(--green-dark)
+        }
+
+        .act td {
+            padding: 10px;
+            border-bottom: 1px solid #dce9e2;
+            font-size: 14px
+        }
+
+        .loginbox {
+            max-width: 430px;
+            margin: 20px auto
+        }
+
+        .loginbox p {
+            margin: 8px 0
+        }
+
+        .ltabs {
+            display: flex;
+            background: var(--green-soft);
+            border-radius: 8px;
+            padding: 4px;
+            margin: 12px 0
+        }
+
+        .ltabs span {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer
+        }
+
+        .ltabs .on {
+            background: #fff;
+            font-weight: 700
+        }
+
+        @media(max-width:760px) {
+            .pwrap {
+                grid-template-columns: 1fr
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            nav .nav-links {
+                gap: 10px
+            }
+        }
+
+
+        /* ===== Nearby: map + list ===== */
+        .ftabs button i {
+            font-style: normal;
+            margin-left: 6px;
+            font-size: 12px;
+            background: #0b6b4d22;
+            border-radius: 10px;
+            padding: 1px 7px
+        }
+
+        .ftabs button.on i {
+            background: #ffffff40
+        }
+
+        .nearGrid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 18px;
+            margin-top: 14px
+        }
+
+        .flist {
+            max-height: 430px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px
+        }
+
+        .fitem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            border-radius: 12px;
+            padding: 12px 14px
+        }
+
+        .finfo {
+            cursor: pointer;
+            min-width: 0
+        }
+
+        .finfo b {
+            display: block;
+            font-size: 14px
+        }
+
+        .finfo small {
+            color: #667085;
+            font-size: 12px
+        }
+
+        .fbtns {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0
+        }
+
+        .fbtns button,
+        .fbtns a {
+            border: 1px solid #0b6b4d;
+            color: #0b6b4d;
+            background: #fff;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .fempty {
+            background: #e8f1fb;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 13px;
+            color: #344054
+        }
+
+        @media(max-width:860px) {
+            .nearGrid {
+                grid-template-columns: 1fr
+            }
+
+            .flist {
+                max-height: none
+            }
+        }
+
+        /* ===== Watch Video modal ===== */
+        .vmodal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000000b3;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px
+        }
+
+        .vmodal.on {
+            display: flex
+        }
+
+        .vbox {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px;
+            width: min(820px, 100%)
+        }
+
+        .vbox video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            max-height: 70vh
+        }
+
+        .vbox p {
+            padding: 18px;
+            line-height: 1.6;
+            color: #344054
+        }
+
+        .vclose {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px #0004;
+            cursor: pointer;
+            font-size: 16px
+        }
     </style>
 </head>
 
@@ -925,198 +1372,365 @@
     <div class="blob one"></div>
     <div class="blob two"></div>
     <nav>
-        <div class="logo">🌾 RuralCare AI</div>
-        <div class="nav-links"><a href="#triageCard">Symptom Check</a><a href="#healthcareSection">Nearby Care</a><a
-                href="#medicineSection">Medicines</a></div>
+        <div class="logo" onclick="showPage('home')" style="cursor:pointer">🌿 Healvia<small>Health for Every
+                Home</small></div>
+        <div class="nav-links">
+            <a data-p="home" onclick="showPage('home')">Home</a>
+            <a data-p="symptoms" onclick="showPage('symptoms')">Check Symptoms</a>
+            <a data-p="nearby" onclick="showPage('nearby')">Nearby Healthcare</a>
+            <a data-p="medicine" onclick="showPage('medicine')">Medicine</a>
+            <a data-p="pharmacy" onclick="showPage('pharmacy')">Pharmacy</a>
+            <a data-p="admin" onclick="showPage('admin')">Admin</a>
+            <a data-p="login" onclick="showPage('login')">Login</a>
+        </div>
         <div class="status">● AI Healthcare Assistant</div>
     </nav>
-    <section class="hero">
-        <div class="hero-copy">
-            <div class="hero-kicker">🌿 Accessible healthcare support</div>
-            <h1>Healthcare Support <span>Closer to Every Village</span></h1>
-            <p>An AI-powered rural healthcare assistance system that helps users understand symptom urgency and connect
-                with nearby healthcare resources.</p>
-            <div class="hero-actions"><a class="primary" href="#triageCard"
-                    style="text-decoration:none;padding:11px 15px;border-radius:11px;font-size:14px;font-weight:800;display:inline-block">🩺
-                    Check Symptoms</a><a class="secondary" href="#healthcareSection"
-                    style="text-decoration:none;padding:10px 15px;border-radius:11px;font-size:14px;font-weight:800;display:inline-block">📍
-                    Find Healthcare</a></div>
+    <div class="spage on" id="sp-home">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="hero-kicker">🌿 Accessible healthcare support</div>
+                <h1>Healthcare Support <span>Closer to Every Village</span></h1>
+                <p>An AI-powered rural healthcare assistance system that helps users understand symptom urgency and
+                    connect
+                    with nearby healthcare resources.</p>
+                <div class="hero-actions"><button class="primary" onclick="showPage('symptoms')"
+                        style="padding:12px 24px;border-radius:11px;font-size:14px;font-weight:800">Get
+                        Started</button><button class="secondary" onclick="openVideo()"
+                        style="padding:11px 22px;border-radius:11px;font-size:14px;font-weight:800">▶ Watch
+                        Video</button></div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-badge">AI assistance • Regional languages</div>
+                <div class="sun"></div>
+                <div class="village">
+                    <div class="hill"></div>
+                    <div class="hill two"></div>
+                    <div class="house"></div>
+                </div>
+            </div>
+        </section>
+        <div class="quick">
+            <div onclick="showPage('symptoms')"><span>🛡️</span>Symptom Check</div>
+            <div onclick="showPage('nearby')"><span>📍</span>Nearby Healthcare</div>
+            <div onclick="showPage('medicine')"><span>💊</span>Medicine Availability</div>
+            <div onclick="showPage('sms')"><span>💬</span>SMS Support<small>(Low Connectivity)</small></div>
         </div>
-        <div class="hero-visual">
-            <div class="hero-badge">AI assistance • Regional languages</div>
-            <div class="sun"></div>
-            <div class="village">
-                <div class="hill"></div>
-                <div class="hill two"></div>
-                <div class="house"></div>
-            </div>
+        <div class="langbar"><b>Choose Your Language</b>
+            <div id="chips"></div>
         </div>
-    </section>
-    <div class="container">
-        <div class="how-help-section">
-            <button class="help-toggle" id="helpToggle" onclick="toggleHelp()"><span>💡 How It
-                    Helps</span><span>▼</span></button>
-            <div class="help-content" id="helpContent">
-                <div class="feature">
-                    <div class="feature-icon">🎙️</div>
-                    <h3>Voice Support</h3>
-                    <p>Users can describe symptoms using voice, helping people who find typing difficult.</p>
+        <div class="container">
+            <div class="how-help-section">
+                <button class="help-toggle" id="helpToggle" onclick="toggleHelp()"><span>💡 How It
+                        Helps</span><span>▼</span></button>
+                <div class="help-content" id="helpContent">
+                    <div class="feature">
+                        <div class="feature-icon">🎙️</div>
+                        <h3>Voice Support</h3>
+                        <p>Users can describe symptoms using voice, helping people who find typing difficult.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Triage</h3>
+                        <p>The system provides basic urgency guidance based on reported symptoms.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💊</div>
+                        <h3>Medicine Availability</h3>
+                        <p>Users can search participating pharmacies for medicine availability.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Regional Languages</h3>
+                        <p>The interface supports English, Hindi, Kannada, Marathi, Tamil and Telugu.</p>
+                    </div>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Triage</h3>
-                    <p>The system provides basic urgency guidance based on reported symptoms.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">💊</div>
-                    <h3>Medicine Availability</h3>
-                    <p>Users can search participating pharmacies for medicine availability.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Regional Languages</h3>
-                    <p>The interface supports English, Hindi, Kannada, Marathi, Tamil and Telugu.</p>
-                </div>
-            </div>
-        </div>
-        <div class="card" id="triageCard">
-            <h2>🩺 AI Symptom Triage</h2>
-            <p class="card-description">Select your symptoms and provide additional details. The system will provide
-                basic urgency guidance.</p>
-            <label for="language">Preferred Language</label><select id="language">
-                <option value="English">English</option>
-                <option value="Hindi">Hindi</option>
-                <option value="Kannada">Kannada</option>
-                <option value="Marathi">Marathi</option>
-                <option value="Tamil">Tamil</option>
-                <option value="Telugu">Telugu</option>
-            </select>
-            <label for="symptomSelect">Select Symptoms</label><select id="symptomSelect" class="symptom-select">
-                <option value="">Choose a symptom...</option>
-            </select>
-            <div id="selectedTitle" class="selected-title" style="display:none;">Selected symptoms</div>
-            <div id="selectedSymptomsContainer" class="selected-symptoms"></div>
-            <div id="otherSymptomBox">
-                <div class="other-row"><input type="text" id="otherSymptom" placeholder="Enter other symptom"><button
-                        class="secondary add-other" onclick="addOtherSymptom()">Add</button></div>
-            </div>
-            <label for="symptoms">Additional Details</label><textarea id="symptoms"
-                placeholder="Describe any additional symptoms or details..."></textarea>
-            <div class="button-row"><button class="secondary" onclick="startVoice()">🎙️ Speak Symptoms</button><button
-                    class="primary" onclick="checkSeverity()">✨ Check Severity</button></div>
-            <div id="voiceVisualizer" class="voice-visualizer">
-                <div class="voice-status-row"><span class="voice-live-dot"></span><span id="voiceStatusText">🎙️
-                        Listening... Speak now</span></div>
-                <div id="frequencyBars" class="frequency-bars">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                </div><button type="button" class="voice-stop-button" onclick="stopVoice()">✕ Stop Listening</button>
-            </div>
-            <div class="result" id="result">
-                <h3 id="resultTitle">Assessment</h3>
-                <p id="resultText">Your result will appear here.</p>
             </div>
         </div>
     </div>
-    <section class="pharmacy" id="healthcareSection">
-        <div class="card">
-            <h2>🗺️ Nearby Healthcare</h2>
-            <p class="card-description">Find hospitals, clinics and pharmacies near your current location.</p>
-            <div class="button-row"><button class="primary" onclick="findNearbyHealthcare()">📍 Find Near Me</button>
+    <div class="spage" id="sp-symptoms">
+        <div class="container">
+            <div class="stepper"><span id="stp1" class="on"><b>1</b>Symptoms</span><span id="stp2"><b>2</b>Triage
+                    Result</span><span id="stp3"><b>3</b>Nearby Care</span></div>
+            <div class="card" id="triageCard">
+                <h2>🩺 AI Symptom Triage</h2>
+                <p class="card-description">Select your symptoms and provide additional details. The system will provide
+                    basic urgency guidance.</p>
+                <label for="language">Preferred Language</label><select id="language">
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Kannada">Kannada</option>
+                    <option value="Marathi">Marathi</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Telugu">Telugu</option>
+                </select>
+                <label for="symptomSelect">Select Symptoms</label><select id="symptomSelect" class="symptom-select">
+                    <option value="">Choose a symptom...</option>
+                </select>
+                <div id="selectedTitle" class="selected-title" style="display:none;">Selected symptoms</div>
+                <div id="selectedSymptomsContainer" class="selected-symptoms"></div>
+                <div id="otherSymptomBox">
+                    <div class="other-row"><input type="text" id="otherSymptom"
+                            placeholder="Enter other symptom"><button class="secondary add-other"
+                            onclick="addOtherSymptom()">Add</button></div>
+                </div>
+                <label for="symptoms">Additional Details</label><textarea id="symptoms"
+                    placeholder="Describe any additional symptoms or details..."></textarea>
+                <div class="button-row"><button class="secondary" onclick="startVoice()">🎙️ Speak
+                        Symptoms</button><button class="primary" onclick="checkSeverity()">✨ Check Severity</button>
+                </div>
+                <div id="voiceVisualizer" class="voice-visualizer">
+                    <div class="voice-status-row"><span class="voice-live-dot"></span><span id="voiceStatusText">🎙️
+                            Listening... Speak now</span></div>
+                    <div id="frequencyBars" class="frequency-bars">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div><button type="button" class="voice-stop-button" onclick="stopVoice()">✕ Stop
+                        Listening</button>
+                </div>
+                <div class="result" id="result">
+                    <h3 id="resultTitle">Assessment</h3>
+                    <p id="resultText">Your result will appear here.</p>
+                    <a id="call108" href="tel:108" class="call108" style="display:none">📞 Call 108 (Ambulance)</a>
+                    <div class="tips"><b>What you should do:</b>
+                        <p>✅ Visit a nearby clinic or doctor as soon as possible.</p>
+                        <p>💧 Keep yourself hydrated and rest.</p>
+                        <p>⚠️ If symptoms get worse (high fever, severe pain, difficulty breathing), seek urgent care
+                            immediately.</p>
+                        <p class="disc">🟡 This is not a diagnosis or prescription. Please consult a qualified
+                            healthcare professional.</p>
+                        <button class="primary" onclick="showPage('nearby');setStep(3)">📍 Find nearby care</button>
+                    </div>
+                </div>
             </div>
-            <p id="locationStatus" style="margin-top:15px;color:#667085;line-height:1.5;">Click "Find Near Me" to locate
-                nearby hospitals and pharmacies.</p>
-            <div id="healthcareMap"
-                style="width:100%;height:500px;margin-top:20px;border-radius:18px;overflow:hidden;border:1px solid #e1e8f0;">
-            </div>
-            <div class="map-legend">
-                <div class="legend-item"><span class="legend-dot legend-current"></span>Your Location</div>
-                <div class="legend-item"><span class="legend-dot legend-hospital"></span>Hospital</div>
-                <div class="legend-item"><span class="legend-dot legend-clinic"></span>Clinic</div>
-                <div class="legend-item"><span class="legend-dot legend-pharmacy"></span>Pharmacy</div>
-            </div>
-            <div id="directionsPanel"
-                style="display:none;margin-top:20px;padding:20px;background:#f7fbf8;border-radius:18px;border:1px solid #e1e8f0;">
-            </div>
-            <div id="navigationControls" style="margin-top:20px;">
-                <div class="navigation-card">
-                    <div class="navigation-header">
-                        <div>
-                            <div class="navigation-small">🧭 Navigation</div>
-                            <h3 id="navigationDestination">Select a healthcare location</h3>
+        </div>
+    </div>
+    <div class="spage" id="sp-nearby">
+        <section class="pharmacy" id="healthcareSection">
+            <div class="card">
+                <h2>🗺️ Nearby Healthcare</h2>
+                <p class="card-description">Find hospitals, clinics and pharmacies near your current location.</p>
+                <div class="button-row"><button class="primary" onclick="findNearbyHealthcare()">📍 Find Near
+                        Me</button>
+                </div>
+                <div class="ftabs">
+                    <button class="on" data-t="all" onclick="filterFacilities('all',this)">All <i
+                            id="c-all">0</i></button>
+                    <button data-t="hospital" onclick="filterFacilities('hospital',this)">🏥 Hospitals <i
+                            id="c-hospital">0</i></button>
+                    <button data-t="clinic" onclick="filterFacilities('clinic',this)">⚕️ Clinics <i
+                            id="c-clinic">0</i></button>
+                    <button data-t="pharmacy" onclick="filterFacilities('pharmacy',this)">💊 Pharmacies <i
+                            id="c-pharmacy">0</i></button>
+                </div>
+                <p id="locationStatus" style="margin-top:15px;color:#667085;line-height:1.5;">Click "Find Near Me" to
+                    locate
+                    nearby hospitals and pharmacies.</p>
+                <div class="nearGrid">
+                    <div id="healthcareMap"
+                        style="width:100%;height:430px;border-radius:18px;overflow:hidden;border:1px solid #e1e8f0;">
+                    </div>
+                    <div id="flist" class="flist">
+                        <div class="fempty">Tap <b>Find Near Me</b> to see hospitals, clinics and pharmacies around you.
                         </div>
                     </div>
-                    <div class="travel-modes"><button class="travel-mode active" data-mode="motorcycle"
-                            onclick="selectTravelMode('motorcycle')">🏍️<span>2-Wheeler</span></button><button
-                            class="travel-mode" data-mode="car"
-                            onclick="selectTravelMode('car')">🚗<span>Car</span></button><button class="travel-mode"
-                            data-mode="bus" onclick="selectTravelMode('bus')">🚌<span>Bus</span></button><button
-                            class="travel-mode" data-mode="walking"
-                            onclick="selectTravelMode('walking')">🚶<span>Walk</span></button></div>
-                    <div class="route-summary">
-                        <div><strong id="routeDistance">—</strong><span>Distance</span></div>
-                        <div><strong id="navigationRouteTime">—</strong><span>Estimated time</span></div>
+                </div>
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-dot legend-current"></span>Your Location</div>
+                    <div class="legend-item"><span class="legend-dot legend-hospital"></span>Hospital</div>
+                    <div class="legend-item"><span class="legend-dot legend-clinic"></span>Clinic</div>
+                    <div class="legend-item"><span class="legend-dot legend-pharmacy"></span>Pharmacy</div>
+                </div>
+                <div id="directionsPanel"
+                    style="display:none;margin-top:20px;padding:20px;background:#f7fbf8;border-radius:18px;border:1px solid #e1e8f0;">
+                </div>
+                <div id="navigationControls" style="margin-top:20px;">
+                    <div class="navigation-card">
+                        <div class="navigation-header">
+                            <div>
+                                <div class="navigation-small">🧭 Navigation</div>
+                                <h3 id="navigationDestination">Select a healthcare location</h3>
+                            </div>
+                        </div>
+                        <div class="travel-modes"><button class="travel-mode active" data-mode="motorcycle"
+                                onclick="selectTravelMode('motorcycle')">🏍️<span>2-Wheeler</span></button><button
+                                class="travel-mode" data-mode="car"
+                                onclick="selectTravelMode('car')">🚗<span>Car</span></button><button class="travel-mode"
+                                data-mode="bus" onclick="selectTravelMode('bus')">🚌<span>Bus</span></button><button
+                                class="travel-mode" data-mode="walking"
+                                onclick="selectTravelMode('walking')">🚶<span>Walk</span></button></div>
+                        <div class="route-summary">
+                            <div><strong id="routeDistance">—</strong><span>Distance</span></div>
+                            <div><strong id="navigationRouteTime">—</strong><span>Estimated time</span></div>
+                        </div>
+                        <div id="currentNavigationInstruction" class="current-navigation-instruction">Select a travel
+                            mode
+                            to begin navigation.</div>
+                        <div class="navigation-actions"><button class="primary navigation-start-button"
+                                onclick="startNavigation()">▶️ Start Route</button><button class="secondary"
+                                onclick="recenterOnUser()">📍 Re-centre</button><button class="danger-button"
+                                onclick="endNavigation()">✕ End Route</button></div>
                     </div>
-                    <div id="currentNavigationInstruction" class="current-navigation-instruction">Select a travel mode
-                        to begin navigation.</div>
-                    <div class="navigation-actions"><button class="primary navigation-start-button"
-                            onclick="startNavigation()">▶️ Start Route</button><button class="secondary"
-                            onclick="recenterOnUser()">📍 Re-centre</button><button class="danger-button"
-                            onclick="endNavigation()">✕ End Route</button></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="spage" id="sp-medicine">
+        <section class="pharmacy" id="medicineSection">
+            <div class="card">
+                <h2>💊 Medicine Availability</h2>
+                <p class="card-description">Search for a medicine to check availability at participating nearby
+                    pharmacies.
+                </p>
+                <div class="pharmacy-box"><input type="text" id="medicine" placeholder="Enter medicine name..."><button
+                        class="primary" onclick="findMedicine()">Search</button></div>
+                <div id="pharmacyResult">
+                    <p id="pharmacyText"></p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="spage" id="sp-pharmacy">
+        <div class="pwrap">
+            <aside class="pside"><b>🌿 Pharmacy / Shopkeeper</b>
+                <a class="on"
+                    onclick="document.getElementById('pharmacyId').scrollIntoView({behavior:'smooth',block:'center'})">Update
+                    Inventory</a>
+                <a
+                    onclick="document.getElementById('dashboardPharmacyId').scrollIntoView({behavior:'smooth',block:'center'})">My
+                    Pharmacy</a>
+                <a onclick="showPage('medicine')">Search Medicines</a>
+                <a onclick="showPage('login')">Logout</a>
+            </aside>
+            <div class="pmain">
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>🏪 Pharmacy / Shopkeeper Portal</h2>
+                        <p class="card-description">Register your pharmacy and update medicine availability for patients
+                            searching
+                            nearby.</p>
+                        <div class="portal-grid">
+                            <div class="portal-panel">
+                                <h3>Register Pharmacy</h3><input type="text" id="pharmacyName"
+                                    placeholder="Pharmacy name"><input type="text" id="ownerName"
+                                    placeholder="Owner / Shopkeeper name"><input type="text" id="pharmacyPhone"
+                                    placeholder="Phone number"><input type="text" id="pharmacyAddress"
+                                    placeholder="Pharmacy address">
+                                <div class="button-row"><button class="primary" onclick="registerPharmacy()">🏪 Register
+                                        Pharmacy</button></div>
+                                <p id="registrationResult" style="margin-top:12px;"></p>
+                            </div>
+                            <div class="portal-panel">
+                                <h3>Update Medicine Availability</h3><input type="number" id="pharmacyId"
+                                    placeholder="Pharmacy ID"><input type="text" id="inventoryMedicine"
+                                    placeholder="Medicine name"><input type="number" id="medicineQuantity"
+                                    placeholder="Quantity available" min="0"><label
+                                    style="display:flex;align-items:center;gap:10px;margin:12px 0;"><input
+                                        type="checkbox" id="medicineAvailable" style="width:auto;">Medicine currently
+                                    available</label>
+                                <div class="button-row"><button class="primary" onclick="updateMedicineInventory()">💊
+                                        Update
+                                        Availability</button></div>
+                                <p id="inventoryResult" style="margin-top:12px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>📊 Pharmacy Dashboard</h2>
+                        <p class="card-description">View and manage the medicines currently reported by your pharmacy.
+                        </p>
+                        <div class="pharmacy-box"><input type="number" id="dashboardPharmacyId"
+                                placeholder="Enter Pharmacy ID..." min="1"><button class="primary"
+                                onclick="loadPharmacyDashboard()">📊 Load Dashboard</button></div>
+                        <div id="dashboardResult" class="dashboard-shell" style="margin-top:20px;display:none;"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="spage" id="sp-admin">
+        <div class="pwrap">
+            <aside class="pside"><b>🌿 Healvia</b><a class="on">Overview</a><a
+                    onclick="showPage('pharmacy')">Pharmacies</a><a onclick="showPage('medicine')">Medicine
+                    Inventory</a><a onclick="showPage('login')">Logout</a></aside>
+            <div class="pmain">
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>Admin Dashboard</h2>
+                        <div class="stats">
+                            <div><small>Total Users</small><b>1,248</b></div>
+                            <div><small>Active Pharmacies</small><b id="statPharmacies">0</b></div>
+                            <div><small>Hospitals &amp; Clinics</small><b>42</b></div>
+                            <div><small>Total Medicines</small><b id="statMedicines">0</b></div>
+                        </div>
+                        <h3>Recent Activity <small>(sample data)</small></h3>
+                        <table class="act">
+                            <tr>
+                                <td>3:20 PM</td>
+                                <td>New pharmacy registered</td>
+                            </tr>
+                            <tr>
+                                <td>2:45 PM</td>
+                                <td>Medicine stock updated – Paracetamol (50 units)</td>
+                            </tr>
+                            <tr>
+                                <td>1:30 PM</td>
+                                <td>New user registered</td>
+                            </tr>
+                            <tr>
+                                <td>11:15 AM</td>
+                                <td>Urgent care alert – fever + breathing issue</td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="spage" id="sp-login">
+        <div class="container">
+            <div class="card loginbox">
+                <h2>Login to Your Account</h2>
+                <div class="ltabs"><span class="on">Mobile</span><span
+                        onclick="alert('Email login coming soon')">Email</span></div>
+                <label>Mobile Number</label>
+                <div style="display:flex;gap:8px"><input value="+91" style="width:70px" readonly><input id="loginMobile"
+                        type="tel" placeholder="98765 43210"></div>
+                <button class="primary" style="width:100%;margin-top:14px" onclick="sendOtp()">Send OTP</button>
+                <div id="otpBox" style="display:none"><input id="otpInput" placeholder="Enter 6-digit OTP"
+                        style="margin-top:12px"><button class="primary" style="width:100%;margin-top:10px"
+                        onclick="verifyOtp()">Verify &amp; Login</button></div>
+                <p style="font-size:12px;margin-top:12px;color:#667085">Demo mode: any 6-digit code works. Real SMS OTP
+                    is planned.</p>
+            </div>
+        </div>
+    </div>
+    <div class="spage" id="sp-sms">
+        <div class="container">
+            <div class="card loginbox">
+                <div style="font-size:46px;text-align:center">📱</div>
+                <h2 style="text-align:center">Get Important Health Information via SMS</h2>
+                <p>Even without internet, you can:</p>
+                <p>✅ Send your symptoms (in your language)</p>
+                <p>✅ Get triage guidance and safety tips</p>
+                <p>✅ Find nearby hospitals, clinics and pharmacies</p>
+                <div class="tips" style="margin-top:14px"><b>SMS Format Example:</b>
+                    <p>"Fever and cough for 2 days" to 12345</p>
+                    <p class="disc">Prototype page: SMS service is planned, not live.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="pharmacy" id="medicineSection">
-        <div class="card">
-            <h2>💊 Medicine Availability</h2>
-            <p class="card-description">Search for a medicine to check availability at participating nearby pharmacies.
-            </p>
-            <div class="pharmacy-box"><input type="text" id="medicine" placeholder="Enter medicine name..."><button
-                    class="primary" onclick="findMedicine()">Search</button></div>
-            <div id="pharmacyResult">
-                <p id="pharmacyText"></p>
-            </div>
+    </div>
+    <div id="videoModal" class="vmodal" onclick="if(event.target===this)closeVideo()">
+        <div class="vbox"><button class="vclose" onclick="closeVideo()" aria-label="Close video">✕</button>
+            <video id="demoVideo" controls playsinline preload="none">
+                <source src="/static/demo.mp4" type="video/mp4">
+            </video>
+            <p id="videoMsg" style="display:none">Demo video not added yet. Save your video as <b>static/demo.mp4</b> in
+                the project folder and refresh this page.</p>
         </div>
-    </section>
-    <section class="pharmacy">
-        <div class="card">
-            <h2>🏪 Pharmacy / Shopkeeper Portal</h2>
-            <p class="card-description">Register your pharmacy and update medicine availability for patients searching
-                nearby.</p>
-            <div class="portal-grid">
-                <div class="portal-panel">
-                    <h3>Register Pharmacy</h3><input type="text" id="pharmacyName" placeholder="Pharmacy name"><input
-                        type="text" id="ownerName" placeholder="Owner / Shopkeeper name"><input type="text"
-                        id="pharmacyPhone" placeholder="Phone number"><input type="text" id="pharmacyAddress"
-                        placeholder="Pharmacy address">
-                    <div class="button-row"><button class="primary" onclick="registerPharmacy()">🏪 Register
-                            Pharmacy</button></div>
-                    <p id="registrationResult" style="margin-top:12px;"></p>
-                </div>
-                <div class="portal-panel">
-                    <h3>Update Medicine Availability</h3><input type="number" id="pharmacyId"
-                        placeholder="Pharmacy ID"><input type="text" id="inventoryMedicine"
-                        placeholder="Medicine name"><input type="number" id="medicineQuantity"
-                        placeholder="Quantity available" min="0"><label
-                        style="display:flex;align-items:center;gap:10px;margin:12px 0;"><input type="checkbox"
-                            id="medicineAvailable" style="width:auto;">Medicine currently available</label>
-                    <div class="button-row"><button class="primary" onclick="updateMedicineInventory()">💊 Update
-                            Availability</button></div>
-                    <p id="inventoryResult" style="margin-top:12px;"></p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="pharmacy">
-        <div class="card">
-            <h2>📊 Pharmacy Dashboard</h2>
-            <p class="card-description">View and manage the medicines currently reported by your pharmacy.</p>
-            <div class="pharmacy-box"><input type="number" id="dashboardPharmacyId" placeholder="Enter Pharmacy ID..."
-                    min="1"><button class="primary" onclick="loadPharmacyDashboard()">📊 Load Dashboard</button></div>
-            <div id="dashboardResult" class="dashboard-shell" style="margin-top:20px;display:none;"></div>
-        </div>
-    </section>
-    <footer>RuralCare AI is a prototype healthcare assistance system. It does not provide medical diagnosis or
+    </div>
+    <footer>Healvia is a prototype healthcare assistance system. It does not provide medical diagnosis or
         prescriptions. Always consult a qualified healthcare professional for medical decisions.</footer>
     <script>
         /* =====================================================
@@ -1445,7 +2059,7 @@
                 loadDashboard: "📊 Load Dashboard",
 
                 footer:
-                    "RuralCare AI is a prototype healthcare assistance system. It does not provide medical diagnosis or prescriptions. Always consult a qualified healthcare professional for medical decisions."
+                    "Healvia is a prototype healthcare assistance system. It does not provide medical diagnosis or prescriptions. Always consult a qualified healthcare professional for medical decisions."
             },
 
 
@@ -1543,7 +2157,7 @@
                 loadDashboard: "📊 डैशबोर्ड लोड करें",
 
                 footer:
-                    "RuralCare AI एक प्रोटोटाइप स्वास्थ्य सहायता प्रणाली है। यह चिकित्सा निदान या दवाओं की सलाह प्रदान नहीं करती। चिकित्सा संबंधी निर्णयों के लिए हमेशा योग्य स्वास्थ्य पेशेवर से परामर्श करें।"
+                    "Healvia एक प्रोटोटाइप स्वास्थ्य सहायता प्रणाली है। यह चिकित्सा निदान या दवाओं की सलाह प्रदान नहीं करती। चिकित्सा संबंधी निर्णयों के लिए हमेशा योग्य स्वास्थ्य पेशेवर से परामर्श करें।"
             },
 
 
@@ -1641,7 +2255,7 @@
                 loadDashboard: "📊 ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಲೋಡ್ ಮಾಡಿ",
 
                 footer:
-                    "RuralCare AI ಒಂದು ಪ್ರೋಟೋಟೈಪ್ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯಾಗಿದೆ. ಇದು ವೈದ್ಯಕೀಯ ರೋಗನಿರ್ಣಯ ಅಥವಾ ಔಷಧ ಸಲಹೆಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ. ವೈದ್ಯಕೀಯ ನಿರ್ಧಾರಗಳಿಗಾಗಿ ಯಾವಾಗಲೂ ಅರ್ಹ ಆರೋಗ್ಯ ವೃತ್ತಿಪರರನ್ನು ಸಂಪರ್ಕಿಸಿ."
+                    "Healvia ಒಂದು ಪ್ರೋಟೋಟೈಪ್ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯಾಗಿದೆ. ಇದು ವೈದ್ಯಕೀಯ ರೋಗನಿರ್ಣಯ ಅಥವಾ ಔಷಧ ಸಲಹೆಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ. ವೈದ್ಯಕೀಯ ನಿರ್ಧಾರಗಳಿಗಾಗಿ ಯಾವಾಗಲೂ ಅರ್ಹ ಆರೋಗ್ಯ ವೃತ್ತಿಪರರನ್ನು ಸಂಪರ್ಕಿಸಿ."
             },
 
 
@@ -1739,7 +2353,7 @@
                 loadDashboard: "📊 डॅशबोर्ड लोड करा",
 
                 footer:
-                    "RuralCare AI ही एक प्रोटोटाइप आरोग्य सहाय्य प्रणाली आहे. ती वैद्यकीय निदान किंवा औषधांचे प्रिस्क्रिप्शन देत नाही. वैद्यकीय निर्णयांसाठी नेहमी पात्र आरोग्य व्यावसायिकांचा सल्ला घ्या."
+                    "Healvia ही एक प्रोटोटाइप आरोग्य सहाय्य प्रणाली आहे. ती वैद्यकीय निदान किंवा औषधांचे प्रिस्क्रिप्शन देत नाही. वैद्यकीय निर्णयांसाठी नेहमी पात्र आरोग्य व्यावसायिकांचा सल्ला घ्या."
             },
 
 
@@ -1837,7 +2451,7 @@
                 loadDashboard: "📊 డ్యాష్‌బోర్డ్‌ను లోడ్ చేయండి",
 
                 footer:
-                    "RuralCare AI ఒక ప్రోటోటైప్ ఆరోగ్య సహాయ వ్యవస్థ. ఇది వైద్య నిర్ధారణ లేదా మందుల ప్రిస్క్రిప్షన్ ఇవ్వదు. వైద్య నిర్ణయాల కోసం ఎల్లప్పుడూ అర్హత కలిగిన ఆరోగ్య నిపుణుడిని సంప్రదించండి."
+                    "Healvia ఒక ప్రోటోటైప్ ఆరోగ్య సహాయ వ్యవస్థ. ఇది వైద్య నిర్ధారణ లేదా మందుల ప్రిస్క్రిప్షన్ ఇవ్వదు. వైద్య నిర్ణయాల కోసం ఎల్లప్పుడూ అర్హత కలిగిన ఆరోగ్య నిపుణుడిని సంప్రదించండి."
             },
 
 
@@ -1935,7 +2549,7 @@
                 loadDashboard: "📊 டாஷ்போர்டை ஏற்றவும்",
 
                 footer:
-                    "RuralCare AI ஒரு முன்மாதிரி சுகாதார உதவி அமைப்பு. இது மருத்துவ நோயறிதல் அல்லது மருந்து பரிந்துரைகளை வழங்காது. மருத்துவ முடிவுகளுக்கு எப்போதும் தகுதி பெற்ற சுகாதார நிபுணரை அணுகவும்."
+                    "Healvia ஒரு முன்மாதிரி சுகாதார உதவி அமைப்பு. இது மருத்துவ நோயறிதல் அல்லது மருந்து பரிந்துரைகளை வழங்காது. மருத்துவ முடிவுகளுக்கு எப்போதும் தகுதி பெற்ற சுகாதார நிபுணரை அணுகவும்."
             }
 
         };
@@ -3766,7 +4380,7 @@
 
                     /* Choose color from ACTUAL backend result */
 
-                    if (urgency === "low urgency") {
+                    if (data.level === "low") {
 
                         result.classList.add(
                             "result-low"
@@ -3775,8 +4389,7 @@
                     }
 
                     else if (
-                        urgency ===
-                        "medical consultation recommended"
+                        data.level === "consultation"
                     ) {
 
                         result.classList.add(
@@ -3786,8 +4399,7 @@
                     }
 
                     else if (
-                        urgency ===
-                        "urgent care required"
+                        data.level === "urgent"
                     ) {
 
                         result.classList.add(
@@ -3803,8 +4415,7 @@
                         "🩺 " +
                         data.urgency;
 
-                    text.innerText =
-                        data.message;
+                    text.innerText = data.message; setStep(2); show108(data.level);
 
                 } else {
 
@@ -4110,7 +4721,7 @@
             </strong>
 
             <p style="margin-top:8px;">
-                Please make sure the RuralCare
+                Please make sure the Healvia
                 backend is running and try again.
             </p>
 
@@ -4187,6 +4798,7 @@
                         latitude,
                         longitude
                     );
+                    window.userPos = [latitude, longitude];
                     function startLocationTracking() {
 
                         if (!navigator.geolocation) {
@@ -4348,8 +4960,9 @@
 
 
             try {
+                clearNearby();
 
-                const radius = 3000;
+                const radius = 5000;
 
 
                 const query = `
@@ -4467,9 +5080,7 @@
 
 
                         if (
-                            !isHospital &&
-                            !isClinic &&
-                            !isPharmacy
+                            !isHospital && !isClinic && !isPharmacy
                         ) {
                             return;
                         }
@@ -4481,8 +5092,7 @@
                                 isHospital
                                     ? "Hospital"
                                     : isClinic
-                                        ? "Clinic"
-                                        : "Pharmacy"
+                                        ? "Clinic" : "Pharmacy"
                             );
 
 
@@ -4505,7 +5115,6 @@
 
                         }
                         else {
-
                             color = "#19a463";
                             symbol = "💊";
                             pharmacies++;
@@ -4562,6 +5171,7 @@
                                 }
                             )
                                 .addTo(healthcareMap);
+                        nearbyItems.push({ name: name, lat: lat, lon: lon, phone: tags.phone || tags["contact:phone"] || "", marker: marker, type: isHospital ? "hospital" : isClinic ? "clinic" : "pharmacy" });
 
 
                         marker.bindPopup(`
@@ -4622,6 +5232,7 @@
                        &nbsp;&nbsp;
                     💊 ${pharmacies} pharmacies
              `;
+                renderNearby();
 
 
             }
@@ -5562,9 +6173,7 @@
                             .bindPopup(popup);
 
 
-                    healthcareMarkers.push(
-                        marker
-                    );
+                    marker._type = type; healthcareMarkers.push(marker);
 
                 }
             );
@@ -6032,6 +6641,123 @@
     </script>
 
 
+    <script>
+        /* ===== Healvia navigation + extras ===== */
+        function showPage(p) {
+            document.querySelectorAll(".spage").forEach(function (e) { e.classList.toggle("on", e.id === "sp-" + p); });
+            document.querySelectorAll(".nav-links a").forEach(function (a) { a.classList.toggle("on", a.dataset.p === p); });
+            window.scrollTo(0, 0);
+            if (p === "nearby" && typeof healthcareMap !== "undefined" && healthcareMap) setTimeout(function () { healthcareMap.invalidateSize(); }, 150);
+            if (p === "admin") loadAdminStats();
+            if (p === "symptoms") setStep(1);
+        }
+        function setStep(n) { [1, 2, 3].forEach(function (i) { document.getElementById("stp" + i).classList.toggle("on", i === n); }); }
+        function show108(level) { document.getElementById("call108").style.display = level === "urgent" ? "inline-block" : "none"; }
+        var nearbyItems = [];
+        var nearbyFilter = "all";
+        function clearNearby() {
+            nearbyItems.forEach(function (i) { if (healthcareMap && i.marker) healthcareMap.removeLayer(i.marker); });
+            nearbyItems = [];
+        }
+        function distKm(a, b) {
+            var r = function (x) { return x * Math.PI / 180; };
+            var h = Math.sin(r(b[0] - a[0]) / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(r(b[1] - a[1]) / 2) ** 2;
+            return 12742 * Math.asin(Math.sqrt(h));
+        }
+        function renderNearby() {
+            var counts = { all: nearbyItems.length, hospital: 0, clinic: 0, pharmacy: 0 };
+            nearbyItems.forEach(function (i) {
+                counts[i.type]++;
+                i.d = window.userPos ? distKm(window.userPos, [i.lat, i.lon]) : 0;
+            });
+            Object.keys(counts).forEach(function (k) { var el = document.getElementById("c-" + k); if (el) el.innerText = counts[k]; });
+            nearbyItems.sort(function (a, b) { return a.d - b.d; });
+            var labels = { hospital: "Hospital", clinic: "Clinic", pharmacy: "Pharmacy" };
+            var html = "";
+            var bounds = [];
+            nearbyItems.forEach(function (i, idx) {
+                var show = nearbyFilter === "all" || i.type === nearbyFilter;
+                if (show) {
+                    if (!healthcareMap.hasLayer(i.marker)) i.marker.addTo(healthcareMap);
+                    bounds.push([i.lat, i.lon]);
+                    html += '<div class="fitem"><div class="finfo" onclick="focusItem(' + idx + ')"><b>' + escapeHtml(i.name) + '</b>' +
+                        '<small>' + i.d.toFixed(1) + ' km • ' + Math.max(1, Math.round(i.d * 3)) + ' min • ' + labels[i.type] + '</small></div>' +
+                        '<div class="fbtns"><button onclick="routeToItem(' + idx + ')">🧭 Directions</button>' +
+                        (i.phone ? '<a href="tel:' + escapeHtml(i.phone) + '">📞</a>' : '') + '</div></div>';
+                } else if (healthcareMap.hasLayer(i.marker)) {
+                    healthcareMap.removeLayer(i.marker);
+                }
+            });
+            document.getElementById("flist").innerHTML = html || '<div class="fempty">Nothing of this type found nearby. Try another tab.</div>';
+            if (window.userPos) bounds.push(window.userPos);
+            if (bounds.length > 1) healthcareMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+        }
+        function filterFacilities(type, btn) {
+            nearbyFilter = type;
+            document.querySelectorAll(".ftabs button").forEach(function (b) { b.classList.toggle("on", b === btn); });
+            if (healthcareMap && nearbyItems.length) renderNearby();
+        }
+        function focusItem(i) {
+            var it = nearbyItems[i]; if (!it) return;
+            healthcareMap.setView([it.lat, it.lon], 16); it.marker.openPopup();
+        }
+        function routeToItem(i) {
+            var it = nearbyItems[i]; if (!it) return;
+            showRoute(it.lat, it.lon, it.name, it.type === "hospital" ? "hospital" : "pharmacy");
+            var nav = document.getElementById("navigationControls");
+            if (nav) nav.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        var _origShowRoute = showRoute;
+        showRoute = function (lat, lon, name, type) {
+            _origShowRoute.apply(this, arguments);
+            var h = document.getElementById("navigationDestination");
+            if (h && h.tagName === "H3") h.innerText = "To: " + name;
+        };
+        function openVideo() {
+            var m = document.getElementById("videoModal"), v = document.getElementById("demoVideo"), msg = document.getElementById("videoMsg");
+            m.classList.add("on"); msg.style.display = "none"; v.style.display = "block";
+            v.onerror = function () { v.style.display = "none"; msg.style.display = "block"; };
+            v.querySelector("source").onerror = v.onerror;
+            v.load(); var pr = v.play(); if (pr && pr.catch) pr.catch(function () { });
+        }
+        function closeVideo() {
+            var v = document.getElementById("demoVideo"); v.pause();
+            document.getElementById("videoModal").classList.remove("on");
+        }
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeVideo(); });
+        (function buildChips() {
+            var langs = [["English", "English"], ["Kannada", "ಕನ್ನಡ"], ["Hindi", "हिन्दी"], ["Tamil", "தமிழ்"], ["Telugu", "తెలుగు"], ["Marathi", "मराठी"]];
+            var box = document.getElementById("chips");
+            langs.forEach(function (l) {
+                var s = document.createElement("span"); s.textContent = l[1]; s.dataset.l = l[0];
+                if (l[0] === "English") s.className = "on";
+                s.onclick = function () {
+                    var sel = document.getElementById("language"); sel.value = l[0]; sel.dispatchEvent(new Event("change"));
+                    box.querySelectorAll("span").forEach(function (x) { x.classList.toggle("on", x === s); });
+                };
+                box.appendChild(s);
+            });
+            document.getElementById("language").addEventListener("change", function (e) {
+                box.querySelectorAll("span").forEach(function (x) { x.classList.toggle("on", x.dataset.l === e.target.value); });
+            });
+        })();
+        async function loadAdminStats() {
+            try {
+                var d = await (await fetch("/api/admin/stats")).json();
+                document.getElementById("statPharmacies").innerText = d.pharmacies;
+                document.getElementById("statMedicines").innerText = d.medicines;
+            } catch (e) { console.error("Could not load admin stats", e); }
+        }
+        function sendOtp() {
+            if (document.getElementById("loginMobile").value.replace(/\D/g, "").length < 10) return alert("Enter a valid 10-digit mobile number.");
+            document.getElementById("otpBox").style.display = "block";
+        }
+        function verifyOtp() {
+            if (/^\d{6}$/.test(document.getElementById("otpInput").value)) showPage("pharmacy"); else alert("Enter the 6-digit OTP.");
+        }
+        showPage("home");
+
+    </script>
 </body>
 
 
