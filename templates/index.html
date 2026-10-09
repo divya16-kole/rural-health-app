@@ -11,1090 +11,1731 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
     </script>
 
-    <title>RuralCare AI</title>
+    <title>Healvia</title>
+
 
     <style>
+        :root {
+            --green: #16875d;
+            --green-dark: #0f6848;
+            --green-soft: #eaf7f0;
+            --mint: #f4fbf7;
+            --ink: #17352a;
+            --muted: #66756e;
+            --line: #dce9e2;
+            --white: #fff;
+            --orange: #f4a340;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #eef7ff, #f8fbff);
-            color: #172033;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: #f7fbf9;
+            color: var(--ink);
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden
         }
-
-
-        /* --------------------------------
-           BACKGROUND
-        -------------------------------- */
 
         .blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.35;
+            filter: blur(90px);
+            opacity: .18;
             z-index: -1;
+            pointer-events: none
         }
 
         .blob.one {
-            width: 300px;
-            height: 300px;
-            background: #8ec5ff;
-            top: -100px;
-            left: -80px;
+            width: 330px;
+            height: 330px;
+            background: #9be1bd;
+            top: -160px;
+            left: -100px
         }
 
         .blob.two {
-            width: 350px;
-            height: 350px;
-            background: #b8f1d5;
-            right: -120px;
-            bottom: -100px;
+            width: 400px;
+            height: 400px;
+            background: #b9e7cf;
+            right: -180px;
+            bottom: -180px
         }
 
-
-        /* --------------------------------
-           NAVBAR
-        -------------------------------- */
-
         nav {
-            width: 92%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 16px 22px;
-
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(15px);
-
+            position: sticky;
+            top: 14px;
+            z-index: 50;
+            width: min(1180px, calc(100% - 32px));
+            margin: 14px auto 0;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid var(--line);
             border-radius: 18px;
-
             display: flex;
-            justify-content: space-between;
             align-items: center;
-
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            gap: 22px;
+            box-shadow: 0 8px 30px rgba(18, 65, 45, .08);
+            backdrop-filter: blur(14px)
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1677ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 19px;
+            font-weight: 850;
+            color: var(--green-dark);
+            white-space: nowrap
+        }
+
+        .logo::first-letter {
+            font-size: 20px
         }
 
         .status {
-            font-size: 13px;
-            color: #159447;
-            font-weight: 600;
+            margin-left: auto;
+            color: #267a57;
+            font-size: 12px;
+            font-weight: 700;
+            background: #effaf4;
+            border: 1px solid #d7eee2;
+            padding: 8px 11px;
+            border-radius: 999px
         }
 
+        .nav-links {
+            display: flex;
+            gap: 5px;
+            margin-left: auto
+        }
 
-        /* --------------------------------
-           HERO
-        -------------------------------- */
+        .nav-links a {
+            color: #53645d;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 10px;
+            border-radius: 9px
+        }
+
+        .nav-links a:hover {
+            background: var(--green-soft);
+            color: var(--green-dark)
+        }
 
         .hero {
-            width: 92%;
-            max-width: 1200px;
-            margin: 50px auto 30px;
+            width: min(1180px, calc(100% - 32px));
+            margin: 34px auto 22px;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 22px;
+            align-items: stretch;
+            text-align: left
+        }
 
-            text-align: center;
+        .hero-copy {
+            background: linear-gradient(135deg, #e8f8ef 0%, #f7fcf9 70%);
+            border: 1px solid #d8eee1;
+            border-radius: 28px;
+            padding: 46px 44px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero-copy::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: #b9e9ce;
+            right: -80px;
+            bottom: -100px;
+            opacity: .5
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #fff;
+            border: 1px solid #d9eee2;
+            color: var(--green-dark);
+            padding: 7px 11px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 18px
         }
 
         .hero h1 {
-            font-size: 48px;
-            line-height: 1.1;
-            margin-bottom: 18px;
+            font-size: clamp(34px, 5vw, 57px);
+            line-height: 1.03;
+            letter-spacing: -1.8px;
+            margin-bottom: 17px
         }
 
         .hero h1 span {
-            color: #1677ff;
+            color: var(--green)
         }
 
         .hero p {
-            max-width: 700px;
-            margin: auto;
-
-            font-size: 17px;
-            color: #667085;
+            max-width: 650px;
+            font-size: 16px;
             line-height: 1.7;
+            color: var(--muted);
+            margin-bottom: 24px
         }
 
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
 
-        /* --------------------------------
-           MAIN GRID
-        -------------------------------- */
+        .hero-visual {
+            border-radius: 28px;
+            min-height: 330px;
+            background: linear-gradient(145deg, #166e4e, #24976b);
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 28px
+        }
+
+        .hero-visual::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 75% 25%, rgba(255, 255, 255, .25), transparent 27%), radial-gradient(circle at 20% 90%, rgba(190, 245, 214, .24), transparent 35%)
+        }
+
+        .village {
+            position: absolute;
+            left: 24px;
+            right: 24px;
+            bottom: 25px;
+            height: 125px
+        }
+
+        .sun {
+            position: absolute;
+            right: 38px;
+            top: 32px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #ffd77a;
+            box-shadow: 0 0 0 18px rgba(255, 215, 122, .10)
+        }
+
+        .hill {
+            position: absolute;
+            bottom: 0;
+            width: 70%;
+            height: 80px;
+            background: #0d5d43;
+            border-radius: 100% 100% 0 0;
+            transform: rotate(-5deg)
+        }
+
+        .hill.two {
+            right: -5%;
+            width: 72%;
+            height: 105px;
+            background: #11704d;
+            transform: rotate(5deg)
+        }
+
+        .house {
+            position: absolute;
+            bottom: 0;
+            left: 32%;
+            width: 95px;
+            height: 66px;
+            background: #f5e8cf;
+            border-radius: 4px
+        }
+
+        .house:before {
+            content: "";
+            position: absolute;
+            left: -13px;
+            top: -32px;
+            border-left: 61px solid transparent;
+            border-right: 61px solid transparent;
+            border-bottom: 39px solid #d97845
+        }
+
+        .house:after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 35px;
+            left: 38px;
+            bottom: 0;
+            background: #7b5a43
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(255, 255, 255, .14);
+            border: 1px solid rgba(255, 255, 255, .3);
+            padding: 9px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            backdrop-filter: blur(5px)
+        }
 
         .container {
-            width: 92%;
-            max-width: 1200px;
-            margin: 40px auto;
-
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            width: min(1180px, calc(100% - 32px));
+            margin: 22px auto 34px;
+            display: block
         }
 
         .how-help-section {
-            width: 100%;
+            margin-bottom: 20px
         }
 
+        .help-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 15px 18px;
+            font-weight: 800;
+            box-shadow: 0 5px 18px rgba(18, 65, 45, .05);
+            margin-bottom: 12px
+        }
 
-        /* --------------------------------
-           CARD
-        -------------------------------- */
+        .help-toggle span:last-child {
+            color: var(--green);
+            font-size: 18px
+        }
+
+        .help-toggle.active span:last-child {
+            transform: rotate(180deg)
+        }
+
+        .help-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .45s ease
+        }
+
+        .help-content.open {
+            max-height: 500px
+        }
+
+        .feature {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 150px;
+            box-shadow: 0 5px 18px rgba(18, 65, 45, .04)
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--green-soft);
+            font-size: 21px;
+            margin-bottom: 12px
+        }
+
+        .feature h3 {
+            font-size: 15px;
+            margin-bottom: 7px
+        }
+
+        .feature p {
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--muted)
+        }
 
         .card {
-            background: rgba(255, 255, 255, 0.88);
-            border-radius: 24px;
-            padding: 30px;
-
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
-
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 8px 28px rgba(18, 65, 45, .055);
+            margin-bottom: 20px
         }
 
         .card h2 {
-            margin-bottom: 10px;
+            font-size: 23px;
+            letter-spacing: -.4px;
+            margin-bottom: 7px
         }
 
         .card-description {
-            color: #667085;
-            margin-bottom: 25px;
-            line-height: 1.6;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
+            margin-bottom: 21px
         }
 
-
-        /* --------------------------------
-           FORM
-        -------------------------------- */
+        .card h2::first-letter {
+            font-size: 24px
+        }
 
         label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            margin-top: 18px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #365047;
+            margin: 16px 0 7px
         }
 
         select,
         textarea,
         input {
             width: 100%;
-
-            padding: 14px 15px;
-
-            border: 1px solid #d9e2ec;
-            border-radius: 12px;
-
-            font-size: 15px;
-
+            padding: 12px 13px;
+            border: 1px solid #d5e2db;
+            border-radius: 11px;
+            font-size: 14px;
             outline: none;
-
-            background: white;
+            background: #fff;
+            color: var(--ink);
+            font-family: inherit
         }
 
         select:focus,
         textarea:focus,
         input:focus {
-            border-color: #1677ff;
+            border-color: #52a77f;
+            box-shadow: 0 0 0 3px rgba(22, 135, 93, .09)
         }
 
         textarea {
             min-height: 120px;
-            resize: vertical;
+            resize: vertical
         }
-
-
-        /* --------------------------------
-           BUTTONS
-        -------------------------------- */
 
         .button-row {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 17px;
+            flex-wrap: wrap
         }
 
         button {
             border: none;
-            border-radius: 12px;
-
-            padding: 13px 18px;
-
-            font-size: 15px;
-            font-weight: 600;
-
+            border-radius: 11px;
+            padding: 11px 15px;
+            font-size: 14px;
+            font-weight: 800;
             cursor: pointer;
-
-            transition: 0.25s;
+            transition: .2s ease;
+            font-family: inherit
         }
 
         button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px)
         }
 
         .primary {
-            background: #1677ff;
-            color: white;
+            background: var(--green);
+            color: #fff
+        }
+
+        .primary:hover {
+            background: var(--green-dark)
         }
 
         .secondary {
-            background: #eef5ff;
-            color: #1677ff;
+            background: #edf8f2;
+            color: var(--green-dark);
+            border: 1px solid #d4ebde
         }
 
-
-        /* --------------------------------
-           SELECTED SYMPTOMS
-        -------------------------------- */
+        .danger-button {
+            background: #fff0ef;
+            color: #c63d36;
+            border: 1px solid #f1c6c1
+        }
 
         .selected-title {
-            font-size: 13px;
-            color: #667085;
-
-            margin-top: 15px;
-            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            margin: 14px 0 7px
         }
 
         .selected-symptoms {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 7px
         }
 
         .symptom-chip {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-
-            background: #eef5ff;
-            color: #1677ff;
-
-            border-radius: 20px;
-
-            padding: 8px 11px;
-
-            font-size: 13px;
-            font-weight: 600;
+            gap: 6px;
+            background: var(--green-soft);
+            color: var(--green-dark);
+            border: 1px solid #d4ecdf;
+            border-radius: 999px;
+            padding: 7px 10px;
+            font-size: 12px;
+            font-weight: 800
         }
 
         .chip-remove {
             background: transparent;
             padding: 0;
-            margin: 0;
-
-            color: #1677ff;
-
-            font-size: 16px;
-            line-height: 1;
+            color: var(--green-dark);
+            font-size: 15px
         }
 
-        .chip-remove:hover {
-            transform: none;
-        }
-
-
-        /* --------------------------------
-           OTHER SYMPTOM
-        -------------------------------- */
-
-        #otherSymptomBox {
-            display: none;
-            margin-top: 12px;
-        }
-
-        .other-row {
+        .other-row,
+        .pharmacy-box {
             display: flex;
-            gap: 8px;
+            gap: 9px
         }
 
-        .other-row input {
-            flex: 1;
+        .other-row input,
+        .pharmacy-box input {
+            flex: 1
         }
 
         .add-other {
-            white-space: nowrap;
+            white-space: nowrap
         }
-
-
-        /* --------------------------------
-           RESULT
-        -------------------------------- */
 
         .result {
             display: none;
-
-            margin-top: 25px;
-
-            padding: 20px;
-
-            border-radius: 16px;
-
-            background: #f5f9ff;
-
-            border-left: 5px solid #1677ff;
+            margin-top: 20px;
+            padding: 17px;
+            border-radius: 15px;
+            border: 1px solid #d7e8de;
+            border-left: 5px solid var(--green);
+            background: #f5fbf7
         }
 
         .result h3 {
-            margin-bottom: 8px;
+            font-size: 17px;
+            margin-bottom: 6px
         }
 
         .result p {
-            color: #667085;
-            line-height: 1.6;
+            color: #52635c;
+            line-height: 1.55;
+            font-size: 13px
         }
 
+        .result-low {
+            background: #eefaf3 !important;
+            border-left-color: #1b9b62 !important
+        }
 
-        /* --------------------------------
-           HOW IT HELPS BUTTON
-        -------------------------------- */
+        .result-consultation {
+            background: #fff8e8 !important;
+            border-left-color: #e49a22 !important
+        }
 
-        .help-toggle {
-            width: 100%;
+        .result-urgent {
+            background: #fff1ef !important;
+            border-left-color: #dc4b42 !important
+        }
 
+        .voice-visualizer {
+            display: none;
+            margin-top: 14px;
+            padding: 16px;
+            background: #f6fbf8;
+            border: 1px solid #dcebe3;
+            border-radius: 15px
+        }
+
+        .voice-visualizer.active {
+            display: block
+        }
+
+        .voice-status-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-
-            background: white;
-            color: #172033;
-
-            border: 1px solid #e1e8f0;
-
-            margin-bottom: 12px;
-
-            padding: 16px 18px;
-
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            justify-content: center;
+            gap: 8px;
+            font-weight: 800;
+            color: var(--green);
+            font-size: 13px
         }
 
-        .help-toggle span:last-child {
-            font-size: 20px;
-            transition: transform 0.3s;
+        .voice-live-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #df4b43;
+            animation: voicePulse 1.3s infinite
         }
 
-        .help-toggle.active span:last-child {
-            transform: rotate(180deg);
+        @keyframes voicePulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(223, 75, 67, .45)
+            }
+
+            70% {
+                box-shadow: 0 0 0 9px rgba(223, 75, 67, 0)
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(223, 75, 67, 0)
+            }
         }
 
-        .help-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
+        .frequency-bars {
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 10px
         }
 
-        .help-content.open {
-            max-height: 1000px;
+        .frequency-bars span {
+            width: 4px;
+            height: 8px;
+            border-radius: 10px;
+            background: var(--green);
+            transition: height .08s ease
         }
 
-
-        /* --------------------------------
-           FEATURE CARDS
-        -------------------------------- */
-
-        .feature {
-            padding: 20px;
-
-            background: #f8fbff;
-
-            border-radius: 18px;
-
-            margin-bottom: 12px;
-
-            border: 1px solid #e8eef5;
+        .voice-stop-button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 8px 13px;
+            border-radius: 9px;
+            background: #fff0ef;
+            color: #c63d36;
+            border: 1px solid #f1c6c1;
+            font-size: 12px
         }
-
-        .feature-icon {
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
-
-        .feature h3 {
-            margin-bottom: 6px;
-            font-size: 17px;
-        }
-
-        .feature p {
-            color: #667085;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-
-        /* --------------------------------
-           PHARMACY
-        -------------------------------- */
 
         .pharmacy {
-            width: 92%;
-            max-width: 1200px;
-            margin: 20px auto 50px;
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto
         }
 
-        .pharmacy-box {
-            display: flex;
-            gap: 10px;
+        .pharmacy>.card {
+            margin-bottom: 20px
         }
 
-        .pharmacy-box input {
-            flex: 1;
+        .pharmacy-box button {
+            white-space: nowrap
         }
 
         #pharmacyResult {
             display: none;
-
-            margin-top: 18px;
-
-            padding: 16px;
-
-            background: #f7fbf8;
-
-            border-radius: 14px;
-
-            border-left: 4px solid #19a463;
+            margin-top: 16px;
+            padding: 15px;
+            background: #f4fbf7;
+            border-radius: 13px;
+            border: 1px solid #d8ebe0;
+            border-left: 4px solid #1b9b62
         }
 
-
-        /* --------------------------------
-           FOOTER
-        -------------------------------- */
-
-        footer {
-            width: 92%;
-            max-width: 1200px;
-
-            margin: 40px auto;
-
-            text-align: center;
-
-            color: #7b8494;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-        }
-
-
-        /* --------------------------------
-           RESPONSIVE
-        -------------------------------- */
-
-        @media(max-width: 850px) {
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-        }
-
-        /* --------------------------------
-   HEALTHCARE MAP MARKERS
--------------------------------- */
-
-        .map-marker {
-            width: 34px;
-            height: 34px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid white;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-        }
-
-        .map-marker span {
-            transform: rotate(45deg);
-            font-size: 17px;
-        }
-
-        .current-marker {
-            background: #1677ff;
-        }
-
-        .hospital-marker {
-            background: #e53935;
-        }
-
-        .pharmacy-marker {
-            background: #19a463;
-        }
-
-        .clinic-marker {
-            background: #8e44ad;
+        #healthcareMap {
+            box-shadow: inset 0 0 0 1px #dce9e2
         }
 
         .map-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 18px;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #475467;
+            gap: 15px;
+            margin-top: 13px;
+            font-size: 12px;
+            color: #53635d
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px
         }
 
         .legend-dot {
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%
         }
 
         .legend-current {
-            background: #1677ff;
+            background: #2585dd
         }
 
         .legend-hospital {
-            background: #e53935;
+            background: #e0443e
         }
 
         .legend-pharmacy {
-            background: #19a463;
+            background: #1b9b62
         }
 
         .legend-clinic {
-            background: #8e44ad;
+            background: #8b55ad
         }
 
-        .direction-button {
-            margin-top: 10px;
-            padding: 9px 14px;
-            border: none;
-            border-radius: 9px;
-            background: #1677ff;
-            color: white;
+        .navigation-card {
+            background: #f7fbf9;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            padding: 18px
+        }
+
+        .navigation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px
+        }
+
+        .navigation-small {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            color: var(--green);
+            font-weight: 900;
+            margin-bottom: 4px
+        }
+
+        .navigation-header h3 {
+            font-size: 17px
+        }
+
+        .travel-modes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 14px
+        }
+
+        .travel-mode {
+            border: 1px solid #d6e3dc;
+            background: #fff;
+            color: #43564e;
+            padding: 11px 7px
+        }
+
+        .travel-mode span {
+            display: block;
+            font-size: 11px;
+            margin-top: 4px
+        }
+
+        .travel-mode.active {
+            background: #eaf7f0;
+            border: 2px solid #39a875;
+            color: var(--green-dark)
+        }
+
+        .route-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 13px
+        }
+
+        .route-summary>div {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 11px;
+            padding: 12px;
+            text-align: center
+        }
+
+        .route-summary strong {
+            display: block;
+            font-size: 18px
+        }
+
+        .route-summary span {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .current-navigation-instruction {
+            background: #eef5f1;
+            border-radius: 11px;
+            padding: 12px;
+            margin-bottom: 13px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #41564d;
+            line-height: 1.45
+        }
+
+        .navigation-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .navigation-actions button {
+            flex: 1;
+            min-width: 120px
+        }
+
+        footer {
+            width: min(1180px, calc(100% - 32px));
+            margin: 35px auto 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            color: #7a8982;
+            font-size: 12px;
+            line-height: 1.6
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 16px
+        }
+
+        .portal-panel {
+            background: #f7fbf9 !important;
+            border: 1px solid var(--line) !important;
+            border-radius: 16px !important;
+            padding: 18px !important
+        }
+
+        .portal-panel h3 {
+            font-size: 15px;
+            margin-bottom: 12px
+        }
+
+        .portal-panel input {
+            margin-bottom: 9px
+        }
+
+        .dashboard-shell {
+            background: #f7fbf9;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            padding: 16px
+        }
+
+        @media(max-width:900px) {
+            .hero {
+                grid-template-columns: 1fr
+            }
+
+            .hero-visual {
+                min-height: 250px
+            }
+
+            .help-content {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .portal-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:650px) {
+            nav {
+                position: relative;
+                width: calc(100% - 20px)
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .status {
+                font-size: 10px
+            }
+
+            .hero,
+            .container,
+            .pharmacy,
+            footer {
+                width: calc(100% - 20px)
+            }
+
+            .hero-copy {
+                padding: 30px 24px
+            }
+
+            .hero h1 {
+                font-size: 38px
+            }
+
+            .card {
+                padding: 20px
+            }
+
+            .help-content {
+                grid-template-columns: 1fr
+            }
+
+            .pharmacy-box,
+            .other-row {
+                flex-direction: column
+            }
+
+            .pharmacy-box button,
+            .other-row button {
+                width: 100%
+            }
+
+            .travel-modes {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .navigation-actions {
+                flex-direction: column
+            }
+
+            .navigation-actions button {
+                width: 100%
+            }
+        }
+
+        /* ===== Healvia theme layer ===== */
+        :root {
+            --green: #0b6b4d;
+            --green-dark: #064e3b;
+            --green-soft: #e8f5ee;
+            --mint: #f3faf6
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap
+        }
+
+        nav .logo small {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: #667085
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        nav .nav-links a {
             cursor: pointer;
-            font-weight: 600;
+            padding: 6px 2px;
+            border-bottom: 2px solid transparent;
+            font-size: 14px
         }
 
-        .direction-button:hover {
-            opacity: 0.9;
+        nav .nav-links a.on {
+            color: var(--green);
+            border-color: var(--green);
+            font-weight: 700
         }
 
-        .direction-list {
-            margin-top: 15px;
-            padding-left: 22px;
+        .spage {
+            display: none
         }
 
-        .direction-list li {
-            margin-bottom: 9px;
-            line-height: 1.5;
+        .spage.on {
+            display: block
+        }
+
+        .quick {
+            display: flex;
+            gap: 26px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 22px auto;
+            max-width: 900px
+        }
+
+        .quick div {
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            width: 120px
+        }
+
+        .quick span {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            font-size: 26px
+        }
+
+        .quick small {
+            display: block;
+            font-weight: 400;
+            color: #667085;
+            font-size: 11px
+        }
+
+        .langbar {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            border-radius: 14px;
+            padding: 16px
+        }
+
+        #chips {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        #chips span {
+            padding: 8px 18px;
+            border: 1px solid #dce9e2;
+            border-radius: 8px;
+            cursor: pointer
+        }
+
+        #chips span.on {
+            background: var(--green);
+            color: #fff
+        }
+
+        .stepper {
+            display: flex;
+            gap: 22px;
+            margin: 0 0 18px;
+            font-size: 13px;
+            color: #667085;
+            flex-wrap: wrap
+        }
+
+        .stepper b {
+            display: inline-grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #cbd5d0;
+            color: #fff;
+            margin-right: 6px
+        }
+
+        .stepper .on {
+            color: #17352a;
+            font-weight: 700
+        }
+
+        .stepper .on b {
+            background: var(--green)
+        }
+
+        .call108 {
+            display: inline-block;
+            background: #b42318;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 12px 0
+        }
+
+        .tips {
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.6
+        }
+
+        .tips p {
+            margin: 6px 0
+        }
+
+        .tips .disc {
+            background: #fff8e6;
+            border: 1px solid #f5c26b;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px
+        }
+
+        .ftabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0
+        }
+
+        .ftabs button {
+            padding: 8px 16px;
+            border: 1px solid #dce9e2;
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .ftabs button.on {
+            background: var(--green);
+            color: #fff
+        }
+
+        .pwrap {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            max-width: 1150px;
+            margin: 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #dce9e2;
+            background: #fff
+        }
+
+        .pside {
+            background: var(--green-dark);
+            color: #fff;
+            padding: 16px 10px
+        }
+
+        .pside b {
+            display: block;
+            padding: 8px 12px 16px
+        }
+
+        .pside a {
+            display: block;
+            padding: 11px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            font-size: 14px
+        }
+
+        .pside a.on,
+        .pside a:hover {
+            background: #ffffff26
+        }
+
+        .pmain {
+            padding: 10px;
+            min-width: 0
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 14px 0 22px
+        }
+
+        .stats div {
+            border: 1px solid #dce9e2;
+            border-radius: 12px;
+            padding: 14px
+        }
+
+        .stats b {
+            display: block;
+            font-size: 26px;
+            color: var(--green-dark)
+        }
+
+        .act td {
+            padding: 10px;
+            border-bottom: 1px solid #dce9e2;
+            font-size: 14px
+        }
+
+        .loginbox {
+            max-width: 430px;
+            margin: 20px auto
+        }
+
+        .loginbox p {
+            margin: 8px 0
+        }
+
+        .ltabs {
+            display: flex;
+            background: var(--green-soft);
+            border-radius: 8px;
+            padding: 4px;
+            margin: 12px 0
+        }
+
+        .ltabs span {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer
+        }
+
+        .ltabs .on {
+            background: #fff;
+            font-weight: 700
+        }
+
+        @media(max-width:760px) {
+            .pwrap {
+                grid-template-columns: 1fr
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            nav .nav-links {
+                gap: 10px
+            }
+        }
+
+
+        /* ===== Nearby: map + list ===== */
+        .ftabs button i {
+            font-style: normal;
+            margin-left: 6px;
+            font-size: 12px;
+            background: #0b6b4d22;
+            border-radius: 10px;
+            padding: 1px 7px
+        }
+
+        .ftabs button.on i {
+            background: #ffffff40
+        }
+
+        .nearGrid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 18px;
+            margin-top: 14px
+        }
+
+        .flist {
+            max-height: 430px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px
+        }
+
+        .fitem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid #dce9e2;
+            border-radius: 12px;
+            padding: 12px 14px
+        }
+
+        .finfo {
+            cursor: pointer;
+            min-width: 0
+        }
+
+        .finfo b {
+            display: block;
+            font-size: 14px
+        }
+
+        .finfo small {
+            color: #667085;
+            font-size: 12px
+        }
+
+        .fbtns {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0
+        }
+
+        .fbtns button,
+        .fbtns a {
+            border: 1px solid #0b6b4d;
+            color: #0b6b4d;
+            background: #fff;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .fempty {
+            background: #e8f1fb;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 13px;
+            color: #344054
+        }
+
+        @media(max-width:860px) {
+            .nearGrid {
+                grid-template-columns: 1fr
+            }
+
+            .flist {
+                max-height: none
+            }
+        }
+
+        /* ===== Watch Video modal ===== */
+        .vmodal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000000b3;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px
+        }
+
+        .vmodal.on {
+            display: flex
+        }
+
+        .vbox {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px;
+            width: min(820px, 100%)
+        }
+
+        .vbox video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            max-height: 70vh
+        }
+
+        .vbox p {
+            padding: 18px;
+            line-height: 1.6;
+            color: #344054
+        }
+
+        .vclose {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px #0004;
+            cursor: pointer;
+            font-size: 16px
         }
     </style>
-
 </head>
 
-
 <body>
-
-
     <div class="blob one"></div>
     <div class="blob two"></div>
-
-
-    <!-- --------------------------------
-         NAVBAR
-    -------------------------------- -->
-
     <nav>
-
-        <div class="logo">
-            🌾 RuralCare AI
+        <div class="logo" onclick="showPage('home')" style="cursor:pointer">🌿 Healvia<small>Health for Every
+                Home</small></div>
+        <div class="nav-links">
+            <a data-p="home" onclick="showPage('home')">Home</a>
+            <a data-p="symptoms" onclick="showPage('symptoms')">Check Symptoms</a>
+            <a data-p="nearby" onclick="showPage('nearby')">Nearby Healthcare</a>
+            <a data-p="medicine" onclick="showPage('medicine')">Medicine</a>
+            <a data-p="pharmacy" onclick="showPage('pharmacy')">Pharmacy</a>
+            <a data-p="admin" onclick="showPage('admin')">Admin</a>
+            <a data-p="login" onclick="showPage('login')">Login</a>
         </div>
-
-        <div class="status">
-            ● AI Healthcare Assistant
-        </div>
-
+        <div class="status">● AI Healthcare Assistant</div>
     </nav>
-
-
-    <!-- --------------------------------
-         HERO
-    -------------------------------- -->
-
-    <section class="hero">
-
-        <h1>
-            Healthcare Support
-            <span>Closer to Every Village</span>
-        </h1>
-
-        <p>
-            An AI-powered rural healthcare assistance system that helps
-            users understand symptom urgency and connect with nearby
-            healthcare resources.
-        </p>
-
-    </section>
-
-
-    <!-- --------------------------------
-     MAIN
--------------------------------- -->
-
-    <div class="container">
-
-
-        <!-- HOW IT HELPS -->
-
-        <div class="how-help-section">
-
-            <button class="help-toggle" id="helpToggle" onclick="toggleHelp()">
-
-                <span>
-                    💡 How It Helps
-                </span>
-
-                <span>
-                    ▼
-                </span>
-
-            </button>
-
-
-            <div class="help-content" id="helpContent">
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🎙️
-                    </div>
-
-                    <h3>
-                        Voice Support
-                    </h3>
-
-                    <p>
-                        Users can describe symptoms using voice,
-                        helping people who find typing difficult.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🤖
-                    </div>
-
-                    <h3>
-                        AI Triage
-                    </h3>
-
-                    <p>
-                        The system provides basic urgency guidance
-                        based on the reported symptoms.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        💊
-                    </div>
-
-                    <h3>
-                        Medicine Availability
-                    </h3>
-
-                    <p>
-                        Users can search participating pharmacies
-                        for medicine availability.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🌐
-                    </div>
-
-                    <h3>
-                        Regional Languages
-                    </h3>
-
-                    <p>
-                        The interface supports English, Hindi,
-                        Kannada and Marathi.
-                    </p>
-
-                </div>
-
+    <div class="spage on" id="sp-home">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="hero-kicker">🌿 Accessible healthcare support</div>
+                <h1>Healthcare Support <span>Closer to Every Village</span></h1>
+                <p>An AI-powered rural healthcare assistance system that helps users understand symptom urgency and
+                    connect
+                    with nearby healthcare resources.</p>
+                <div class="hero-actions"><button class="primary" onclick="showPage('symptoms')"
+                        style="padding:12px 24px;border-radius:11px;font-size:14px;font-weight:800">Get
+                        Started</button><button class="secondary" onclick="openVideo()"
+                        style="padding:11px 22px;border-radius:11px;font-size:14px;font-weight:800">▶ Watch
+                        Video</button></div>
             </div>
-
+            <div class="hero-visual">
+                <div class="hero-badge">AI assistance • Regional languages</div>
+                <div class="sun"></div>
+                <div class="village">
+                    <div class="hill"></div>
+                    <div class="hill two"></div>
+                    <div class="house"></div>
+                </div>
+            </div>
+        </section>
+        <div class="quick">
+            <div onclick="showPage('symptoms')"><span>🛡️</span>Symptom Check</div>
+            <div onclick="showPage('nearby')"><span>📍</span>Nearby Healthcare</div>
+            <div onclick="showPage('medicine')"><span>💊</span>Medicine Availability</div>
+            <div onclick="showPage('sms')"><span>💬</span>SMS Support<small>(Low Connectivity)</small></div>
         </div>
-
-
-
-        <!-- AI SYMPTOM TRIAGE -->
-
-        <div class="card">
-
-            <h2>
-                🩺 AI Symptom Triage
-            </h2>
-
-            <p class="card-description">
-                Select your symptoms and provide additional details.
-                The system will provide basic urgency guidance.
-            </p>
-
-
-            <label for="language">
-                Preferred Language
-            </label>
-
-            <select id="language">
-
-                <option value="English">
-                    English
-                </option>
-
-                <option value="Hindi">
-                    Hindi
-                </option>
-
-                <option value="Kannada">
-                    Kannada
-                </option>
-
-                <option value="Marathi">
-                    Marathi
-                </option>
-
-            </select>
-
-
-            <label for="symptomSelect">
-                Select Symptoms
-            </label>
-
-            <select id="symptomSelect" class="symptom-select">
-
-                <option value="">
-                    Choose a symptom...
-                </option>
-
-            </select>
-
-
-            <div id="selectedTitle" class="selected-title" style="display:none;">
-                Selected symptoms
-            </div>
-
-
-            <div id="selectedSymptomsContainer" class="selected-symptoms"></div>
-
-
-            <div id="otherSymptomBox">
-
-                <div class="other-row">
-
-                    <input type="text" id="otherSymptom" placeholder="Enter other symptom">
-
-                    <button class="secondary add-other" onclick="addOtherSymptom()">
-                        Add
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <label for="symptoms">
-                Additional Details
-            </label>
-
-            <textarea id="symptoms" placeholder="Describe any additional symptoms or details..."></textarea>
-
-
-            <div class="button-row">
-
-                <button class="secondary" onclick="startVoice()">
-                    🎙️ Speak Symptoms
-                </button>
-
-                <button class="primary" onclick="checkSeverity()">
-                    ✨ Check Severity
-                </button>
-
-            </div>
-
-
-            <div class="result" id="result">
-
-                <h3 id="resultTitle">
-                    Assessment
-                </h3>
-
-                <p id="resultText">
-                    Your result will appear here.
-                </p>
-
-            </div>
-
+        <div class="langbar"><b>Choose Your Language</b>
+            <div id="chips"></div>
         </div>
-
+        <div class="container">
+            <div class="how-help-section">
+                <button class="help-toggle" id="helpToggle" onclick="toggleHelp()"><span>💡 How It
+                        Helps</span><span>▼</span></button>
+                <div class="help-content" id="helpContent">
+                    <div class="feature">
+                        <div class="feature-icon">🎙️</div>
+                        <h3>Voice Support</h3>
+                        <p>Users can describe symptoms using voice, helping people who find typing difficult.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Triage</h3>
+                        <p>The system provides basic urgency guidance based on reported symptoms.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💊</div>
+                        <h3>Medicine Availability</h3>
+                        <p>Users can search participating pharmacies for medicine availability.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Regional Languages</h3>
+                        <p>The interface supports English, Hindi, Kannada, Marathi, Tamil and Telugu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- --------------------------------
-     HEALTHCARE MAP
--------------------------------- -->
-
-    <section class="pharmacy">
-
-        <div class="card">
-
-            <h2>🗺️ Nearby Healthcare</h2>
-
-            <p class="card-description">
-                Find hospitals and pharmacies near your current location.
-            </p>
-
-            <div class="button-row">
-
-                <button class="primary" onclick="findNearbyHealthcare()">
-                    📍 Find Near Me
-                </button>
-
-            </div>
-
-            <p id="locationStatus" style="
-                margin-top:15px;
-                color:#667085;
-                line-height:1.5;
-            ">
-                Click "Find Near Me" to locate nearby hospitals and pharmacies.
-            </p>
-
-            <div id="healthcareMap" style="
-                width:100%;
-                height:500px;
-                margin-top:20px;
-                border-radius:18px;
-                overflow:hidden;
-                border:1px solid #e1e8f0;
-            ">
-            </div>
-            <button class="direction-button" onclick="recenterOnUser()" style="margin-top:15px;">
-                📍 Re-centre on Me
-            </button>
-            <div class="map-legend">
-
-                <div class="legend-item">
-                    <span class="legend-dot legend-current"></span>
-                    Your Location
+    <div class="spage" id="sp-symptoms">
+        <div class="container">
+            <div class="stepper"><span id="stp1" class="on"><b>1</b>Symptoms</span><span id="stp2"><b>2</b>Triage
+                    Result</span><span id="stp3"><b>3</b>Nearby Care</span></div>
+            <div class="card" id="triageCard">
+                <h2>🩺 AI Symptom Triage</h2>
+                <p class="card-description">Select your symptoms and provide additional details. The system will provide
+                    basic urgency guidance.</p>
+                <label for="language">Preferred Language</label><select id="language">
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Kannada">Kannada</option>
+                    <option value="Marathi">Marathi</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Telugu">Telugu</option>
+                </select>
+                <label for="symptomSelect">Select Symptoms</label><select id="symptomSelect" class="symptom-select">
+                    <option value="">Choose a symptom...</option>
+                </select>
+                <div id="selectedTitle" class="selected-title" style="display:none;">Selected symptoms</div>
+                <div id="selectedSymptomsContainer" class="selected-symptoms"></div>
+                <div id="otherSymptomBox">
+                    <div class="other-row"><input type="text" id="otherSymptom"
+                            placeholder="Enter other symptom"><button class="secondary add-other"
+                            onclick="addOtherSymptom()">Add</button></div>
                 </div>
-
-                <div class="legend-item">
-                    <span class="legend-dot legend-hospital"></span>
-                    Hospital
+                <label for="symptoms">Additional Details</label><textarea id="symptoms"
+                    placeholder="Describe any additional symptoms or details..."></textarea>
+                <div class="button-row"><button class="secondary" onclick="startVoice()">🎙️ Speak
+                        Symptoms</button><button class="primary" onclick="checkSeverity()">✨ Check Severity</button>
                 </div>
-                <div class="legend-item">
-                    <span class="legend-dot legend-clinic"></span>
-                    Clinic
+                <div id="voiceVisualizer" class="voice-visualizer">
+                    <div class="voice-status-row"><span class="voice-live-dot"></span><span id="voiceStatusText">🎙️
+                            Listening... Speak now</span></div>
+                    <div id="frequencyBars" class="frequency-bars">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div><button type="button" class="voice-stop-button" onclick="stopVoice()">✕ Stop
+                        Listening</button>
                 </div>
-
-                <div class="legend-item">
-                    <span class="legend-dot legend-pharmacy"></span>
-                    Pharmacy
+                <div class="result" id="result">
+                    <h3 id="resultTitle">Assessment</h3>
+                    <p id="resultText">Your result will appear here.</p>
+                    <a id="call108" href="tel:108" class="call108" style="display:none">📞 Call 108 (Ambulance)</a>
+                    <div class="tips"><b>What you should do:</b>
+                        <p>✅ Visit a nearby clinic or doctor as soon as possible.</p>
+                        <p>💧 Keep yourself hydrated and rest.</p>
+                        <p>⚠️ If symptoms get worse (high fever, severe pain, difficulty breathing), seek urgent care
+                            immediately.</p>
+                        <p class="disc">🟡 This is not a diagnosis or prescription. Please consult a qualified
+                            healthcare professional.</p>
+                        <button class="primary" onclick="showPage('nearby');setStep(3)">📍 Find nearby care</button>
+                    </div>
                 </div>
-
             </div>
-            <div id="directionsPanel" style="
-        display:none;
-        margin-top:20px;
-        padding:20px;
-        background:#f7fbf8;
-        border-radius:18px;
-        border:1px solid #e1e8f0;
-    ">
-            </div>
-
         </div>
-
-    </section>
-
-
-
-
-    <!-- --------------------------------
-         PHARMACY
-    -------------------------------- -->
-
-    <section class="pharmacy">
-
-        <div class="card">
-
-            <h2>
-                💊 Medicine Availability
-            </h2>
-
-            <p class="card-description">
-                Search for a medicine to check availability
-                at participating nearby pharmacies.
-            </p>
-
-
-            <div class="pharmacy-box">
-
-                <input type="text" id="medicine" placeholder="Enter medicine name...">
-
-                <button class="primary" onclick="findMedicine()">
-                    Search
-                </button>
-
-            </div>
-
-
-            <div id="pharmacyResult">
-
-                <p id="pharmacyText"></p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="pharmacy">
-        <div class="card">
-            <h2>🏪 Pharmacy / Shopkeeper Portal</h2>
-
-            <p class="card-description">
-                Register your pharmacy and update the availability of medicines
-                for patients searching nearby.
-            </p>
-
-            <!-- Pharmacy Registration -->
-            <div style="
-            background:#f7fbf8;
-            padding:20px;
-            border-radius:16px;
-            margin-top:20px;
-        ">
-                <h3>Register Pharmacy</h3>
-
-                <input type="text" id="pharmacyName" placeholder="Pharmacy name" style="margin-bottom:10px;">
-
-                <input type="text" id="ownerName" placeholder="Owner / Shopkeeper name" style="margin-bottom:10px;">
-
-                <input type="text" id="pharmacyPhone" placeholder="Phone number" style="margin-bottom:10px;">
-
-                <input type="text" id="pharmacyAddress" placeholder="Pharmacy address" style="margin-bottom:10px;">
-
-                <div class="button-row">
-                    <button class="primary" onclick="registerPharmacy()">
-                        🏪 Register Pharmacy
-                    </button>
+    </div>
+    <div class="spage" id="sp-nearby">
+        <section class="pharmacy" id="healthcareSection">
+            <div class="card">
+                <h2>🗺️ Nearby Healthcare</h2>
+                <p class="card-description">Find hospitals, clinics and pharmacies near your current location.</p>
+                <div class="button-row"><button class="primary" onclick="findNearbyHealthcare()">📍 Find Near
+                        Me</button>
                 </div>
-
-                <p id="registrationResult" style="margin-top:12px;"></p>
-            </div>
-
-
-            <!-- Medicine Inventory -->
-            <div style="
-            background:#f7fbf8;
-            padding:20px;
-            border-radius:16px;
-            margin-top:20px;
-        ">
-                <h3>Update Medicine Availability</h3>
-
-                <input type="number" id="pharmacyId" placeholder="Pharmacy ID" style="margin-bottom:10px;">
-
-                <input type="text" id="inventoryMedicine" placeholder="Medicine name" style="margin-bottom:10px;">
-
-                <input type="number" id="medicineQuantity" placeholder="Quantity available" min="0"
-                    style="margin-bottom:10px;">
-
-                <label style="
-                display:flex;
-                align-items:center;
-                gap:10px;
-                margin:12px 0;
-            ">
-                    <input type="checkbox" id="medicineAvailable">
-
-                    Medicine currently available
-                </label>
-
-                <div class="button-row">
-                    <button class="primary" onclick="updateMedicineInventory()">
-                        💊 Update Availability
-                    </button>
+                <div class="ftabs">
+                    <button class="on" data-t="all" onclick="filterFacilities('all',this)">All <i
+                            id="c-all">0</i></button>
+                    <button data-t="hospital" onclick="filterFacilities('hospital',this)">🏥 Hospitals <i
+                            id="c-hospital">0</i></button>
+                    <button data-t="clinic" onclick="filterFacilities('clinic',this)">⚕️ Clinics <i
+                            id="c-clinic">0</i></button>
+                    <button data-t="pharmacy" onclick="filterFacilities('pharmacy',this)">💊 Pharmacies <i
+                            id="c-pharmacy">0</i></button>
                 </div>
-
-                <p id="inventoryResult" style="margin-top:12px;"></p>
+                <p id="locationStatus" style="margin-top:15px;color:#667085;line-height:1.5;">Click "Find Near Me" to
+                    locate
+                    nearby hospitals and pharmacies.</p>
+                <div class="nearGrid">
+                    <div id="healthcareMap"
+                        style="width:100%;height:430px;border-radius:18px;overflow:hidden;border:1px solid #e1e8f0;">
+                    </div>
+                    <div id="flist" class="flist">
+                        <div class="fempty">Tap <b>Find Near Me</b> to see hospitals, clinics and pharmacies around you.
+                        </div>
+                    </div>
+                </div>
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-dot legend-current"></span>Your Location</div>
+                    <div class="legend-item"><span class="legend-dot legend-hospital"></span>Hospital</div>
+                    <div class="legend-item"><span class="legend-dot legend-clinic"></span>Clinic</div>
+                    <div class="legend-item"><span class="legend-dot legend-pharmacy"></span>Pharmacy</div>
+                </div>
+                <div id="directionsPanel"
+                    style="display:none;margin-top:20px;padding:20px;background:#f7fbf8;border-radius:18px;border:1px solid #e1e8f0;">
+                </div>
+                <div id="navigationControls" style="margin-top:20px;">
+                    <div class="navigation-card">
+                        <div class="navigation-header">
+                            <div>
+                                <div class="navigation-small">🧭 Navigation</div>
+                                <h3 id="navigationDestination">Select a healthcare location</h3>
+                            </div>
+                        </div>
+                        <div class="travel-modes"><button class="travel-mode active" data-mode="motorcycle"
+                                onclick="selectTravelMode('motorcycle')">🏍️<span>2-Wheeler</span></button><button
+                                class="travel-mode" data-mode="car"
+                                onclick="selectTravelMode('car')">🚗<span>Car</span></button><button class="travel-mode"
+                                data-mode="bus" onclick="selectTravelMode('bus')">🚌<span>Bus</span></button><button
+                                class="travel-mode" data-mode="walking"
+                                onclick="selectTravelMode('walking')">🚶<span>Walk</span></button></div>
+                        <div class="route-summary">
+                            <div><strong id="routeDistance">—</strong><span>Distance</span></div>
+                            <div><strong id="navigationRouteTime">—</strong><span>Estimated time</span></div>
+                        </div>
+                        <div id="currentNavigationInstruction" class="current-navigation-instruction">Select a travel
+                            mode
+                            to begin navigation.</div>
+                        <div class="navigation-actions"><button class="primary navigation-start-button"
+                                onclick="startNavigation()">▶️ Start Route</button><button class="secondary"
+                                onclick="recenterOnUser()">📍 Re-centre</button><button class="danger-button"
+                                onclick="endNavigation()">✕ End Route</button></div>
+                    </div>
+                </div>
             </div>
-
-        </div>
-    </section>
-    <section class="pharmacy">
-        <div class="card">
-
-            <h2>📊 Pharmacy Dashboard</h2>
-
-            <p class="card-description">
-                View and manage the medicines currently reported by your pharmacy.
-            </p>
-
-            <div class="pharmacy-box">
-
-                <input type="number" id="dashboardPharmacyId" placeholder="Enter Pharmacy ID..." min="1">
-
-                <button class="primary" onclick="loadPharmacyDashboard()">
-                    📊 Load Dashboard
-                </button>
-
+        </section>
+    </div>
+    <div class="spage" id="sp-medicine">
+        <section class="pharmacy" id="medicineSection">
+            <div class="card">
+                <h2>💊 Medicine Availability</h2>
+                <p class="card-description">Search for a medicine to check availability at participating nearby
+                    pharmacies.
+                </p>
+                <div class="pharmacy-box"><input type="text" id="medicine" placeholder="Enter medicine name..."><button
+                        class="primary" onclick="findMedicine()">Search</button></div>
+                <div id="pharmacyResult">
+                    <p id="pharmacyText"></p>
+                </div>
             </div>
-
-            <div id="dashboardResult" style="
-                margin-top:20px;
-                display:none;
-            "></div>
-
+        </section>
+    </div>
+    <div class="spage" id="sp-pharmacy">
+        <div class="pwrap">
+            <aside class="pside"><b>🌿 Pharmacy / Shopkeeper</b>
+                <a class="on"
+                    onclick="document.getElementById('pharmacyId').scrollIntoView({behavior:'smooth',block:'center'})">Update
+                    Inventory</a>
+                <a
+                    onclick="document.getElementById('dashboardPharmacyId').scrollIntoView({behavior:'smooth',block:'center'})">My
+                    Pharmacy</a>
+                <a onclick="showPage('medicine')">Search Medicines</a>
+                <a onclick="showPage('login')">Logout</a>
+            </aside>
+            <div class="pmain">
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>🏪 Pharmacy / Shopkeeper Portal</h2>
+                        <p class="card-description">Register your pharmacy and update medicine availability for patients
+                            searching
+                            nearby.</p>
+                        <div class="portal-grid">
+                            <div class="portal-panel">
+                                <h3>Register Pharmacy</h3><input type="text" id="pharmacyName"
+                                    placeholder="Pharmacy name"><input type="text" id="ownerName"
+                                    placeholder="Owner / Shopkeeper name"><input type="text" id="pharmacyPhone"
+                                    placeholder="Phone number"><input type="text" id="pharmacyAddress"
+                                    placeholder="Pharmacy address">
+                                <div class="button-row"><button class="primary" onclick="registerPharmacy()">🏪 Register
+                                        Pharmacy</button></div>
+                                <p id="registrationResult" style="margin-top:12px;"></p>
+                            </div>
+                            <div class="portal-panel">
+                                <h3>Update Medicine Availability</h3><input type="number" id="pharmacyId"
+                                    placeholder="Pharmacy ID"><input type="text" id="inventoryMedicine"
+                                    placeholder="Medicine name"><input type="number" id="medicineQuantity"
+                                    placeholder="Quantity available" min="0"><label
+                                    style="display:flex;align-items:center;gap:10px;margin:12px 0;"><input
+                                        type="checkbox" id="medicineAvailable" style="width:auto;">Medicine currently
+                                    available</label>
+                                <div class="button-row"><button class="primary" onclick="updateMedicineInventory()">💊
+                                        Update
+                                        Availability</button></div>
+                                <p id="inventoryResult" style="margin-top:12px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>📊 Pharmacy Dashboard</h2>
+                        <p class="card-description">View and manage the medicines currently reported by your pharmacy.
+                        </p>
+                        <div class="pharmacy-box"><input type="number" id="dashboardPharmacyId"
+                                placeholder="Enter Pharmacy ID..." min="1"><button class="primary"
+                                onclick="loadPharmacyDashboard()">📊 Load Dashboard</button></div>
+                        <div id="dashboardResult" class="dashboard-shell" style="margin-top:20px;display:none;"></div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </section>
-
-
-    <!-- --------------------------------
-         FOOTER
-    -------------------------------- -->
-
-    <footer>
-
-        RuralCare AI is a prototype healthcare assistance system.
-        It does not provide medical diagnosis or prescriptions.
-        Always consult a qualified healthcare professional for
-        medical decisions.
-
-    </footer>
-
-
-
+    </div>
+    <div class="spage" id="sp-admin">
+        <div class="pwrap">
+            <aside class="pside"><b>🌿 Healvia</b><a class="on">Overview</a><a
+                    onclick="showPage('pharmacy')">Pharmacies</a><a onclick="showPage('medicine')">Medicine
+                    Inventory</a><a onclick="showPage('login')">Logout</a></aside>
+            <div class="pmain">
+                <section class="pharmacy">
+                    <div class="card">
+                        <h2>Admin Dashboard</h2>
+                        <div class="stats">
+                            <div><small>Total Users</small><b>1,248</b></div>
+                            <div><small>Active Pharmacies</small><b id="statPharmacies">0</b></div>
+                            <div><small>Hospitals &amp; Clinics</small><b>42</b></div>
+                            <div><small>Total Medicines</small><b id="statMedicines">0</b></div>
+                        </div>
+                        <h3>Recent Activity <small>(sample data)</small></h3>
+                        <table class="act">
+                            <tr>
+                                <td>3:20 PM</td>
+                                <td>New pharmacy registered</td>
+                            </tr>
+                            <tr>
+                                <td>2:45 PM</td>
+                                <td>Medicine stock updated – Paracetamol (50 units)</td>
+                            </tr>
+                            <tr>
+                                <td>1:30 PM</td>
+                                <td>New user registered</td>
+                            </tr>
+                            <tr>
+                                <td>11:15 AM</td>
+                                <td>Urgent care alert – fever + breathing issue</td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="spage" id="sp-login">
+        <div class="container">
+            <div class="card loginbox">
+                <h2>Login to Your Account</h2>
+                <div class="ltabs"><span class="on">Mobile</span><span
+                        onclick="alert('Email login coming soon')">Email</span></div>
+                <label>Mobile Number</label>
+                <div style="display:flex;gap:8px"><input value="+91" style="width:70px" readonly><input id="loginMobile"
+                        type="tel" placeholder="98765 43210"></div>
+                <button class="primary" style="width:100%;margin-top:14px" onclick="sendOtp()">Send OTP</button>
+                <div id="otpBox" style="display:none"><input id="otpInput" placeholder="Enter 6-digit OTP"
+                        style="margin-top:12px"><button class="primary" style="width:100%;margin-top:10px"
+                        onclick="verifyOtp()">Verify &amp; Login</button></div>
+                <p style="font-size:12px;margin-top:12px;color:#667085">Demo mode: any 6-digit code works. Real SMS OTP
+                    is planned.</p>
+            </div>
+        </div>
+    </div>
+    <div class="spage" id="sp-sms">
+        <div class="container">
+            <div class="card loginbox">
+                <div style="font-size:46px;text-align:center">📱</div>
+                <h2 style="text-align:center">Get Important Health Information via SMS</h2>
+                <p>Even without internet, you can:</p>
+                <p>✅ Send your symptoms (in your language)</p>
+                <p>✅ Get triage guidance and safety tips</p>
+                <p>✅ Find nearby hospitals, clinics and pharmacies</p>
+                <div class="tips" style="margin-top:14px"><b>SMS Format Example:</b>
+                    <p>"Fever and cough for 2 days" to 12345</p>
+                    <p class="disc">Prototype page: SMS service is planned, not live.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="videoModal" class="vmodal" onclick="if(event.target===this)closeVideo()">
+        <div class="vbox"><button class="vclose" onclick="closeVideo()" aria-label="Close video">✕</button>
+            <video id="demoVideo" controls playsinline preload="none">
+                <source src="/static/demo.mp4" type="video/mp4">
+            </video>
+            <p id="videoMsg" style="display:none">Demo video not added yet. Save your video as <b>static/demo.mp4</b> in
+                the project folder and refresh this page.</p>
+        </div>
+    </div>
+    <footer>Healvia is a prototype healthcare assistance system. It does not provide medical diagnosis or
+        prescriptions. Always consult a qualified healthcare professional for medical decisions.</footer>
     <script>
-
-
         /* =====================================================
-           SYMPTOM TRANSLATIONS
-        ===================================================== */
+                   SYMPTOM TRANSLATIONS
+                ===================================================== */
 
         const symptomTranslations = {
 
@@ -1243,10 +1884,1146 @@
                 "Frequent urination": "वारंवार लघवी होणे",
                 "Other": "इतर"
 
+            },
+            Telugu: {
+
+                "Fever": "జ్వరం",
+                "Headache": "తలనొప్పి",
+                "Cough": "దగ్గు",
+                "Cold": "జలుబు",
+                "Sore throat": "గొంతు నొప్పి",
+                "Runny nose": "ముక్కు కారడం",
+                "Body pain": "శరీర నొప్పి",
+                "Fatigue": "అలసట",
+                "Dizziness": "తల తిరగడం",
+                "Nausea": "వికారం",
+                "Vomiting": "వాంతులు",
+                "Stomach pain": "కడుపు నొప్పి",
+                "Diarrhea": "విరేచనాలు",
+                "Chest pain": "ఛాతీ నొప్పి",
+                "Shortness of breath": "శ్వాస తీసుకోవడంలో ఇబ్బంది",
+                "Back pain": "వెన్నునొప్పి",
+                "Joint pain": "కీళ్ల నొప్పి",
+                "Muscle pain": "కండరాల నొప్పి",
+                "Abdominal pain": "ఉదర నొప్పి",
+                "Loss of appetite": "ఆకలి లేకపోవడం",
+                "Weakness": "బలహీనత",
+                "Chills": "చలి",
+                "Skin rash": "చర్మంపై దద్దుర్లు",
+                "Itching": "దురద",
+                "Eye pain": "కంటి నొప్పి",
+                "Ear pain": "చెవి నొప్పి",
+                "Tooth pain": "పంటి నొప్పి",
+                "Constipation": "మలబద్ధకం",
+                "Burning urination": "మూత్ర విసర్జన సమయంలో మంట",
+                "Frequent urination": "తరచుగా మూత్ర విసర్జన",
+                "Other": "ఇతర"
+
+            },
+
+            Tamil: {
+
+                "Fever": "காய்ச்சல்",
+                "Headache": "தலைவலி",
+                "Cough": "இருமல்",
+                "Cold": "சளி",
+                "Sore throat": "தொண்டை வலி",
+                "Runny nose": "மூக்கு ஒழுகுதல்",
+                "Body pain": "உடல் வலி",
+                "Fatigue": "சோர்வு",
+                "Dizziness": "தலைச்சுற்றல்",
+                "Nausea": "குமட்டல்",
+                "Vomiting": "வாந்தி",
+                "Stomach pain": "வயிற்று வலி",
+                "Diarrhea": "வயிற்றுப்போக்கு",
+                "Chest pain": "மார்பு வலி",
+                "Shortness of breath": "மூச்சுத்திணறல்",
+                "Back pain": "முதுகுவலி",
+                "Joint pain": "மூட்டு வலி",
+                "Muscle pain": "தசை வலி",
+                "Abdominal pain": "வயிற்று வலி",
+                "Loss of appetite": "பசியின்மை",
+                "Weakness": "பலவீனம்",
+                "Chills": "குளிர்ச்சியுடன் நடுக்கம்",
+                "Skin rash": "தோலில் தடிப்பு",
+                "Itching": "அரிப்பு",
+                "Eye pain": "கண் வலி",
+                "Ear pain": "காது வலி",
+                "Tooth pain": "பல் வலி",
+                "Constipation": "மலச்சிக்கல்",
+                "Burning urination": "சிறுநீர் கழிக்கும்போது எரிச்சல்",
+                "Frequent urination": "அடிக்கடி சிறுநீர் கழித்தல்",
+                "Other": "மற்றவை"
+
+            }
+
+
+        };
+        /* =====================================================
+   FULL PAGE TRANSLATIONS
+===================================================== */
+
+        const pageTranslations = {
+
+            English: {
+                status: "● AI Healthcare Assistant",
+                heroTitle: "Healthcare Support",
+                heroSubtitle: "Closer to Every Village",
+                heroDescription:
+                    "An AI-powered rural healthcare assistance system that helps users understand symptom urgency and connect with nearby healthcare resources.",
+
+                howItHelps: "💡 How It Helps",
+                voiceSupport: "Voice Support",
+                voiceSupportDesc:
+                    "Users can describe symptoms using voice, helping people who find typing difficult.",
+                aiTriage: "AI Triage",
+                aiTriageDesc:
+                    "The system provides basic urgency guidance based on the reported symptoms.",
+                medicineAvailability: "Medicine Availability",
+                medicineAvailabilityDesc:
+                    "Users can search participating pharmacies for medicine availability.",
+                regionalLanguages: "Regional Languages",
+                regionalLanguagesDesc:
+                    "The interface supports English, Hindi, Kannada, Marathi, Tamil and Telugu.",
+
+                triageTitle: "🩺 AI Symptom Triage",
+                triageDescription:
+                    "Select your symptoms and provide additional details. The system will provide basic urgency guidance.",
+                preferredLanguage: "Preferred Language",
+                selectSymptoms: "Select Symptoms",
+                chooseSymptom: "Choose a symptom...",
+                selectedSymptoms: "Selected symptoms",
+                otherSymptomPlaceholder: "Enter other symptom",
+                add: "Add",
+                additionalDetails: "Additional Details",
+                detailsPlaceholder:
+                    "Describe any additional symptoms or details...",
+                speakSymptoms: "🎙️ Speak Symptoms",
+                checkSeverity: "✨ Check Severity",
+                assessment: "Assessment",
+                resultPlaceholder: "Your result will appear here.",
+
+                nearbyHealthcare: "🗺️ Nearby Healthcare",
+                nearbyHealthcareDescription:
+                    "Find hospitals and pharmacies near your current location.",
+                findNearMe: "📍 Find Near Me",
+                locationInitial:
+                    'Click "Find Near Me" to locate nearby hospitals and pharmacies.',
+                recenterOnMe: "📍 Re-centre on Me",
+                yourLocation: "Your Location",
+                hospital: "Hospital",
+                clinic: "Clinic",
+                pharmacy: "Pharmacy",
+
+                navigation: "🧭 Navigation",
+                destination: "Select a healthcare location",
+                voiceOn: "🔊 Voice ON",
+                twoWheeler: "2-Wheeler",
+                car: "Car",
+                bus: "Bus",
+                walk: "Walk",
+                distance: "Distance",
+                estimatedTime: "Estimated time",
+                navigationInstruction:
+                    "Select a travel mode to begin navigation.",
+                startRoute: "▶️ Start Route",
+                recenter: "📍 Re-centre",
+                endRoute: "✕ End Route",
+
+                medicineSectionTitle: "💊 Medicine Availability",
+                medicineSectionDescription:
+                    "Search for a medicine to check availability at participating nearby pharmacies.",
+                search: "Search",
+
+                pharmacyPortal: "🏪 Pharmacy / Shopkeeper Portal",
+                pharmacyPortalDescription:
+                    "Register your pharmacy and update the availability of medicines for patients searching nearby.",
+                registerPharmacyTitle: "Register Pharmacy",
+                pharmacyNamePlaceholder: "Pharmacy name",
+                ownerNamePlaceholder: "Owner / Shopkeeper name",
+                phonePlaceholder: "Phone number",
+                addressPlaceholder: "Pharmacy address",
+                registerPharmacyButton: "🏪 Register Pharmacy",
+
+                inventoryTitle: "Update Medicine Availability",
+                pharmacyIdPlaceholder: "Pharmacy ID",
+                medicineNamePlaceholder: "Medicine name",
+                quantityPlaceholder: "Quantity available",
+                medicineAvailable: "Medicine currently available",
+                updateAvailability: "💊 Update Availability",
+
+                dashboardTitle: "📊 Pharmacy Dashboard",
+                dashboardDescription:
+                    "View and manage the medicines currently reported by your pharmacy.",
+                dashboardIdPlaceholder: "Enter Pharmacy ID...",
+                loadDashboard: "📊 Load Dashboard",
+
+                footer:
+                    "Healvia is a prototype healthcare assistance system. It does not provide medical diagnosis or prescriptions. Always consult a qualified healthcare professional for medical decisions."
+            },
+
+
+            Hindi: {
+                status: "● AI स्वास्थ्य सहायक",
+                heroTitle: "स्वास्थ्य सहायता",
+                heroSubtitle: "हर गांव के और करीब",
+                heroDescription:
+                    "AI-संचालित ग्रामीण स्वास्थ्य सहायता प्रणाली जो उपयोगकर्ताओं को लक्षणों की तात्कालिकता समझने और आसपास की स्वास्थ्य सेवाओं से जुड़ने में मदद करती है।",
+
+                howItHelps: "💡 यह कैसे मदद करता है",
+                voiceSupport: "वॉइस सहायता",
+                voiceSupportDesc:
+                    "उपयोगकर्ता आवाज़ के माध्यम से अपने लक्षण बता सकते हैं, जिससे टाइप करने में कठिनाई होने पर मदद मिलती है।",
+                aiTriage: "AI ट्रायेज",
+                aiTriageDesc:
+                    "यह प्रणाली बताए गए लक्षणों के आधार पर प्राथमिक तात्कालिकता संबंधी मार्गदर्शन देती है।",
+                medicineAvailability: "दवा की उपलब्धता",
+                medicineAvailabilityDesc:
+                    "उपयोगकर्ता आसपास की भाग लेने वाली फार्मेसियों में दवा की उपलब्धता खोज सकते हैं।",
+                regionalLanguages: "क्षेत्रीय भाषाएँ",
+                regionalLanguagesDesc:
+                    "इंटरफ़ेस अंग्रेज़ी, हिंदी, कन्नड़, मराठी, तमिल और तेलुगु का समर्थन करता है।",
+
+                triageTitle: "🩺 AI लक्षण ट्रायेज",
+                triageDescription:
+                    "अपने लक्षण चुनें और अतिरिक्त विवरण दें। प्रणाली प्राथमिक तात्कालिकता संबंधी मार्गदर्शन देगी।",
+                preferredLanguage: "पसंदीदा भाषा",
+                selectSymptoms: "लक्षण चुनें",
+                chooseSymptom: "लक्षण चुनें...",
+                selectedSymptoms: "चुने गए लक्षण",
+                otherSymptomPlaceholder: "अन्य लक्षण दर्ज करें",
+                add: "जोड़ें",
+                additionalDetails: "अतिरिक्त विवरण",
+                detailsPlaceholder:
+                    "अतिरिक्त लक्षण या विवरण लिखें...",
+                speakSymptoms: "🎙️ लक्षण बोलें",
+                checkSeverity: "✨ गंभीरता जांचें",
+                assessment: "मूल्यांकन",
+                resultPlaceholder: "आपका परिणाम यहां दिखाई देगा।",
+
+                nearbyHealthcare: "🗺️ आसपास की स्वास्थ्य सेवाएँ",
+                nearbyHealthcareDescription:
+                    "अपने वर्तमान स्थान के पास अस्पताल और फार्मेसियाँ खोजें।",
+                findNearMe: "📍 मेरे पास खोजें",
+                locationInitial:
+                    'अस्पताल और फार्मेसियाँ खोजने के लिए "मेरे पास खोजें" दबाएँ।',
+                recenterOnMe: "📍 मेरे स्थान पर केंद्रित करें",
+                yourLocation: "आपका स्थान",
+                hospital: "अस्पताल",
+                clinic: "क्लिनिक",
+                pharmacy: "फार्मेसी",
+
+                navigation: "🧭 नेविगेशन",
+                destination: "स्वास्थ्य केंद्र चुनें",
+                voiceOn: "🔊 वॉइस चालू",
+                twoWheeler: "दोपहिया",
+                car: "कार",
+                bus: "बस",
+                walk: "पैदल",
+                distance: "दूरी",
+                estimatedTime: "अनुमानित समय",
+                navigationInstruction:
+                    "नेविगेशन शुरू करने के लिए यात्रा का तरीका चुनें।",
+                startRoute: "▶️ मार्ग शुरू करें",
+                recenter: "📍 फिर से केंद्रित करें",
+                endRoute: "✕ मार्ग समाप्त करें",
+
+                medicineSectionTitle: "💊 दवा की उपलब्धता",
+                medicineSectionDescription:
+                    "पास की भाग लेने वाली फार्मेसियों में दवा की उपलब्धता खोजें।",
+                search: "खोजें",
+
+                pharmacyPortal: "🏪 फार्मेसी / दुकानदार पोर्टल",
+                pharmacyPortalDescription:
+                    "अपनी फार्मेसी पंजीकृत करें और मरीजों के लिए दवाओं की उपलब्धता अपडेट करें।",
+                registerPharmacyTitle: "फार्मेसी पंजीकृत करें",
+                pharmacyNamePlaceholder: "फार्मेसी का नाम",
+                ownerNamePlaceholder: "मालिक / दुकानदार का नाम",
+                phonePlaceholder: "फोन नंबर",
+                addressPlaceholder: "फार्मेसी का पता",
+                registerPharmacyButton: "🏪 फार्मेसी पंजीकृत करें",
+
+                inventoryTitle: "दवा की उपलब्धता अपडेट करें",
+                pharmacyIdPlaceholder: "फार्मेसी ID",
+                medicineNamePlaceholder: "दवा का नाम",
+                quantityPlaceholder: "उपलब्ध मात्रा",
+                medicineAvailable: "दवा अभी उपलब्ध है",
+                updateAvailability: "💊 उपलब्धता अपडेट करें",
+
+                dashboardTitle: "📊 फार्मेसी डैशबोर्ड",
+                dashboardDescription:
+                    "अपनी फार्मेसी द्वारा रिपोर्ट की गई दवाओं को देखें और प्रबंधित करें।",
+                dashboardIdPlaceholder: "फार्मेसी ID दर्ज करें...",
+                loadDashboard: "📊 डैशबोर्ड लोड करें",
+
+                footer:
+                    "Healvia एक प्रोटोटाइप स्वास्थ्य सहायता प्रणाली है। यह चिकित्सा निदान या दवाओं की सलाह प्रदान नहीं करती। चिकित्सा संबंधी निर्णयों के लिए हमेशा योग्य स्वास्थ्य पेशेवर से परामर्श करें।"
+            },
+
+
+            Kannada: {
+                status: "● AI ಆರೋಗ್ಯ ಸಹಾಯಕ",
+                heroTitle: "ಆರೋಗ್ಯ ಸಹಾಯ",
+                heroSubtitle: "ಪ್ರತಿಯೊಂದು ಹಳ್ಳಿಗೂ ಇನ್ನಷ್ಟು ಹತ್ತಿರ",
+                heroDescription:
+                    "AI ಆಧಾರಿತ ಗ್ರಾಮೀಣ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯು ಬಳಕೆದಾರರಿಗೆ ಲಕ್ಷಣಗಳ ತುರ್ತು ಮಟ್ಟವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಮತ್ತು ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.",
+
+                howItHelps: "💡 ಇದು ಹೇಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ",
+                voiceSupport: "ಧ್ವನಿ ಸಹಾಯ",
+                voiceSupportDesc:
+                    "ಟೈಪ್ ಮಾಡಲು ಕಷ್ಟವಾಗುವ ಬಳಕೆದಾರರು ಧ್ವನಿಯ ಮೂಲಕ ತಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ತಿಳಿಸಬಹುದು.",
+                aiTriage: "AI ಟ್ರಯಾಜ್",
+                aiTriageDesc:
+                    "ವರದಿ ಮಾಡಿದ ಲಕ್ಷಣಗಳ ಆಧಾರದ ಮೇಲೆ ವ್ಯವಸ್ಥೆಯು ಪ್ರಾಥಮಿಕ ತುರ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತದೆ.",
+                medicineAvailability: "ಔಷಧ ಲಭ್ಯತೆ",
+                medicineAvailabilityDesc:
+                    "ಬಳಕೆದಾರರು ಸಮೀಪದ ಭಾಗವಹಿಸುವ ಔಷಧ ಅಂಗಡಿಗಳಲ್ಲಿ ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ಹುಡುಕಬಹುದು.",
+                regionalLanguages: "ಪ್ರಾದೇಶಿಕ ಭಾಷೆಗಳು",
+                regionalLanguagesDesc:
+                    "ಇಂಟರ್‌ಫೇಸ್ ಇಂಗ್ಲಿಷ್, ಹಿಂದಿ, ಕನ್ನಡ, ಮರಾಠಿ, ತಮಿಳು ಮತ್ತು ತೆಲುಗನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ.",
+
+                triageTitle: "🩺 AI ಲಕ್ಷಣಗಳ ಟ್ರಯಾಜ್",
+                triageDescription:
+                    "ನಿಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಹೆಚ್ಚುವರಿ ವಿವರಗಳನ್ನು ನೀಡಿ. ವ್ಯವಸ್ಥೆಯು ಪ್ರಾಥಮಿಕ ತುರ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತದೆ.",
+                preferredLanguage: "ಆದ್ಯತೆಯ ಭಾಷೆ",
+                selectSymptoms: "ಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                chooseSymptom: "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ...",
+                selectedSymptoms: "ಆಯ್ಕೆಮಾಡಿದ ಲಕ್ಷಣಗಳು",
+                otherSymptomPlaceholder: "ಇತರ ಲಕ್ಷಣವನ್ನು ನಮೂದಿಸಿ",
+                add: "ಸೇರಿಸಿ",
+                additionalDetails: "ಹೆಚ್ಚುವರಿ ವಿವರಗಳು",
+                detailsPlaceholder:
+                    "ಹೆಚ್ಚುವರಿ ಲಕ್ಷಣಗಳು ಅಥವಾ ವಿವರಗಳನ್ನು ಬರೆಯಿರಿ...",
+                speakSymptoms: "🎙️ ಲಕ್ಷಣಗಳನ್ನು ಹೇಳಿ",
+                checkSeverity: "✨ ತೀವ್ರತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+                assessment: "ಮೌಲ್ಯಮಾಪನ",
+                resultPlaceholder: "ನಿಮ್ಮ ಫಲಿತಾಂಶ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
+
+                nearbyHealthcare: "🗺️ ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳು",
+                nearbyHealthcareDescription:
+                    "ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಸ್ಥಳದ ಸಮೀಪದ ಆಸ್ಪತ್ರೆಗಳು ಮತ್ತು ಔಷಧ ಅಂಗಡಿಗಳನ್ನು ಹುಡುಕಿ.",
+                findNearMe: "📍 ಹತ್ತಿರದಲ್ಲಿರುವುದನ್ನು ಹುಡುಕಿ",
+                locationInitial:
+                    '"ಹತ್ತಿರದಲ್ಲಿರುವುದನ್ನು ಹುಡುಕಿ" ಒತ್ತಿ ಸಮೀಪದ ಆರೋಗ್ಯ ಸೇವೆಗಳನ್ನು ಹುಡುಕಿ.',
+                recenterOnMe: "📍 ನನ್ನ ಸ್ಥಳಕ್ಕೆ ಮರುಕೇಂದ್ರಗೊಳಿಸಿ",
+                yourLocation: "ನಿಮ್ಮ ಸ್ಥಳ",
+                hospital: "ಆಸ್ಪತ್ರೆ",
+                clinic: "ಕ್ಲಿನಿಕ್",
+                pharmacy: "ಔಷಧ ಅಂಗಡಿ",
+
+                navigation: "🧭 ನ್ಯಾವಿಗೇಶನ್",
+                destination: "ಆರೋಗ್ಯ ಕೇಂದ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                voiceOn: "🔊 ಧ್ವನಿ ಆನ್",
+                twoWheeler: "ದ್ವಿಚಕ್ರ ವಾಹನ",
+                car: "ಕಾರು",
+                bus: "ಬಸ್",
+                walk: "ನಡೆದು",
+                distance: "ದೂರ",
+                estimatedTime: "ಅಂದಾಜು ಸಮಯ",
+                navigationInstruction:
+                    "ನ್ಯಾವಿಗೇಶನ್ ಪ್ರಾರಂಭಿಸಲು ಪ್ರಯಾಣದ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+                startRoute: "▶️ ಮಾರ್ಗ ಪ್ರಾರಂಭಿಸಿ",
+                recenter: "📍 ಮರುಕೇಂದ್ರಗೊಳಿಸಿ",
+                endRoute: "✕ ಮಾರ್ಗ ಕೊನೆಗೊಳಿಸಿ",
+
+                medicineSectionTitle: "💊 ಔಷಧ ಲಭ್ಯತೆ",
+                medicineSectionDescription:
+                    "ಸಮೀಪದ ಭಾಗವಹಿಸುವ ಔಷಧ ಅಂಗಡಿಗಳಲ್ಲಿ ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ಹುಡುಕಿ.",
+                search: "ಹುಡುಕಿ",
+
+                pharmacyPortal: "🏪 ಔಷಧ ಅಂಗಡಿ / ಅಂಗಡಿಕಾರರ ಪೋರ್ಟಲ್",
+                pharmacyPortalDescription:
+                    "ನಿಮ್ಮ ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ ಮತ್ತು ರೋಗಿಗಳಿಗೆ ಔಷಧಗಳ ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ.",
+                registerPharmacyTitle: "ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ",
+                pharmacyNamePlaceholder: "ಔಷಧ ಅಂಗಡಿಯ ಹೆಸರು",
+                ownerNamePlaceholder: "ಮಾಲೀಕ / ಅಂಗಡಿಕಾರರ ಹೆಸರು",
+                phonePlaceholder: "ಫೋನ್ ಸಂಖ್ಯೆ",
+                addressPlaceholder: "ಔಷಧ ಅಂಗಡಿಯ ವಿಳಾಸ",
+                registerPharmacyButton: "🏪 ಔಷಧ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ",
+
+                inventoryTitle: "ಔಷಧ ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ",
+                pharmacyIdPlaceholder: "ಔಷಧ ಅಂಗಡಿ ID",
+                medicineNamePlaceholder: "ಔಷಧದ ಹೆಸರು",
+                quantityPlaceholder: "ಲಭ್ಯವಿರುವ ಪ್ರಮಾಣ",
+                medicineAvailable: "ಔಷಧ ಪ್ರಸ್ತುತ ಲಭ್ಯವಿದೆ",
+                updateAvailability: "💊 ಲಭ್ಯತೆಯನ್ನು ನವೀಕರಿಸಿ",
+
+                dashboardTitle: "📊 ಔಷಧ ಅಂಗಡಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+                dashboardDescription:
+                    "ನಿಮ್ಮ ಔಷಧ ಅಂಗಡಿಯಿಂದ ವರದಿಯಾದ ಔಷಧಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ನಿರ್ವಹಿಸಿ.",
+                dashboardIdPlaceholder: "ಔಷಧ ಅಂಗಡಿ ID ನಮೂದಿಸಿ...",
+                loadDashboard: "📊 ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಲೋಡ್ ಮಾಡಿ",
+
+                footer:
+                    "Healvia ಒಂದು ಪ್ರೋಟೋಟೈಪ್ ಆರೋಗ್ಯ ಸಹಾಯ ವ್ಯವಸ್ಥೆಯಾಗಿದೆ. ಇದು ವೈದ್ಯಕೀಯ ರೋಗನಿರ್ಣಯ ಅಥವಾ ಔಷಧ ಸಲಹೆಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ. ವೈದ್ಯಕೀಯ ನಿರ್ಧಾರಗಳಿಗಾಗಿ ಯಾವಾಗಲೂ ಅರ್ಹ ಆರೋಗ್ಯ ವೃತ್ತಿಪರರನ್ನು ಸಂಪರ್ಕಿಸಿ."
+            },
+
+
+            Marathi: {
+                status: "● AI आरोग्य सहाय्यक",
+                heroTitle: "आरोग्य सहाय्य",
+                heroSubtitle: "प्रत्येक गावाच्या आणखी जवळ",
+                heroDescription:
+                    "AI-आधारित ग्रामीण आरोग्य सहाय्य प्रणाली वापरकर्त्यांना लक्षणांची तातडी समजून घेण्यास आणि जवळच्या आरोग्य सेवांशी जोडण्यास मदत करते.",
+
+                howItHelps: "💡 हे कसे मदत करते",
+                voiceSupport: "आवाजाची सुविधा",
+                voiceSupportDesc:
+                    "टाइप करणे कठीण असल्यास वापरकर्ते आवाजाद्वारे आपली लक्षणे सांगू शकतात.",
+                aiTriage: "AI ट्रायेज",
+                aiTriageDesc:
+                    "नोंदवलेल्या लक्षणांवर आधारित प्रणाली प्राथमिक तातडीचे मार्गदर्शन देते.",
+                medicineAvailability: "औषध उपलब्धता",
+                medicineAvailabilityDesc:
+                    "वापरकर्ते जवळील सहभागी औषधालयांमध्ये औषधांची उपलब्धता शोधू शकतात.",
+                regionalLanguages: "प्रादेशिक भाषा",
+                regionalLanguagesDesc:
+                    "इंटरफेस इंग्रजी, हिंदी, कन्नड, मराठी, तमिळ आणि तेलुगूला समर्थन देतो.",
+
+                triageTitle: "🩺 AI लक्षण ट्रायेज",
+                triageDescription:
+                    "आपली लक्षणे निवडा आणि अतिरिक्त माहिती द्या. प्रणाली प्राथमिक तातडीचे मार्गदर्शन देईल.",
+                preferredLanguage: "पसंतीची भाषा",
+                selectSymptoms: "लक्षणे निवडा",
+                chooseSymptom: "लक्षण निवडा...",
+                selectedSymptoms: "निवडलेली लक्षणे",
+                otherSymptomPlaceholder: "इतर लक्षण लिहा",
+                add: "जोडा",
+                additionalDetails: "अतिरिक्त माहिती",
+                detailsPlaceholder:
+                    "अतिरिक्त लक्षणे किंवा माहिती लिहा...",
+                speakSymptoms: "🎙️ लक्षणे बोला",
+                checkSeverity: "✨ तीव्रता तपासा",
+                assessment: "मूल्यांकन",
+                resultPlaceholder: "तुमचा निकाल येथे दिसेल.",
+
+                nearbyHealthcare: "🗺️ जवळील आरोग्यसेवा",
+                nearbyHealthcareDescription:
+                    "आपल्या सध्याच्या स्थानाजवळील रुग्णालये आणि औषधालये शोधा.",
+                findNearMe: "📍 माझ्या जवळ शोधा",
+                locationInitial:
+                    'जवळील रुग्णालये आणि औषधालये शोधण्यासाठी "माझ्या जवळ शोधा" दाबा.',
+                recenterOnMe: "📍 माझ्या स्थानावर पुन्हा केंद्रित करा",
+                yourLocation: "तुमचे स्थान",
+                hospital: "रुग्णालय",
+                clinic: "क्लिनिक",
+                pharmacy: "औषधालय",
+
+                navigation: "🧭 दिशादर्शन",
+                destination: "आरोग्य केंद्र निवडा",
+                voiceOn: "🔊 आवाज सुरू",
+                twoWheeler: "दुचाकी",
+                car: "कार",
+                bus: "बस",
+                walk: "पायी",
+                distance: "अंतर",
+                estimatedTime: "अंदाजे वेळ",
+                navigationInstruction:
+                    "दिशादर्शन सुरू करण्यासाठी प्रवासाचा प्रकार निवडा.",
+                startRoute: "▶️ मार्ग सुरू करा",
+                recenter: "📍 पुन्हा केंद्रित करा",
+                endRoute: "✕ मार्ग समाप्त करा",
+
+                medicineSectionTitle: "💊 औषध उपलब्धता",
+                medicineSectionDescription:
+                    "जवळील सहभागी औषधालयांमध्ये औषधांची उपलब्धता शोधा.",
+                search: "शोधा",
+
+                pharmacyPortal: "🏪 औषधालय / दुकानदार पोर्टल",
+                pharmacyPortalDescription:
+                    "आपले औषधालय नोंदणी करा आणि रुग्णांसाठी औषधांची उपलब्धता अद्यतनित करा.",
+                registerPharmacyTitle: "औषधालय नोंदणी करा",
+                pharmacyNamePlaceholder: "औषधालयाचे नाव",
+                ownerNamePlaceholder: "मालक / दुकानदाराचे नाव",
+                phonePlaceholder: "फोन नंबर",
+                addressPlaceholder: "औषधालयाचा पत्ता",
+                registerPharmacyButton: "🏪 औषधालय नोंदणी करा",
+
+                inventoryTitle: "औषध उपलब्धता अद्यतनित करा",
+                pharmacyIdPlaceholder: "औषधालय ID",
+                medicineNamePlaceholder: "औषधाचे नाव",
+                quantityPlaceholder: "उपलब्ध प्रमाण",
+                medicineAvailable: "औषध सध्या उपलब्ध आहे",
+                updateAvailability: "💊 उपलब्धता अद्यतनित करा",
+
+                dashboardTitle: "📊 औषधालय डॅशबोर्ड",
+                dashboardDescription:
+                    "आपल्या औषधालयाने नोंदवलेली औषधे पहा आणि व्यवस्थापित करा.",
+                dashboardIdPlaceholder: "औषधालय ID प्रविष्ट करा...",
+                loadDashboard: "📊 डॅशबोर्ड लोड करा",
+
+                footer:
+                    "Healvia ही एक प्रोटोटाइप आरोग्य सहाय्य प्रणाली आहे. ती वैद्यकीय निदान किंवा औषधांचे प्रिस्क्रिप्शन देत नाही. वैद्यकीय निर्णयांसाठी नेहमी पात्र आरोग्य व्यावसायिकांचा सल्ला घ्या."
+            },
+
+
+            Telugu: {
+                status: "● AI ఆరోగ్య సహాయకుడు",
+                heroTitle: "ఆరోగ్య సహాయం",
+                heroSubtitle: "ప్రతి గ్రామానికి మరింత చేరువగా",
+                heroDescription:
+                    "AI ఆధారిత గ్రామీణ ఆరోగ్య సహాయ వ్యవస్థ వినియోగదారులకు లక్షణాల అత్యవసర స్థాయిని అర్థం చేసుకోవడంలో మరియు సమీప ఆరోగ్య సేవలతో అనుసంధానం కావడంలో సహాయపడుతుంది.",
+
+                howItHelps: "💡 ఇది ఎలా సహాయపడుతుంది",
+                voiceSupport: "వాయిస్ సహాయం",
+                voiceSupportDesc:
+                    "టైప్ చేయడం కష్టంగా ఉన్నవారు వాయిస్ ద్వారా తమ లక్షణాలను వివరించవచ్చు.",
+                aiTriage: "AI ట్రయాజ్",
+                aiTriageDesc:
+                    "తెలిపిన లక్షణాల ఆధారంగా వ్యవస్థ ప్రాథమిక అత్యవసర మార్గదర్శకత్వాన్ని అందిస్తుంది.",
+                medicineAvailability: "మందుల లభ్యత",
+                medicineAvailabilityDesc:
+                    "వినియోగదారులు సమీపంలోని పాల్గొనే ఫార్మసీలలో మందుల లభ్యతను వెతకవచ్చు.",
+                regionalLanguages: "ప్రాంతీయ భాషలు",
+                regionalLanguagesDesc:
+                    "ఇంటర్‌ఫేస్ ఇంగ్లీష్, హిందీ, కన్నడ, మరాఠీ, తమిళం మరియు తెలుగును మద్దతు ఇస్తుంది.",
+
+                triageTitle: "🩺 AI లక్షణాల ట్రయాజ్",
+                triageDescription:
+                    "మీ లక్షణాలను ఎంచుకుని అదనపు వివరాలను ఇవ్వండి. వ్యవస్థ ప్రాథమిక అత్యవసర మార్గదర్శకత్వాన్ని అందిస్తుంది.",
+                preferredLanguage: "ప్రాధాన్య భాష",
+                selectSymptoms: "లక్షణాలను ఎంచుకోండి",
+                chooseSymptom: "లక్షణాన్ని ఎంచుకోండి...",
+                selectedSymptoms: "ఎంచుకున్న లక్షణాలు",
+                otherSymptomPlaceholder: "ఇతర లక్షణాన్ని నమోదు చేయండి",
+                add: "చేర్చండి",
+                additionalDetails: "అదనపు వివరాలు",
+                detailsPlaceholder:
+                    "అదనపు లక్షణాలు లేదా వివరాలను నమోదు చేయండి...",
+                speakSymptoms: "🎙️ లక్షణాలను చెప్పండి",
+                checkSeverity: "✨ తీవ్రతను తనిఖీ చేయండి",
+                assessment: "అంచనా",
+                resultPlaceholder: "మీ ఫలితం ఇక్కడ కనిపిస్తుంది.",
+
+                nearbyHealthcare: "🗺️ సమీప ఆరోగ్య సేవలు",
+                nearbyHealthcareDescription:
+                    "మీ ప్రస్తుత స్థానానికి సమీపంలోని ఆసుపత్రులు మరియు ఫార్మసీలను కనుగొనండి.",
+                findNearMe: "📍 నా దగ్గర వెతకండి",
+                locationInitial:
+                    '"నా దగ్గర వెతకండి" నొక్కి సమీప ఆసుపత్రులు మరియు ఫార్మసీలను కనుగొనండి.',
+                recenterOnMe: "📍 నా స్థానానికి మళ్లీ కేంద్రీకరించండి",
+                yourLocation: "మీ స్థానం",
+                hospital: "ఆసుపత్రి",
+                clinic: "క్లినిక్",
+                pharmacy: "ఫార్మసీ",
+
+                navigation: "🧭 నావిగేషన్",
+                destination: "ఆరోగ్య కేంద్రాన్ని ఎంచుకోండి",
+                voiceOn: "🔊 వాయిస్ ఆన్",
+                twoWheeler: "ద్విచక్ర వాహనం",
+                car: "కారు",
+                bus: "బస్",
+                walk: "నడక",
+                distance: "దూరం",
+                estimatedTime: "అంచనా సమయం",
+                navigationInstruction:
+                    "నావిగేషన్ ప్రారంభించడానికి ప్రయాణ విధానాన్ని ఎంచుకోండి.",
+                startRoute: "▶️ మార్గాన్ని ప్రారంభించండి",
+                recenter: "📍 మళ్లీ కేంద్రీకరించండి",
+                endRoute: "✕ మార్గాన్ని ముగించండి",
+
+                medicineSectionTitle: "💊 మందుల లభ్యత",
+                medicineSectionDescription:
+                    "సమీపంలోని పాల్గొనే ఫార్మసీలలో మందుల లభ్యతను వెతకండి.",
+                search: "వెతకండి",
+
+                pharmacyPortal: "🏪 ఫార్మసీ / దుకాణదారు పోర్టల్",
+                pharmacyPortalDescription:
+                    "మీ ఫార్మసీని నమోదు చేసి, రోగుల కోసం మందుల లభ్యతను నవీకరించండి.",
+                registerPharmacyTitle: "ఫార్మసీని నమోదు చేయండి",
+                pharmacyNamePlaceholder: "ఫార్మసీ పేరు",
+                ownerNamePlaceholder: "యజమాని / దుకాణదారు పేరు",
+                phonePlaceholder: "ఫోన్ నంబర్",
+                addressPlaceholder: "ఫార్మసీ చిరునామా",
+                registerPharmacyButton: "🏪 ఫార్మసీని నమోదు చేయండి",
+
+                inventoryTitle: "మందుల లభ్యతను నవీకరించండి",
+                pharmacyIdPlaceholder: "ఫార్మసీ ID",
+                medicineNamePlaceholder: "మందు పేరు",
+                quantityPlaceholder: "అందుబాటులో ఉన్న పరిమాణం",
+                medicineAvailable: "మందు ప్రస్తుతం అందుబాటులో ఉంది",
+                updateAvailability: "💊 లభ్యతను నవీకరించండి",
+
+                dashboardTitle: "📊 ఫార్మసీ డ్యాష్‌బోర్డ్",
+                dashboardDescription:
+                    "మీ ఫార్మసీ ద్వారా నివేదించబడిన మందులను వీక్షించి నిర్వహించండి.",
+                dashboardIdPlaceholder: "ఫార్మసీ ID నమోదు చేయండి...",
+                loadDashboard: "📊 డ్యాష్‌బోర్డ్‌ను లోడ్ చేయండి",
+
+                footer:
+                    "Healvia ఒక ప్రోటోటైప్ ఆరోగ్య సహాయ వ్యవస్థ. ఇది వైద్య నిర్ధారణ లేదా మందుల ప్రిస్క్రిప్షన్ ఇవ్వదు. వైద్య నిర్ణయాల కోసం ఎల్లప్పుడూ అర్హత కలిగిన ఆరోగ్య నిపుణుడిని సంప్రదించండి."
+            },
+
+
+            Tamil: {
+                status: "● AI சுகாதார உதவியாளர்",
+                heroTitle: "சுகாதார உதவி",
+                heroSubtitle: "ஒவ்வொரு கிராமத்திற்கும் மேலும் அருகில்",
+                heroDescription:
+                    "AI அடிப்படையிலான கிராமப்புற சுகாதார உதவி அமைப்பு, அறிகுறிகளின் அவசர நிலையைப் புரிந்துகொள்ளவும் அருகிலுள்ள சுகாதார சேவைகளுடன் இணைக்கவும் பயனர்களுக்கு உதவுகிறது.",
+
+                howItHelps: "💡 இது எப்படி உதவுகிறது",
+                voiceSupport: "குரல் உதவி",
+                voiceSupportDesc:
+                    "தட்டச்சு செய்வது கடினமாக இருக்கும் பயனர்கள் குரல் மூலம் தங்கள் அறிகுறிகளை தெரிவிக்கலாம்.",
+                aiTriage: "AI ட்ரையாஜ்",
+                aiTriageDesc:
+                    "தெரிவிக்கப்பட்ட அறிகுறிகளின் அடிப்படையில் அமைப்பு ஆரம்ப நிலை அவசர வழிகாட்டுதலை வழங்குகிறது.",
+                medicineAvailability: "மருந்து கிடைக்கும் நிலை",
+                medicineAvailabilityDesc:
+                    "பயனர்கள் அருகிலுள்ள பங்கேற்கும் மருந்தகங்களில் மருந்துகளின் கிடைப்பைத் தேடலாம்.",
+                regionalLanguages: "பிராந்திய மொழிகள்",
+                regionalLanguagesDesc:
+                    "இடைமுகம் ஆங்கிலம், இந்தி, கன்னடம், மராத்தி, தமிழ் மற்றும் தெலுங்கை ஆதரிக்கிறது.",
+
+                triageTitle: "🩺 AI அறிகுறி ட்ரையாஜ்",
+                triageDescription:
+                    "உங்கள் அறிகுறிகளைத் தேர்ந்தெடுத்து கூடுதல் விவரங்களை வழங்கவும். அமைப்பு ஆரம்ப நிலை அவசர வழிகாட்டுதலை வழங்கும்.",
+                preferredLanguage: "விருப்ப மொழி",
+                selectSymptoms: "அறிகுறிகளைத் தேர்ந்தெடுக்கவும்",
+                chooseSymptom: "அறிகுறியைத் தேர்ந்தெடுக்கவும்...",
+                selectedSymptoms: "தேர்ந்தெடுத்த அறிகுறிகள்",
+                otherSymptomPlaceholder: "மற்ற அறிகுறியை உள்ளிடவும்",
+                add: "சேர்க்கவும்",
+                additionalDetails: "கூடுதல் விவரங்கள்",
+                detailsPlaceholder:
+                    "கூடுதல் அறிகுறிகள் அல்லது விவரங்களை உள்ளிடவும்...",
+                speakSymptoms: "🎙️ அறிகுறிகளைப் பேசுங்கள்",
+                checkSeverity: "✨ தீவிரத்தைச் சரிபார்க்கவும்",
+                assessment: "மதிப்பீடு",
+                resultPlaceholder: "உங்கள் முடிவு இங்கே தோன்றும்.",
+
+                nearbyHealthcare: "🗺️ அருகிலுள்ள சுகாதார சேவைகள்",
+                nearbyHealthcareDescription:
+                    "உங்கள் தற்போதைய இருப்பிடத்திற்கு அருகிலுள்ள மருத்துவமனைகள் மற்றும் மருந்தகங்களைக் கண்டறியவும்.",
+                findNearMe: "📍 அருகில் தேடு",
+                locationInitial:
+                    '"அருகில் தேடு" என்பதை அழுத்தி அருகிலுள்ள மருத்துவமனைகள் மற்றும் மருந்தகங்களைக் கண்டறியவும்.',
+                recenterOnMe: "📍 என்னை மையப்படுத்து",
+                yourLocation: "உங்கள் இருப்பிடம்",
+                hospital: "மருத்துவமனை",
+                clinic: "கிளினிக்",
+                pharmacy: "மருந்தகம்",
+
+                navigation: "🧭 வழிசெலுத்தல்",
+                destination: "சுகாதார மையத்தைத் தேர்ந்தெடுக்கவும்",
+                voiceOn: "🔊 குரல் ஆன்",
+                twoWheeler: "இருசக்கர வாகனம்",
+                car: "கார்",
+                bus: "பஸ்",
+                walk: "நடந்து",
+                distance: "தூரம்",
+                estimatedTime: "மதிப்பிடப்பட்ட நேரம்",
+                navigationInstruction:
+                    "வழிசெலுத்தலைத் தொடங்க பயண முறையைத் தேர்ந்தெடுக்கவும்.",
+                startRoute: "▶️ வழியைத் தொடங்கு",
+                recenter: "📍 மீண்டும் மையப்படுத்து",
+                endRoute: "✕ வழியை முடி",
+
+                medicineSectionTitle: "💊 மருந்து கிடைக்கும் நிலை",
+                medicineSectionDescription:
+                    "அருகிலுள்ள பங்கேற்கும் மருந்தகங்களில் மருந்துகளின் கிடைப்பைத் தேடுங்கள்.",
+                search: "தேடு",
+
+                pharmacyPortal: "🏪 மருந்தகம் / கடைக்காரர் போர்டல்",
+                pharmacyPortalDescription:
+                    "உங்கள் மருந்தகத்தைப் பதிவு செய்து நோயாளிகளுக்கான மருந்து கிடைப்பை புதுப்பிக்கவும்.",
+                registerPharmacyTitle: "மருந்தகத்தைப் பதிவு செய்க",
+                pharmacyNamePlaceholder: "மருந்தகத்தின் பெயர்",
+                ownerNamePlaceholder: "உரிமையாளர் / கடைக்காரர் பெயர்",
+                phonePlaceholder: "தொலைபேசி எண்",
+                addressPlaceholder: "மருந்தக முகவரி",
+                registerPharmacyButton: "🏪 மருந்தகத்தைப் பதிவு செய்க",
+
+                inventoryTitle: "மருந்து கிடைப்பை புதுப்பிக்கவும்",
+                pharmacyIdPlaceholder: "மருந்தக ID",
+                medicineNamePlaceholder: "மருந்தின் பெயர்",
+                quantityPlaceholder: "கிடைக்கும் அளவு",
+                medicineAvailable: "மருந்து தற்போது கிடைக்கிறது",
+                updateAvailability: "💊 கிடைப்பை புதுப்பிக்கவும்",
+
+                dashboardTitle: "📊 மருந்தக டாஷ்போர்டு",
+                dashboardDescription:
+                    "உங்கள் மருந்தகத்தால் தெரிவிக்கப்பட்ட மருந்துகளைப் பார்த்து நிர்வகிக்கவும்.",
+                dashboardIdPlaceholder: "மருந்தக ID உள்ளிடவும்...",
+                loadDashboard: "📊 டாஷ்போர்டை ஏற்றவும்",
+
+                footer:
+                    "Healvia ஒரு முன்மாதிரி சுகாதார உதவி அமைப்பு. இது மருத்துவ நோயறிதல் அல்லது மருந்து பரிந்துரைகளை வழங்காது. மருத்துவ முடிவுகளுக்கு எப்போதும் தகுதி பெற்ற சுகாதார நிபுணரை அணுகவும்."
             }
 
         };
 
+        /* =====================================================
+           APPLY FULL PAGE LANGUAGE
+        ===================================================== */
+
+        function applyPageLanguage() {
+
+            const language = languageSelect.value;
+
+            const t = pageTranslations[language];
+
+            if (!t) {
+                return;
+            }
+
+            /* Navbar */
+            document.querySelector(".status").innerText =
+                t.status;
+
+            /* Hero */
+            document.querySelector(".hero h1").innerHTML =
+                `${t.heroTitle}<br><span>${t.heroSubtitle}</span>`;
+
+            document.querySelector(".hero p").innerText =
+                t.heroDescription;
+
+
+            /* How it helps */
+            document.querySelector(
+                "#helpToggle span:first-child"
+            ).innerText = t.howItHelps;
+
+
+            const features =
+                document.querySelectorAll(".feature");
+
+            if (features[0]) {
+                features[0].querySelector("h3").innerText =
+                    t.voiceSupport;
+                features[0].querySelector("p").innerText =
+                    t.voiceSupportDesc;
+            }
+
+            if (features[1]) {
+                features[1].querySelector("h3").innerText =
+                    t.aiTriage;
+                features[1].querySelector("p").innerText =
+                    t.aiTriageDesc;
+            }
+
+            if (features[2]) {
+                features[2].querySelector("h3").innerText =
+                    t.medicineAvailability;
+                features[2].querySelector("p").innerText =
+                    t.medicineAvailabilityDesc;
+            }
+
+            if (features[3]) {
+                features[3].querySelector("h3").innerText =
+                    t.regionalLanguages;
+                features[3].querySelector("p").innerText =
+                    t.regionalLanguagesDesc;
+            }
+
+
+            /* AI Triage */
+            const triageCard =
+                document.getElementById("language").closest(".card");
+
+            if (triageCard) {
+
+                triageCard.querySelector("h2").innerText =
+                    t.triageTitle;
+
+                triageCard.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.triageDescription;
+
+                triageCard.querySelector(
+                    'label[for="language"]'
+                ).innerText =
+                    t.preferredLanguage;
+
+                triageCard.querySelector(
+                    'label[for="symptomSelect"]'
+                ).innerText =
+                    t.selectSymptoms;
+
+                triageCard.querySelector(
+                    "#selectedTitle"
+                ).innerText =
+                    t.selectedSymptoms;
+
+                triageCard.querySelector(
+                    'label[for="symptoms"]'
+                ).innerText =
+                    t.additionalDetails;
+
+                triageCard.querySelector(
+                    'button[onclick="startVoice()"]'
+                ).innerText =
+                    t.speakSymptoms;
+
+                triageCard.querySelector(
+                    'button[onclick="checkSeverity()"]'
+                ).innerText =
+                    t.checkSeverity;
+
+                triageCard.querySelector(
+                    "#resultTitle"
+                ).innerText =
+                    t.assessment;
+
+                triageCard.querySelector(
+                    "#resultText"
+                ).innerText =
+                    t.resultPlaceholder;
+            }
+
+
+            /* Placeholders */
+            document.getElementById(
+                "otherSymptom"
+            ).placeholder =
+                t.otherSymptomPlaceholder;
+
+            document.getElementById(
+                "symptoms"
+            ).placeholder =
+                t.detailsPlaceholder;
+
+
+            /* Add button */
+            const addButton =
+                document.querySelector(
+                    'button[onclick="addOtherSymptom()"]'
+                );
+
+            if (addButton) {
+                addButton.innerText = t.add;
+            }
+
+
+            /* Nearby healthcare */
+            const healthcareSection =
+                document.querySelectorAll(".pharmacy")[0];
+
+            if (healthcareSection) {
+
+                healthcareSection.querySelector("h2").innerText =
+                    t.nearbyHealthcare;
+
+                healthcareSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.nearbyHealthcareDescription;
+
+                healthcareSection.querySelector(
+                    'button[onclick="findNearbyHealthcare()"]'
+                ).innerText =
+                    t.findNearMe;
+
+                const locationStatus =
+                    document.getElementById("locationStatus");
+
+                if (locationStatus &&
+                    locationStatus.innerText.includes(
+                        "Click"
+                    )) {
+                    locationStatus.innerText =
+                        t.locationInitial;
+                }
+
+                const oldRecenter =
+                    healthcareSection.querySelector(
+                        'button[onclick="recenterOnUser()"]'
+                    );
+
+                if (oldRecenter) {
+                    oldRecenter.innerText =
+                        t.recenterOnMe;
+                }
+
+                const legendItems =
+                    healthcareSection.querySelectorAll(
+                        ".legend-item"
+                    );
+
+                if (legendItems[0]) {
+                    legendItems[0].lastChild.textContent =
+                        " " + t.yourLocation;
+                }
+
+                if (legendItems[1]) {
+                    legendItems[1].lastChild.textContent =
+                        " " + t.hospital;
+                }
+
+                if (legendItems[2]) {
+                    legendItems[2].lastChild.textContent =
+                        " " + t.clinic;
+                }
+
+                if (legendItems[3]) {
+                    legendItems[3].lastChild.textContent =
+                        " " + t.pharmacy;
+                }
+            }
+
+
+            /* Navigation */
+            document.querySelectorAll(
+                ".navigation-card"
+            ).forEach(function (card) {
+
+                const small =
+                    card.querySelector(
+                        ".navigation-small"
+                    );
+
+                if (small) {
+                    small.innerText = t.navigation;
+                }
+
+                const modes =
+                    card.querySelectorAll(
+                        ".travel-mode"
+                    );
+
+                modes.forEach(function (button) {
+
+                    const mode =
+                        button.dataset.mode;
+
+                    const span =
+                        button.querySelector("span");
+
+                    if (!span) {
+                        return;
+                    }
+
+                    if (mode === "motorcycle") {
+                        span.innerText = t.twoWheeler;
+                    }
+
+                    else if (mode === "car") {
+                        span.innerText = t.car;
+                    }
+
+                    else if (mode === "bus") {
+                        span.innerText = t.bus;
+                    }
+
+                    else if (mode === "walking") {
+                        span.innerText = t.walk;
+                    }
+                });
+
+
+                card.querySelectorAll(
+                    ".route-summary span"
+                ).forEach(function (span) {
+
+                    if (
+                        span.innerText.toLowerCase()
+                            .includes("distance")
+                    ) {
+                        span.innerText = t.distance;
+                    }
+
+                    else {
+                        span.innerText = t.estimatedTime;
+                    }
+                });
+
+
+                card.querySelectorAll(
+                    ".navigation-start-button"
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.startRoute;
+                });
+
+
+                card.querySelectorAll(
+                    'button[onclick="recenterOnUser()"]'
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.recenter;
+                });
+
+
+                card.querySelectorAll(
+                    ".danger-button"
+                ).forEach(function (button) {
+                    button.innerText =
+                        t.endRoute;
+                });
+
+
+                const instruction =
+                    card.querySelector(
+                        "#currentNavigationInstruction"
+                    );
+
+                if (instruction &&
+                    !window.navigationActive) {
+
+                    instruction.innerText =
+                        t.navigationInstruction;
+                }
+            });
+
+
+            /* Medicine search */
+            const medicineSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[1];
+
+            if (medicineSection) {
+
+                medicineSection.querySelector("h2").innerText =
+                    t.medicineSectionTitle;
+
+                medicineSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.medicineSectionDescription;
+
+                document.getElementById(
+                    "medicine"
+                ).placeholder =
+                    language === "English"
+                        ? "Enter medicine name..."
+                        : language === "Hindi"
+                            ? "दवा का नाम दर्ज करें..."
+                            : language === "Kannada"
+                                ? "ಔಷಧದ ಹೆಸರು ನಮೂದಿಸಿ..."
+                                : language === "Marathi"
+                                    ? "औषधाचे नाव प्रविष्ट करा..."
+                                    : language === "Telugu"
+                                        ? "మందు పేరు నమోదు చేయండి..."
+                                        : "மருந்தின் பெயரை உள்ளிடவும்...";
+
+                medicineSection.querySelector(
+                    'button[onclick="findMedicine()"]'
+                ).innerText =
+                    t.search;
+            }
+
+
+            /* Pharmacy portal */
+            const portalSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[2];
+
+            if (portalSection) {
+
+                portalSection.querySelector("h2").innerText =
+                    t.pharmacyPortal;
+
+                portalSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.pharmacyPortalDescription;
+
+                portalSection.querySelector(
+                    "h3"
+                ).innerText =
+                    t.registerPharmacyTitle;
+
+                document.getElementById(
+                    "pharmacyName"
+                ).placeholder =
+                    t.pharmacyNamePlaceholder;
+
+                document.getElementById(
+                    "ownerName"
+                ).placeholder =
+                    t.ownerNamePlaceholder;
+
+                document.getElementById(
+                    "pharmacyPhone"
+                ).placeholder =
+                    t.phonePlaceholder;
+
+                document.getElementById(
+                    "pharmacyAddress"
+                ).placeholder =
+                    t.addressPlaceholder;
+
+                portalSection.querySelector(
+                    'button[onclick="registerPharmacy()"]'
+                ).innerText =
+                    t.registerPharmacyButton;
+
+
+                const headings =
+                    portalSection.querySelectorAll("h3");
+
+                if (headings[1]) {
+                    headings[1].innerText =
+                        t.inventoryTitle;
+                }
+
+                document.getElementById(
+                    "pharmacyId"
+                ).placeholder =
+                    t.pharmacyIdPlaceholder;
+
+                document.getElementById(
+                    "inventoryMedicine"
+                ).placeholder =
+                    t.medicineNamePlaceholder;
+
+                document.getElementById(
+                    "medicineQuantity"
+                ).placeholder =
+                    t.quantityPlaceholder;
+
+                document.getElementById(
+                    "medicineAvailable"
+                ).parentElement.lastChild.textContent =
+                    " " + t.medicineAvailable;
+
+                portalSection.querySelector(
+                    'button[onclick="updateMedicineInventory()"]'
+                ).innerText =
+                    t.updateAvailability;
+            }
+
+
+            /* Dashboard */
+            const dashboardSection =
+                document.querySelectorAll(
+                    ".pharmacy"
+                )[3];
+
+            if (dashboardSection) {
+
+                dashboardSection.querySelector("h2").innerText =
+                    t.dashboardTitle;
+
+                dashboardSection.querySelector(
+                    ".card-description"
+                ).innerText =
+                    t.dashboardDescription;
+
+                document.getElementById(
+                    "dashboardPharmacyId"
+                ).placeholder =
+                    t.dashboardIdPlaceholder;
+
+                dashboardSection.querySelector(
+                    'button[onclick="loadPharmacyDashboard()"]'
+                ).innerText =
+                    t.loadDashboard;
+            }
+
+
+            /* Footer */
+            document.querySelector("footer").innerText =
+                t.footer;
+
+
+            /* Re-render symptoms in selected language */
+            renderSymptomOptions();
+        }
 
         /* =====================================================
            ELEMENTS
@@ -1319,7 +3096,11 @@
                         ? "ಲಕ್ಷಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
                         : language === "Marathi"
                             ? "लक्षण निवडा..."
-                            : "Choose a symptom...";
+                            : language === "Telugu"
+                                ? "లక్షణాన్ని ఎంచుకోండి..."
+                                : language === "Tamil"
+                                    ? "அறிகுறியைத் தேர்ந்தெடுக்கவும்..."
+                                    : "Choose a symptom...";
 
             symptomSelect.appendChild(
                 placeholder
@@ -1593,90 +3374,878 @@
         languageSelect.addEventListener(
             "change",
             function () {
-
+                applyPageLanguage();
                 renderSymptomOptions();
-
             }
+
+
+
         );
 
 
         /* =====================================================
            VOICE SUPPORT
         ===================================================== */
+        /* =====================================================
+    VOICE SUPPORT + LIVE FREQUENCY VISUALIZER
+ ===================================================== */
 
-        function startVoice() {
+        let activeRecognition = null;
 
-            const SpeechRecognition =
-                window.SpeechRecognition ||
-                window.webkitSpeechRecognition;
+        let voiceStream = null;
+        let voiceAudioContext = null;
+        let voiceAnalyser = null;
+        let voiceAnimationFrame = null;
+
+        let voiceManuallyStopped = false;
 
 
-            if (!SpeechRecognition) {
+        /* -----------------------------------------------------
+           START 
+        -----------------------------------------------------*/
+
+        async function startVoice() {
+
+            const button =
+                document.querySelector(
+                    'button[onclick="startVoice()"]'
+                );
+
+            const textarea =
+                document.getElementById("symptoms");
+
+            const language =
+                document.getElementById("language").value;
+
+
+
+            /* -----------------------------------------
+               CHECK BROWSER MICROPHONE SUPPORT
+            ----------------------------------------- */
+
+            if (!navigator.mediaDevices ||
+                !navigator.mediaDevices.getUserMedia) {
 
                 alert(
-                    "Voice recognition is not supported in this browser."
+                    "Your browser does not support microphone access."
                 );
 
                 return;
+            }
+
+
+            /* -----------------------------------------
+               IF ALREADY RECORDING → STOP
+            ----------------------------------------- */
+
+            if (window.activeMediaRecorder) {
+
+                try {
+                    window.activeMediaRecorder.stop();
+                }
+                catch (error) {
+                    console.log(error);
+                }
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               GET MICROPHONE
+            ----------------------------------------- */
+
+            let stream;
+
+            try {
+
+                stream =
+                    await navigator.mediaDevices.getUserMedia({
+                        audio: true
+                    });
+                voiceStream = stream;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Microphone error:",
+                    error
+                );
+
+                alert(
+                    "Microphone permission was denied or the microphone could not be accessed."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               CREATE RECORDER
+            ----------------------------------------- */
+
+            let mimeType = "audio/webm";
+
+            if (
+                MediaRecorder.isTypeSupported(
+                    "audio/webm;codecs=opus"
+                )
+            ) {
+
+                mimeType =
+                    "audio/webm;codecs=opus";
+
+            }
+            else if (
+                MediaRecorder.isTypeSupported(
+                    "audio/webm"
+                )
+            ) {
+
+                mimeType = "audio/webm";
 
             }
 
 
-            const recognition =
-                new SpeechRecognition();
+            const mediaRecorder =
+                new MediaRecorder(
+                    stream,
+                    {
+                        mimeType: mimeType
+                    }
+                );
 
 
-            const language =
-                languageSelect.value;
+            window.activeMediaRecorder =
+                mediaRecorder;
+
+            window.recordedAudioChunks = [];
 
 
-            const voiceLanguages = {
+            /* -----------------------------------------
+               SAVE AUDIO DATA
+            ----------------------------------------- */
 
-                English: "en-IN",
+            mediaRecorder.ondataavailable =
+                function (event) {
 
-                Hindi: "hi-IN",
+                    if (
+                        event.data &&
+                        event.data.size > 0
+                    ) {
 
-                Kannada: "kn-IN",
+                        window.recordedAudioChunks.push(
+                            event.data
+                        );
 
-                Marathi: "mr-IN"
+                    }
+                };
+
+            /* =====================================================
+               START VOICE VISUALIZER
+            ===================================================== */
+
+            function startVoiceVisualizer() {
+
+                const visualizer =
+                    document.getElementById("voiceVisualizer");
+
+                if (visualizer) {
+                    visualizer.classList.add("active");
+                }
+
+                const statusText =
+                    document.getElementById("voiceStatusText");
+
+                if (statusText) {
+                    statusText.innerText =
+                        "🎙️ Listening... Speak now";
+                }
+
+                if (!voiceStream) {
+                    console.error(
+                        "Voice visualizer: microphone stream is missing."
+                    );
+                    return;
+                }
+
+                try {
+
+                    /* Create audio context */
+
+                    voiceAudioContext =
+                        new (
+                            window.AudioContext ||
+                            window.webkitAudioContext
+                        )();
+
+                    /* Create analyser */
+
+                    voiceAnalyser =
+                        voiceAudioContext.createAnalyser();
+
+                    voiceAnalyser.fftSize = 256;
+
+                    voiceAnalyser.smoothingTimeConstant = 0.75;
+
+                    /* Connect microphone to analyser */
+
+                    const microphoneSource =
+                        voiceAudioContext.createMediaStreamSource(
+                            voiceStream
+                        );
+
+                    microphoneSource.connect(
+                        voiceAnalyser
+                    );
+
+                    /* Start animation */
+
+                    animateVoiceFrequency();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Voice visualizer error:",
+                        error
+                    );
+
+                }
+            }
+
+
+            /* =====================================================
+               STOP VOICE VISUALIZER
+            ===================================================== */
+
+            function stopVoiceVisualizer() {
+
+                if (voiceAnimationFrame) {
+
+                    cancelAnimationFrame(
+                        voiceAnimationFrame
+                    );
+
+                    voiceAnimationFrame = null;
+                }
+
+                const bars =
+                    document.querySelectorAll(
+                        "#frequencyBars span"
+                    );
+
+                bars.forEach(
+                    function (bar) {
+
+                        bar.style.height =
+                            "10px";
+
+                        bar.style.opacity =
+                            "0.35";
+
+                    }
+                );
+
+                const visualizer =
+                    document.getElementById(
+                        "voiceVisualizer"
+                    );
+
+                if (visualizer) {
+
+                    visualizer.classList.remove(
+                        "active"
+                    );
+
+                }
+
+                voiceAnalyser = null;
+
+                if (voiceAudioContext) {
+
+                    try {
+
+                        voiceAudioContext.close();
+
+                    }
+                    catch (error) {
+
+                        console.log(error);
+
+                    }
+
+                    voiceAudioContext = null;
+
+                }
+            }
+            /* -----------------------------------------
+               RECORDING STARTED
+            ----------------------------------------- */
+
+            mediaRecorder.onstart =
+                function () {
+
+                    console.log(
+                        "Microphone recording started."
+                    );
+
+
+                    if (button) {
+
+                        button.innerHTML =
+                            "🔴 Recording... Stop when finished";
+
+                        button.disabled = false;
+
+                    }
+
+
+                    if (
+                        typeof startVoiceVisualizer ===
+                        "function"
+                    ) {
+
+                        startVoiceVisualizer();
+
+                    }
+
+                };
+
+
+            /* -----------------------------------------
+               RECORDING STOPPED
+            ----------------------------------------- */
+            mediaRecorder.onstop = async function () {
+
+                console.log("🎙️ Recording stopped.");
+
+                if (typeof stopVoiceVisualizer === "function") {
+                    stopVoiceVisualizer();
+                }
+
+                /* -----------------------------------------
+                   CREATE AUDIO BLOB
+                ----------------------------------------- */
+
+                const audioBlob = new Blob(
+                    window.recordedAudioChunks,
+                    {
+                        type: mimeType
+                    }
+                );
+
+                console.log(
+                    "🎵 Recorded audio size:",
+                    audioBlob.size,
+                    "bytes"
+                );
+
+                if (!audioBlob || audioBlob.size === 0) {
+
+                    alert(
+                        "No audio was recorded. Please try again."
+                    );
+
+                    window.activeMediaRecorder = null;
+                    return;
+                }
+
+
+                /* -----------------------------------------
+                   SHOW TRANSCRIBING STATE
+                ----------------------------------------- */
+
+                if (button) {
+                    button.innerHTML = "⏳ Transcribing...";
+                    button.disabled = true;
+                }
+
+                textarea.value = "⏳ Converting your voice to text...";
+
+
+                try {
+
+                    /* -----------------------------------------
+                       SEND AUDIO TO FLASK
+                    ----------------------------------------- */
+
+                    const formData = new FormData();
+
+                    formData.append(
+                        "audio",
+                        audioBlob,
+                        "symptoms.webm"
+                    );
+
+                    formData.append(
+                        "language",
+                        language
+                    );
+
+
+                    console.log(
+                        "📤 Sending audio to /api/transcribe..."
+                    );
+
+
+                    const response = await fetch(
+                        "/api/transcribe",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                    console.log(
+                        "📥 Transcription HTTP status:",
+                        response.status
+                    );
+
+
+                    /* -----------------------------------------
+                       READ SERVER RESPONSE
+                    ----------------------------------------- */
+
+                    const data = await response.json();
+
+                    console.log(
+                        "📥 Transcription response:",
+                        data
+                    );
+
+
+                    if (!response.ok || !data.success) {
+
+                        throw new Error(
+                            data.message ||
+                            "The server could not transcribe the audio."
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       PUT TRANSCRIPTION INTO TEXTAREA
+                    ----------------------------------------- */
+
+                    const transcript =
+                        String(data.text || "").trim();
+
+
+                    if (!transcript) {
+
+                        throw new Error(
+                            "Gemini returned an empty transcription."
+                        );
+                    }
+
+
+                    textarea.value = transcript;
+
+                    textarea.dispatchEvent(
+                        new Event("input", {
+                            bubbles: true
+                        })
+                    );
+
+                    textarea.focus();
+
+
+                    console.log(
+                        "✅ TRANSCRIPTION:",
+                        transcript
+                    );
+
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "❌ Voice transcription error:",
+                        error
+                    );
+
+
+                    textarea.value = "";
+
+
+                    alert(
+                        "Voice transcription failed:\n\n" +
+                        error.message
+                    );
+
+                }
+                finally {
+
+                    /* -----------------------------------------
+                       STOP MICROPHONE
+                    ----------------------------------------- */
+
+                    stream
+                        .getTracks()
+                        .forEach(
+                            track => track.stop()
+                        );
+
+
+                    if (voiceStream === stream) {
+                        voiceStream = null;
+                    }
+
+
+                    /* -----------------------------------------
+                       RESET BUTTON
+                    ----------------------------------------- */
+
+                    if (button) {
+
+                        button.innerHTML =
+                            "🎙️ Speak Symptoms";
+
+                        button.disabled = false;
+                    }
+
+
+                    window.activeMediaRecorder = null;
+
+                    window.recordedAudioChunks = [];
+
+                }
 
             };
 
 
-            recognition.lang =
-                voiceLanguages[language]
-                || "en-IN";
+            /* -----------------------------------------
+               RECORDER ERROR
+            ----------------------------------------- */
 
-
-            recognition.start();
-
-
-            recognition.onresult =
+            mediaRecorder.onerror =
                 function (event) {
 
-                    const text =
-                        event.results[0][0]
-                            .transcript;
+                    console.error(
+                        "MediaRecorder error:",
+                        event
+                    );
 
 
-                    document.getElementById(
-                        "symptoms"
-                    ).value = text;
+                    stream
+                        .getTracks()
+                        .forEach(
+                            track => track.stop()
+                        );
 
-                };
+
+                    if (button) {
+
+                        button.innerHTML =
+                            "🎙️ Speak Symptoms";
+
+                        button.disabled =
+                            false;
+
+                    }
 
 
-            recognition.onerror =
-                function () {
+                    window.activeMediaRecorder =
+                        null;
+
 
                     alert(
-                        "Voice recognition could not be completed. Please try again."
+                        "The microphone recording failed. Please try again."
                     );
 
                 };
 
+
+            /* -----------------------------------------
+               START RECORDING
+            ----------------------------------------- */
+
+            try {
+
+                mediaRecorder.start(1000);
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Could not start recording:",
+                    error
+                );
+
+
+                stream
+                    .getTracks()
+                    .forEach(
+                        track => track.stop()
+                    );
+
+
+                window.activeMediaRecorder =
+                    null;
+
+
+                if (button) {
+
+                    button.innerHTML =
+                        "🎙️ Speak Symptoms";
+
+                    button.disabled =
+                        false;
+
+                }
+
+
+                alert(
+                    "Could not start the microphone."
+                );
+
+            }
         }
 
+
+
+        /* =====================================================
+           LIVE FREQUENCY ANIMATION
+        ===================================================== */
+
+        function animateVoiceFrequency() {
+
+            if (
+                !voiceAnalyser ||
+                !voiceStream
+            ) {
+                return;
+            }
+
+
+            const bars =
+                document.querySelectorAll(
+                    "#frequencyBars span"
+                );
+
+
+            const dataArray =
+                new Uint8Array(
+                    voiceAnalyser.frequencyBinCount
+                );
+
+
+            function draw() {
+
+                if (
+                    !voiceAnalyser ||
+                    !voiceStream ||
+                    voiceStream.active === false
+                ) {
+
+                    return;
+                }
+
+
+                voiceAnimationFrame =
+                    requestAnimationFrame(draw);
+
+
+                voiceAnalyser.getByteFrequencyData(
+                    dataArray
+                );
+
+
+                bars.forEach(
+                    function (bar, index) {
+
+                        const value =
+                            dataArray[index] || 0;
+
+
+                        const height =
+                            Math.max(
+                                8,
+                                Math.min(
+                                    60,
+                                    value * 0.9
+                                )
+                            );
+
+
+                        bar.style.height =
+                            height + "px";
+
+
+                        bar.style.opacity =
+                            Math.max(
+                                0.35,
+                                Math.min(
+                                    1,
+                                    value / 180
+                                )
+                            );
+                    }
+                );
+            }
+
+
+            draw();
+        }
+
+
+        /* =====================================================
+           STOP VOICE
+        ===================================================== */
+
+        function stopVoice() {
+
+            voiceManuallyStopped = true;
+
+
+            /* -----------------------------------------
+               STOP MEDIA RECORDER
+            ----------------------------------------- */
+
+            if (window.activeMediaRecorder) {
+
+                try {
+
+                    if (
+                        window.activeMediaRecorder.state !==
+                        "inactive"
+                    ) {
+
+                        window.activeMediaRecorder.stop();
+
+                    }
+
+                }
+                catch (error) {
+
+                    console.log(error);
+
+                }
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               OLD RECOGNITION CLEANUP
+               (SAFETY FALLBACK)
+            ----------------------------------------- */
+
+            if (activeRecognition) {
+
+                try {
+
+                    activeRecognition.stop();
+
+                }
+                catch (error) {
+
+                    console.log(error);
+
+                }
+
+            }
+
+
+            /* -----------------------------------------
+               CLEAN UP VISUALIZER
+            ----------------------------------------- */
+
+            if (
+                typeof finishVoiceRecognition ===
+                "function"
+            ) {
+
+                finishVoiceRecognition();
+
+            }
+
+        }
+
+        /* =====================================================
+           CLEANUP
+        ===================================================== */
+
+        function finishVoiceRecognition() {
+
+            activeRecognition = null;
+
+
+            if (voiceAnimationFrame) {
+
+                cancelAnimationFrame(
+                    voiceAnimationFrame
+                );
+
+                voiceAnimationFrame = null;
+            }
+
+
+            if (voiceStream) {
+
+                voiceStream
+                    .getTracks()
+                    .forEach(
+                        function (track) {
+
+                            track.stop();
+
+                        }
+                    );
+
+                voiceStream = null;
+            }
+
+
+            if (voiceAudioContext) {
+
+                try {
+
+                    voiceAudioContext.close();
+
+                }
+                catch (error) {
+
+                    console.log(error);
+
+                }
+
+                voiceAudioContext = null;
+            }
+
+
+            voiceAnalyser = null;
+
+
+            const visualizer =
+                document.getElementById(
+                    "voiceVisualizer"
+                );
+
+            if (visualizer) {
+
+                visualizer.classList.remove(
+                    "active"
+                );
+            }
+
+
+            const button =
+                document.querySelector(
+                    'button[onclick="startVoice()"]'
+                );
+
+            if (button) {
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    "🎙️ Speak Symptoms";
+            }
+        }
 
         /* =====================================================
            CHECK SEVERITY
@@ -1796,14 +4365,57 @@
 
                 if (data.success) {
 
+                    /* Remove old result colors */
+                    result.classList.remove(
+                        "result-low",
+                        "result-consultation",
+                        "result-urgent"
+                    );
+
+                    const urgency =
+                        String(data.urgency || "")
+                            .trim()
+                            .toLowerCase();
+
+
+                    /* Choose color from ACTUAL backend result */
+
+                    if (data.level === "low") {
+
+                        result.classList.add(
+                            "result-low"
+                        );
+
+                    }
+
+                    else if (
+                        data.level === "consultation"
+                    ) {
+
+                        result.classList.add(
+                            "result-consultation"
+                        );
+
+                    }
+
+                    else if (
+                        data.level === "urgent"
+                    ) {
+
+                        result.classList.add(
+                            "result-urgent"
+                        );
+
+                    }
+
+
+                    /* Show the actual returned data */
+
                     title.innerText =
                         "🩺 " +
                         data.urgency;
 
-
-                    text.innerText =
-                        data.message;
-
+                    text.innerText = data.message; setStep(2); show108(data.level);
 
                 } else {
 
@@ -2109,7 +4721,7 @@
             </strong>
 
             <p style="margin-top:8px;">
-                Please make sure the RuralCare
+                Please make sure the Healvia
                 backend is running and try again.
             </p>
 
@@ -2186,6 +4798,7 @@
                         latitude,
                         longitude
                     );
+                    window.userPos = [latitude, longitude];
                     function startLocationTracking() {
 
                         if (!navigator.geolocation) {
@@ -2266,9 +4879,11 @@
                                 },
 
                                 {
-                                    enableHighAccuracy: true,
-                                    timeout: 30000,
-                                    maximumAge: 0
+
+                                    enableHighAccuracy: false,
+                                    timeout: 7000,
+                                    maximumAge: 60000
+
                                 }
                             );
                     }
@@ -2345,6 +4960,7 @@
 
 
             try {
+                clearNearby();
 
                 const radius = 5000;
 
@@ -2464,9 +5080,7 @@
 
 
                         if (
-                            !isHospital &&
-                            !isClinic &&
-                            !isPharmacy
+                            !isHospital && !isClinic && !isPharmacy
                         ) {
                             return;
                         }
@@ -2478,8 +5092,7 @@
                                 isHospital
                                     ? "Hospital"
                                     : isClinic
-                                        ? "Clinic"
-                                        : "Pharmacy"
+                                        ? "Clinic" : "Pharmacy"
                             );
 
 
@@ -2502,7 +5115,6 @@
 
                         }
                         else {
-
                             color = "#19a463";
                             symbol = "💊";
                             pharmacies++;
@@ -2559,6 +5171,7 @@
                                 }
                             )
                                 .addTo(healthcareMap);
+                        nearbyItems.push({ name: name, lat: lat, lon: lon, phone: tags.phone || tags["contact:phone"] || "", marker: marker, type: isHospital ? "hospital" : isClinic ? "clinic" : "pharmacy" });
 
 
                         marker.bindPopup(`
@@ -2619,6 +5232,7 @@
                        &nbsp;&nbsp;
                     💊 ${pharmacies} pharmacies
              `;
+                renderNearby();
 
 
             }
@@ -2643,6 +5257,21 @@
             destinationName,
             destinationType
         ) {
+
+            // SAVE DESTINATION FOR NAVIGATION
+            window.navigationDestination = {
+                latitude: destinationLatitude,
+                longitude: destinationLongitude,
+                name: destinationName,
+                type: destinationType
+            };
+
+            // DEFAULT MODE
+            window.selectedTravelMode =
+                window.selectedTravelMode || "motorcycle";
+
+
+            // YOUR ORIGINAL showRoute CODE STARTS HERE
 
             if (!userMarker) {
                 alert("Please click 'Find Near Me' first.");
@@ -2674,25 +5303,19 @@
                 .then(response => response.json())
                 .then(data => {
 
-                    if (
-                        !data.routes ||
-                        data.routes.length === 0
-                    ) {
+                    if (!data.routes || data.routes.length === 0) {
                         throw new Error("No route found.");
                     }
 
                     const route = data.routes[0];
-                    window.navigationActive = true;
 
-                    /* Remove old route */
+                    window.navigationActive = true;
 
                     if (window.currentRoute) {
                         healthcareMap.removeLayer(
                             window.currentRoute
                         );
                     }
-
-                    /* Draw route on the Leaflet map */
 
                     window.currentRoute =
                         L.geoJSON(
@@ -2704,8 +5327,6 @@
                                 }
                             }
                         ).addTo(healthcareMap);
-
-                    /* Zoom to route */
 
                     healthcareMap.fitBounds(
                         window.currentRoute.getBounds(),
@@ -2720,7 +5341,34 @@
                     const durationMinutes =
                         Math.round(route.duration / 60);
 
-                    /* Turn-by-turn directions */
+                    /*
+                     * STORE DISTANCE FOR THE
+                     * TRAVEL-MODE BUTTONS
+                     */
+                    window.currentRouteDistance =
+                        parseFloat(distanceKm);
+
+                    /*
+                     * UPDATE NAVIGATION SUMMARY
+                     */
+                    const distanceElement =
+                        document.getElementById("routeDistance");
+
+                    if (distanceElement) {
+                        distanceElement.innerText =
+                            distanceKm + " km";
+                    }
+
+                    /*
+                     * UPDATE TIME ACCORDING TO
+                     * SELECTED TRAVEL MODE
+                     */
+                    updateRouteModeTime();
+
+                    /*
+                     * YOUR EXISTING TURN-BY-TURN
+                     * CODE CONTINUES HERE
+                     */
 
                     let stepsHtml = "";
 
@@ -2734,15 +5382,10 @@
                             route.legs[0].steps
                                 .map((step) => {
 
-                                    /* Distance to this step */
-
                                     const distance =
                                         step.distance >= 1000
                                             ? (step.distance / 1000).toFixed(1) + " km"
                                             : Math.round(step.distance) + " m";
-
-
-                                    /* Work out the instruction */
 
                                     let instruction =
                                         "Continue straight";
@@ -2755,15 +5398,12 @@
                                         const modifier =
                                             step.maneuver.modifier;
 
-
                                         if (type === "depart") {
-
                                             instruction =
                                                 "Start your journey";
                                         }
 
                                         else if (type === "arrive") {
-
                                             instruction =
                                                 "You have arrived";
                                         }
@@ -2771,21 +5411,16 @@
                                         else if (type === "turn") {
 
                                             if (modifier === "left") {
-
-                                                instruction =
-                                                    "Turn left";
+                                                instruction = "Turn left";
                                             }
 
                                             else if (modifier === "right") {
-
-                                                instruction =
-                                                    "Turn right";
+                                                instruction = "Turn right";
                                             }
 
                                             else if (
                                                 modifier === "slight left"
                                             ) {
-
                                                 instruction =
                                                     "Keep slightly left";
                                             }
@@ -2793,7 +5428,6 @@
                                             else if (
                                                 modifier === "slight right"
                                             ) {
-
                                                 instruction =
                                                     "Keep slightly right";
                                             }
@@ -2801,7 +5435,6 @@
                                             else if (
                                                 modifier === "sharp left"
                                             ) {
-
                                                 instruction =
                                                     "Turn sharply left";
                                             }
@@ -2809,40 +5442,30 @@
                                             else if (
                                                 modifier === "sharp right"
                                             ) {
-
                                                 instruction =
                                                     "Turn sharply right";
                                             }
 
                                             else {
-
-                                                instruction =
-                                                    "Turn";
+                                                instruction = "Turn";
                                             }
                                         }
 
                                         else if (
                                             type === "roundabout"
                                         ) {
-
                                             instruction =
                                                 "Enter the roundabout";
                                         }
 
-                                        else if (
-                                            type === "merge"
-                                        ) {
-
+                                        else if (type === "merge") {
                                             instruction =
                                                 "Merge onto the road";
                                         }
 
-                                        else if (
-                                            type === "fork"
-                                        ) {
+                                        else if (type === "fork") {
 
                                             if (modifier === "left") {
-
                                                 instruction =
                                                     "Keep left at the fork";
                                             }
@@ -2850,21 +5473,16 @@
                                             else if (
                                                 modifier === "right"
                                             ) {
-
                                                 instruction =
                                                     "Keep right at the fork";
                                             }
 
                                             else {
-
                                                 instruction =
                                                     "Continue at the fork";
                                             }
                                         }
                                     }
-
-
-                                    /* Road name */
 
                                     const roadName =
                                         step.name &&
@@ -2872,21 +5490,21 @@
                                             ? ` onto <b>${escapeHtml(step.name)}</b>`
                                             : "";
 
-
                                     return `
-                    <li>
-                        ${instruction}${roadName}
+                                <li>
+                                    ${instruction}${roadName}
 
-                        <span
-                            style="
-                                color:#667085;
-                                font-size:13px;
-                            "
-                        >
-                            — ${distance}
-                        </span>
-                    </li>
-                `;
+                                    <span
+                                        style="
+                                            color:#667085;
+                                            font-size:13px;
+                                        "
+                                    >
+                                        — ${distance}
+                                    </span>
+                                </li>
+                            `;
+
                                 })
                                 .join("");
                     }
@@ -2905,7 +5523,9 @@
 
                 <p>
                     <b>⏱️ Estimated time:</b>
-                    ${durationMinutes} minutes
+                    <span id="directionsRouteTime">
+                        ${durationMinutes} minutes
+                    </span>
                 </p>
 
                 <h4>Turn-by-turn directions</h4>
@@ -2943,6 +5563,168 @@
             `;
                 });
         }
+
+
+        /* =====================================================
+           TRAVEL MODE TIME CALCULATION
+        ===================================================== */
+
+        function updateRouteModeTime() {
+
+            const distance =
+                window.currentRouteDistance;
+
+            const navigationTimeElement =
+                document.getElementById(
+                    "navigationRouteTime"
+                );
+
+            const directionsTimeElement =
+                document.getElementById(
+                    "directionsRouteTime"
+                );
+
+            if (
+                !distance ||
+                (
+                    !navigationTimeElement &&
+                    !directionsTimeElement
+                )
+            ) {
+                return;
+            }
+
+            const mode =
+                window.selectedTravelMode ||
+                "motorcycle";
+
+            let speed;
+
+            switch (mode) {
+
+                case "motorcycle":
+                    speed = 35;
+                    break;
+
+                case "car":
+                    speed = 30;
+                    break;
+
+                case "bus":
+                    speed = 22;
+                    break;
+
+                case "walking":
+                    speed = 5;
+                    break;
+
+                default:
+                    speed = 30;
+            }
+
+            const minutes =
+                Math.max(
+                    1,
+                    Math.round(
+                        (distance / speed) * 60
+                    )
+                );
+
+            const timeText =
+                minutes + " minutes";
+
+            if (navigationTimeElement) {
+                navigationTimeElement.innerText =
+                    timeText;
+            }
+
+            if (directionsTimeElement) {
+                directionsTimeElement.innerText =
+                    timeText;
+            }
+        }
+        /* =====================================================
+           START ROUTE
+        ===================================================== */
+
+        function startNavigation() {
+
+            if (!window.navigationDestination) {
+
+                alert(
+                    "Please select a healthcare location first."
+                );
+
+                return;
+            }
+
+            window.navigationActive = true;
+
+            const instruction =
+                document.getElementById(
+                    "currentNavigationInstruction"
+                );
+
+            if (instruction) {
+
+                instruction.innerText =
+                    "🧭 Navigation started. Follow the route on the map.";
+            }
+
+            if ("speechSynthesis" in window) {
+
+                const destination =
+                    window.navigationDestination.name;
+
+                speechSynthesis.cancel();
+
+                const utterance =
+                    new SpeechSynthesisUtterance(
+                        "Navigation started to " + destination
+                    );
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* =====================================================
+           END ROUTE
+        ===================================================== */
+
+        function endNavigation() {
+
+            window.navigationActive = false;
+
+            if (window.currentRoute) {
+
+                healthcareMap.removeLayer(
+                    window.currentRoute
+                );
+
+                window.currentRoute = null;
+            }
+
+            if ("speechSynthesis" in window) {
+                speechSynthesis.cancel();
+            }
+
+            const instruction =
+                document.getElementById(
+                    "currentNavigationInstruction"
+                );
+
+            if (instruction) {
+
+                instruction.innerText =
+                    "Navigation ended.";
+            }
+        }
+
+
+        /* =====================================================
+           YOUR EXISTING clearRoute
+        ===================================================== */
+
         function clearRoute() {
 
             if (window.currentRoute) {
@@ -2953,6 +5735,8 @@
 
                 window.currentRoute = null;
             }
+
+            window.navigationActive = false;
 
             const directionsPanel =
                 document.getElementById("directionsPanel");
@@ -3389,9 +6173,7 @@
                             .bindPopup(popup);
 
 
-                    healthcareMarkers.push(
-                        marker
-                    );
+                    marker._type = type; healthcareMarkers.push(marker);
 
                 }
             );
@@ -3812,10 +6594,171 @@
 
             window.navigationActive = true;
         }
+        let selectedTravelMode = "motorcycle";
 
+        function selectTravelMode(mode) {
+
+            // Save selected travel mode
+            selectedTravelMode = mode;
+            window.selectedTravelMode = mode;
+
+            // Remove active from every button
+            document.querySelectorAll(".travel-mode").forEach(function (button) {
+                button.classList.remove("active");
+            });
+
+            // Activate the selected button
+            const selectedButton = document.querySelector(
+                `.travel-mode[data-mode="${mode}"]`
+            );
+
+            if (selectedButton) {
+                selectedButton.classList.add("active");
+            }
+
+            // Change estimated time
+            updateRouteModeTime();
+
+            // Change instruction text
+            const instructionElement =
+                document.getElementById("currentNavigationInstruction");
+
+            const modeNames = {
+                motorcycle: "2-Wheeler",
+                car: "Car",
+                bus: "Bus",
+                walking: "Walking"
+            };
+
+            if (instructionElement) {
+
+                instructionElement.innerText =
+                    "🧭 " +
+                    modeNames[mode] +
+                    " selected. Press Start Route to begin navigation.";
+            }
+        }
     </script>
 
 
+    <script>
+        /* ===== Healvia navigation + extras ===== */
+        function showPage(p) {
+            document.querySelectorAll(".spage").forEach(function (e) { e.classList.toggle("on", e.id === "sp-" + p); });
+            document.querySelectorAll(".nav-links a").forEach(function (a) { a.classList.toggle("on", a.dataset.p === p); });
+            window.scrollTo(0, 0);
+            if (p === "nearby" && typeof healthcareMap !== "undefined" && healthcareMap) setTimeout(function () { healthcareMap.invalidateSize(); }, 150);
+            if (p === "admin") loadAdminStats();
+            if (p === "symptoms") setStep(1);
+        }
+        function setStep(n) { [1, 2, 3].forEach(function (i) { document.getElementById("stp" + i).classList.toggle("on", i === n); }); }
+        function show108(level) { document.getElementById("call108").style.display = level === "urgent" ? "inline-block" : "none"; }
+        var nearbyItems = [];
+        var nearbyFilter = "all";
+        function clearNearby() {
+            nearbyItems.forEach(function (i) { if (healthcareMap && i.marker) healthcareMap.removeLayer(i.marker); });
+            nearbyItems = [];
+        }
+        function distKm(a, b) {
+            var r = function (x) { return x * Math.PI / 180; };
+            var h = Math.sin(r(b[0] - a[0]) / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(r(b[1] - a[1]) / 2) ** 2;
+            return 12742 * Math.asin(Math.sqrt(h));
+        }
+        function renderNearby() {
+            var counts = { all: nearbyItems.length, hospital: 0, clinic: 0, pharmacy: 0 };
+            nearbyItems.forEach(function (i) {
+                counts[i.type]++;
+                i.d = window.userPos ? distKm(window.userPos, [i.lat, i.lon]) : 0;
+            });
+            Object.keys(counts).forEach(function (k) { var el = document.getElementById("c-" + k); if (el) el.innerText = counts[k]; });
+            nearbyItems.sort(function (a, b) { return a.d - b.d; });
+            var labels = { hospital: "Hospital", clinic: "Clinic", pharmacy: "Pharmacy" };
+            var html = "";
+            var bounds = [];
+            nearbyItems.forEach(function (i, idx) {
+                var show = nearbyFilter === "all" || i.type === nearbyFilter;
+                if (show) {
+                    if (!healthcareMap.hasLayer(i.marker)) i.marker.addTo(healthcareMap);
+                    bounds.push([i.lat, i.lon]);
+                    html += '<div class="fitem"><div class="finfo" onclick="focusItem(' + idx + ')"><b>' + escapeHtml(i.name) + '</b>' +
+                        '<small>' + i.d.toFixed(1) + ' km • ' + Math.max(1, Math.round(i.d * 3)) + ' min • ' + labels[i.type] + '</small></div>' +
+                        '<div class="fbtns"><button onclick="routeToItem(' + idx + ')">🧭 Directions</button>' +
+                        (i.phone ? '<a href="tel:' + escapeHtml(i.phone) + '">📞</a>' : '') + '</div></div>';
+                } else if (healthcareMap.hasLayer(i.marker)) {
+                    healthcareMap.removeLayer(i.marker);
+                }
+            });
+            document.getElementById("flist").innerHTML = html || '<div class="fempty">Nothing of this type found nearby. Try another tab.</div>';
+            if (window.userPos) bounds.push(window.userPos);
+            if (bounds.length > 1) healthcareMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+        }
+        function filterFacilities(type, btn) {
+            nearbyFilter = type;
+            document.querySelectorAll(".ftabs button").forEach(function (b) { b.classList.toggle("on", b === btn); });
+            if (healthcareMap && nearbyItems.length) renderNearby();
+        }
+        function focusItem(i) {
+            var it = nearbyItems[i]; if (!it) return;
+            healthcareMap.setView([it.lat, it.lon], 16); it.marker.openPopup();
+        }
+        function routeToItem(i) {
+            var it = nearbyItems[i]; if (!it) return;
+            showRoute(it.lat, it.lon, it.name, it.type === "hospital" ? "hospital" : "pharmacy");
+            var nav = document.getElementById("navigationControls");
+            if (nav) nav.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        var _origShowRoute = showRoute;
+        showRoute = function (lat, lon, name, type) {
+            _origShowRoute.apply(this, arguments);
+            var h = document.getElementById("navigationDestination");
+            if (h && h.tagName === "H3") h.innerText = "To: " + name;
+        };
+        function openVideo() {
+            var m = document.getElementById("videoModal"), v = document.getElementById("demoVideo"), msg = document.getElementById("videoMsg");
+            m.classList.add("on"); msg.style.display = "none"; v.style.display = "block";
+            v.onerror = function () { v.style.display = "none"; msg.style.display = "block"; };
+            v.querySelector("source").onerror = v.onerror;
+            v.load(); var pr = v.play(); if (pr && pr.catch) pr.catch(function () { });
+        }
+        function closeVideo() {
+            var v = document.getElementById("demoVideo"); v.pause();
+            document.getElementById("videoModal").classList.remove("on");
+        }
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeVideo(); });
+        (function buildChips() {
+            var langs = [["English", "English"], ["Kannada", "ಕನ್ನಡ"], ["Hindi", "हिन्दी"], ["Tamil", "தமிழ்"], ["Telugu", "తెలుగు"], ["Marathi", "मराठी"]];
+            var box = document.getElementById("chips");
+            langs.forEach(function (l) {
+                var s = document.createElement("span"); s.textContent = l[1]; s.dataset.l = l[0];
+                if (l[0] === "English") s.className = "on";
+                s.onclick = function () {
+                    var sel = document.getElementById("language"); sel.value = l[0]; sel.dispatchEvent(new Event("change"));
+                    box.querySelectorAll("span").forEach(function (x) { x.classList.toggle("on", x === s); });
+                };
+                box.appendChild(s);
+            });
+            document.getElementById("language").addEventListener("change", function (e) {
+                box.querySelectorAll("span").forEach(function (x) { x.classList.toggle("on", x.dataset.l === e.target.value); });
+            });
+        })();
+        async function loadAdminStats() {
+            try {
+                var d = await (await fetch("/api/admin/stats")).json();
+                document.getElementById("statPharmacies").innerText = d.pharmacies;
+                document.getElementById("statMedicines").innerText = d.medicines;
+            } catch (e) { console.error("Could not load admin stats", e); }
+        }
+        function sendOtp() {
+            if (document.getElementById("loginMobile").value.replace(/\D/g, "").length < 10) return alert("Enter a valid 10-digit mobile number.");
+            document.getElementById("otpBox").style.display = "block";
+        }
+        function verifyOtp() {
+            if (/^\d{6}$/.test(document.getElementById("otpInput").value)) showPage("pharmacy"); else alert("Enter the 6-digit OTP.");
+        }
+        showPage("home");
+
+    </script>
 </body>
+
 
 </html>

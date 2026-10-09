@@ -1,7 +1,21 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
 from datetime import datetime
+import os
+import tempfile
 
+from dotenv import load_dotenv
+from google import genai
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+gemini_client = None
+
+if GEMINI_API_KEY:
+    gemini_client = genai.Client(
+        api_key=GEMINI_API_KEY
+    )
 app = Flask(__name__)
 
 
@@ -680,23 +694,148 @@ def get_pharmacy_inventory(pharmacy_id):
         "count": len(inventory),
         "inventory": inventory
     })
-
-
 # ==================================================
-# HEALTH CHECK API
+# VOICE TRANSCRIPTION API
 # ==================================================
 
-@app.route("/api/health", methods=["GET"])
-def health():
+# ==================================================
+# VOICE TRANSCRIPTION API
+# ==================================================
 
-    return jsonify({
+@app.route("/api/transcribe", methods=["POST"])
+def transcribe_audio():
 
-        "success": True,
+    if gemini_client is None:
+        return jsonify({
+            "success": False,
+            "message": "Gemini API key is not configured."
+        }), 500
 
-        "status": "RuralCare AI backend is running"
+    if "audio" not in request.files:
+        return jsonify({
+            "success": False,
+            "message": "No audio file was received."
+        }), 400
 
-    })
+    audio_file = request.files["audio"]
 
+    audio_bytes = audio_file.read()
+
+    if not audio_bytes:
+        return jsonify({
+            "success": False,
+            "message": "The recorded audio is empty."
+        }), 400
+
+    try:
+
+        # Get selected language from frontend
+        language = request.form.get("language", "English")
+
+        language_codes = {
+            "English": "en-US",
+            "Hindi": "hi-IN",
+            "Kannada": "kn-IN",
+            "Marathi": "mr-IN",
+            "Tamil": "ta-IN",
+            "Telugu": "te-IN"
+        }
+
+        language_code = language_codes.get(
+            language,
+            "en-US"
+        )
+
+        # Save recording temporarily
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=".webm"
+        ) as temp_file:
+
+            temp_file.write(audio_bytes)
+            temp_path = temp_file.name
+
+        print("Received audio:", len(audio_bytes), "bytes")
+        print("Selected language:", language)
+        print("Language code:", language_code)
+
+        # Upload audio to Gemini Files API
+        uploaded_file = gemini_client.files.upload(
+            file=temp_path
+        )
+
+        print("Audio uploaded:", uploaded_file.uri)
+        print("Audio MIME type:", uploaded_file.mime_type)
+
+        # Gemini 3.5 Transcribe
+        interaction = gemini_client.interactions.create(
+            model="gemini-3.5-transcribe",
+            input=[
+                {
+                    "type": "audio",
+                    "uri": uploaded_file.uri,
+                    "mime_type": "audio/webm"
+                }
+            ],
+            generation_config={
+                "transcription_config": {
+                    "language_codes": [language_code]
+                }
+            }
+        )
+
+        transcript = (interaction.output_text or "").strip()
+
+        print("Gemini transcription:", transcript)
+
+        # Remove temporary file
+        try:
+            os.remove(temp_path)
+        except OSError:
+            pass
+
+        if not transcript:
+            return jsonify({
+                "success": False,
+                "message": "Gemini returned an empty transcription."
+            }), 500
+
+        return jsonify({
+            "success": True,
+            "text": transcript
+        })
+
+    except Exception as error:
+
+        print("========================================")
+        print("GEMINI TRANSCRIPTION ERROR:")
+        print(repr(error))
+        print("========================================")
+
+        try:
+            if "temp_path" in locals():
+                os.remove(temp_path)
+        except OSError:
+            pass
+
+        return jsonify({
+            "success": False,
+            "message": f"Voice transcription failed: {error}"
+        }), 500
+
+
+    @app.route("/api/admin/stats", methods=["GET"])
+    def admin_stats():
+     conn = get_db()
+     c = conn.cursor()
+     pharmacies = c.execute("SELECT COUNT(*) FROM pharmacies").fetchone()[0]
+     medicines = c.execute(
+        "SELECT COUNT(DISTINCT LOWER(medicine_name)) FROM medicine_inventory"
+     ).fetchone()[0]
+     conn.close()
+     return jsonify({"pharmacies": pharmacies, "medicines": medicines})
+    
+    
 
 # ==================================================
 # INITIALIZE DATABASE
